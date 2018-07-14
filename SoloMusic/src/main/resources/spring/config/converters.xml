@@ -20,6 +20,11 @@
 	<util:list id="converters">
 		
 		<!--<bean class="converters.AuthorityToStringConverter" />-->
+		<bean class="converters.FolderToStringConverter"/>
+		<bean class="converters.StringToFolderConverter"/>
+		
+		<bean class="converters.MailMessageToStringConverter"/>
+		<bean class="converters.StringToMailMessageConverter"/>
 		
 	</util:list>
 	

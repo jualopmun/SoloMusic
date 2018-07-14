@@ -11,7 +11,8 @@
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>
 		<value>/views/welcome/messages</value>
-		
+		<value>/views/folder/messages</value>
+		<value>/views/mailmessage/messages</value>
 	
     </util:list>
 
