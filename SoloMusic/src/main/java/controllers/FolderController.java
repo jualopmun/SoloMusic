@@ -28,7 +28,7 @@ public class FolderController extends AbstractController {
 	@Autowired
 	LoginService	loginService;
 
-
+//Logica de la carpeta
 //	@RequestMapping(value = "/actor/create", method = RequestMethod.GET)
 //	public ModelAndView create() {
 //		ModelAndView result;
