@@ -10,6 +10,9 @@
   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
  ">
 
+
+
+
 	<!-- User accounts -->
 
 
@@ -26,7 +29,443 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount2" class="security.UserAccount">
+		<property name="username" value="user2" />
+		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="banned" value="false" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
+
+
+<!-- Folders -->
+
+<bean id="folderInbox1" class="domain.Folder">
+		<property name="folderName" value="Inbox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="folderOutbox1" class="domain.Folder">
+		<property name="folderName" value="Outbox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+				
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="folderSpambox1" class="domain.Folder">
+		<property name="folderName" value="Spambox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+	<bean id="folderTrashbox1" class="domain.Folder">
+		<property name="folderName" value="Trashbox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="folderInbox2" class="domain.Folder">
+		<property name="folderName" value="Inbox" />
+		<property name="folderChildren">
+			<list>
+				<ref bean="subFolder1" />
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="subFolder1" class="domain.Folder">
+		<property name="folderName" value="SubFolder1" />
+		<property name="folderFather" ref="folderInbox2" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="folderOutbox2" class="domain.Folder">
+		<property name="folderName" value="Outbox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+	<bean id="folderSpambox2" class="domain.Folder">
+		<property name="folderName" value="Spambox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+	<bean id="folderTrashbox2" class="domain.Folder">
+		<property name="folderName" value="Trashbox" />
+		<property name="folderChildren">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+<!-- Actors -->
+
+
+
+	<bean id="actor1" class="domain.Actor">
+
+		<property name="name" value="Mark" />
+		<property name="surname" value="Kilo" />
+		<property name="email" value="markkilo@go.es" />
+		<property name="birthDate" value="21/07/1991 21:49" />
+		<property name="isPremium" value="true" />
+		<property name="folders">
+			<list>
+				<ref bean="folderInbox1" />
+				<ref bean="folderOutbox1" />
+				<ref bean="folderSpambox1" />
+				<ref bean="folderTrashbox1" />
+			</list>
+		</property>
+		
+	
+		<property name="ownerAdvertisement">
+			<list>
+				<ref bean="advert1" />
+			</list>
+		</property>
+		<property name="registersAdvertisement">
+			<list>
+				<ref bean="advert2" />
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="actor2" />
+			</list>
+		</property>
+		
+		<property name="followeds">
+			<list>
+				<ref bean="actor2" />
+			</list>
+		</property>
+		
+		<property name="userAccount" ref="userAccount1" />
+		<property name="userSpace" ref="userSpace1" />
+	</bean>
+	
+	
+	
+		<bean id="actor2" class="domain.Actor">
+
+		<property name="name" value="Paco" />
+		<property name="surname" value="Kila" />
+		<property name="email" value="markkila@go.es" />
+		<property name="birthDate" value="21/07/1990 21:49" />
+		<property name="isPremium" value="false" />
+		<property name="folders">
+			<list>
+				<ref bean="folderInbox2" />
+				<ref bean="folderOutbox2" />
+				<ref bean="folderSpambox2" />
+				<ref bean="folderTrashbox2" />
+			</list>
+		</property>
+		
+	
+		<property name="ownerAdvertisement">
+			<list>
+				<ref bean="advert2" />
+			</list>
+		</property>
+		<property name="registersAdvertisement">
+			<list>
+				
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="actor1" />
+			</list>
+		</property>
+		
+		<property name="followeds">
+			<list>
+				<ref bean="actor1" />
+			</list>
+		</property>
+		
+		<property name="userAccount" ref="userAccount2" />
+		<property name="userSpace" ref="userSpace2" />
+	</bean>
 	
 
+
+<bean id="advert1" class="domain.Advertisement">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="startDate" value="16/07/2017 21:45" />
+		<property name="endDate" value="21/07/2017 21:49" />
+		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="mainImg" value="www.imagen.com" />
+		<property name="price" value="4.2" />
+		<property name="actorOwener" ref="actor1" />
+		<property name="actorRegisters">
+			<list>
+				<ref bean="actor2" />
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="advert2" class="domain.Advertisement">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="startDate" value="16/07/2017 21:45" />
+		<property name="endDate" value="21/07/2017 21:49" />
+		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="mainImg" value="www.imagen.com" />
+		<property name="price" value="4.4" />
+		<property name="actorOwener" ref="actor2" />
+		<property name="actorRegisters">
+			<list>
+				<ref bean="actor1" />
+			</list>
+		</property>
+
+	</bean>
+	
+	<!-- gift -->
+
+	<bean id="gift1" class="domain.Gift">
+		<property name="address" value="address1" />
+		<property name="idNumber" value="idNumber1" />
+		<property name="phone" value="+34622333444" />
+		
+
+	</bean>
+	
+	<bean id="gift2" class="domain.Gift">
+		<property name="address" value="address2" />
+		<property name="idNumber" value="idNumber2" />
+		<property name="phone" value="+34622333445" />
+		
+
+	</bean>
+	
+	
+	<!-- donations -->
+
+	<bean id="donation1" class="domain.Donation">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="price" value="4.2" />
+		<property name="offersGift" ref="gift1" />
+
+	</bean>
+	
+	<bean id="donation2" class="domain.Donation">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="price" value="4.2" />
+		<property name="offersGift" ref="gift2" />
+
+	</bean>
+	
+	
+	<!-- Events -->
+
+	<bean id="event1" class="domain.Event">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="startDate" value="21/07/2018 21:49" />
+
+
+	</bean>
+	
+	<bean id="event2" class="domain.Event">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="startDate" value="21/08/2018 21:49" />
+
+
+	</bean>
+
+	<!-- Perfomances -->
+
+	<bean id="perfomance1" class="domain.Perfomance">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="videoUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+
+
+	</bean>
+	
+	<bean id="perfomance2" class="domain.Perfomance">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="videoUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+
+
+	</bean>
+	
+	<!-- Tracks -->
+
+	<bean id="track1" class="domain.Track">
+		<property name="title" value="title1" />
+		<property name="duration" value="4" />
+		
+
+	</bean>
+	
+	<bean id="track2" class="domain.Track">
+		<property name="title" value="title2" />
+		<property name="duration" value="5" />
+		
+
+	</bean>
+	
+	<!-- Playlists -->
+
+	<bean id="playlist1" class="domain.PlayList">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="tracks">
+			<list>
+				<ref bean="track1" />
+			</list>
+		</property>
+
+	</bean>
+
+
+	<bean id="playlist2" class="domain.PlayList">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="tracks">
+			<list>
+				<ref bean="track2" />
+			</list>
+		</property>
+
+	</bean>	
+	
+	<!-- UserSpaces -->
+
+	<bean id="userSpace1" class="domain.UserSpace">
+		<property name="title" value="title1" />
+		<property name="description" value="description1" />
+		<property name="profileImg" value="profileImg1" />
+		<property name="contact" value="contact1" />
+		<property name="events">
+			<list>
+				<ref bean="event1" />
+			</list>
+		</property>	
+		<property name="perfomances">
+			<list>
+				<ref bean="perfomance1" />
+			</list>
+		</property>	
+		<property name="donations">
+			<list>
+				<ref bean="donation1" />
+			</list>
+		</property>	
+		<property name="playLists">
+			<list>
+				<ref bean="playlist1" />
+			</list>
+		</property>
+			
+	</bean>
+	
+	
+	<bean id="userSpace2" class="domain.UserSpace">
+		<property name="title" value="title2" />
+		<property name="description" value="description2" />
+		<property name="profileImg" value="profileImg2" />
+		<property name="contact" value="contact2" />
+		<property name="events">
+			<list>
+				<ref bean="event2" />
+			</list>
+		</property>
+		<property name="perfomances">
+			<list>
+				<ref bean="perfomance2" />
+			</list>
+		</property>	
+		<property name="donations">
+			<list>
+				<ref bean="donation2" />
+			</list>
+		</property>
+		<property name="playLists">
+			<list>
+				<ref bean="playlist2" />
+			</list>
+		</property>
+			
+	</bean>
+	
+	
+	
+	
+
+	
+	
 </beans>
