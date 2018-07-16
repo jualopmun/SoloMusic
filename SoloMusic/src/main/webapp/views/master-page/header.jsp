@@ -50,6 +50,20 @@
 											
 					</security:authorize>
 					
+					<security:authorize access="hasRole('USER')">
+					
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false"><spring:message
+									code="master.page.userspace" /><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+					
+			
+						<li><a href="userspace/user/view.do"><spring:message
+									code="master.page.user.userspace" /></a></li>
+									</ul>
+					</security:authorize>
+					
 					
 					
 					

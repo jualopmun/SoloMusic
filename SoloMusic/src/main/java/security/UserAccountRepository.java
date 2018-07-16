@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Actor;
+
 
 @Repository
 public interface UserAccountRepository extends JpaRepository<UserAccount, Integer> {
@@ -24,10 +26,10 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
 	
 //Metodos para encontrar al usuario
 
-//	@Query("select c from Actor c where c.userAccount.username = ?1")
-//	Actor findActorByUsername(String username);
-//
-//	@Query("select c from Actor c where c.userAccount.id = ?1")
-//	Actor findActorByUsernameId(Integer username);
+	@Query("select c from Actor c where c.userAccount.username = ?1")
+	Actor findActorByUsername(String username);
+
+	@Query("select c from Actor c where c.userAccount.id = ?1")
+	Actor findActorByUsernameId(Integer username);
 
 }

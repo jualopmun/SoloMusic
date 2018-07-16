@@ -29,6 +29,9 @@
 		<bean class="converters.ActorToStringConverter"/>
 		<bean class="converters.StringToActorConverter"/>
 		
+		<bean class="converters.UserSpaceToStringConverter"/>
+		<bean class="converters.StringToUserSpaceConverter"/>
+		
 	</util:list>
 	
 </beans>

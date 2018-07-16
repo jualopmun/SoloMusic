@@ -1,0 +1,83 @@
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<jstl:if test="${p==null}">
+<spring:message code="actor.new" var="actorNew"/>
+<input onclick="window.location='userspace/user/create.do'" class="btn btn-warning" type="button"  value="${actorNew}"/>
+</jstl:if>
+
+<jstl:if test="${p!=null}">
+<spring:message code="actor.edit" var="actorEdit"/>
+<input onclick="window.location='userspace/user/edit.do'" class="btn btn-warning" type="button"  value="${actorEdit}"/>
+</jstl:if>
+<br/>
+<br/>
+<tr>
+		<td>
+			<spring:message code="userspace.title" />
+		</td>
+		
+			<jstl:out value="${p.title}"/>
+		<td>
+		<br/>
+			
+			
+		
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<spring:message code="userspace.description" />
+		</td>
+		<jstl:out value="${p.description}"/>
+		<td>
+		<br/>	
+			
+			
+		
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<spring:message code="userspace.profileimg" />
+		</td>
+		<img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${p.profileImg}"/>">
+		<td>
+		<br/>
+			
+			
+		
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<spring:message code="userspace.contact" />
+					<jstl:out value="${p.contact}"/>
+		</td>
+		<td>
+		<br/>
+
+		
+		<br />
+		</td>
+		
+	</tr>
+	
+	<tr>
+	
+
+
+
+

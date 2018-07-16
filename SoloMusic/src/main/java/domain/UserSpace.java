@@ -31,14 +31,14 @@ public class UserSpace extends DomainEntity {
 	//Getters
 	
 	@NotBlank
-	@Length(min=50)
+	@Length(max=50)
 	public String getTitle() {
 		return title;
 	}
 	
 	
 	@NotBlank
-	@Length(min=300)
+	@Length(max=300)
 	public String getDescription() {
 		return description;
 	}

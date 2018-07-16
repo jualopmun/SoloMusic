@@ -14,6 +14,7 @@
 		<value>/views/folder/tiles.xml</value>
 		<value>/views/mailmessage/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
+		<value>/views/userspace/tiles.xml</value>
 		
     	
     </util:list>
