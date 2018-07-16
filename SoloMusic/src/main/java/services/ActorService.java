@@ -1,44 +1,116 @@
+
 package services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
-import domain.Actor;
 import repositories.ActorRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
+import security.UserAccountRepository;
+import domain.Actor;
+import domain.Advertisement;
+import domain.Folder;
+import forms.ActorRegisterForm;
 
 @Service
 @Transactional
 public class ActorService {
-	
+
 	@Autowired
-	private ActorRepository actorRepository;
-	
-	
+	private ActorRepository			actorRepository;
+
+	@Autowired
+	private Validator				validator;
+
+	@Autowired
+	private UserAccountRepository	userAccountRepository;
+
+	@Autowired
+	private UserSpaceService		userSpaceService;
+
 
 	public ActorService() {
 		super();
 	}
 
+	public Actor create() {
+		final Authority a = new Authority();
+		a.setAuthority(Authority.USER);
+		final UserAccount account = new UserAccount();
+		account.setAuthorities(Arrays.asList(a));
+		account.setBanned(false);
 
-	public boolean exists(Integer arg0) {
-		return actorRepository.exists(arg0);
+		//TODO: generación automática del UserSpace, Folders, etc.
+		final Actor actor = new Actor();
+		actor.setUserAccount(account);
+		actor.setOwnerAdvertisement(new ArrayList<Advertisement>());
+		actor.setRegistersAdvertisement(new ArrayList<Advertisement>());
+		actor.setFolders(new ArrayList<Folder>());
+		actor.setFolloweds(new ArrayList<Actor>());
+		actor.setFollowers(new ArrayList<Actor>());
+
+		return actor;
+	}
+
+	public boolean exists(final Integer arg0) {
+		return this.actorRepository.exists(arg0);
 	}
 
 	public List<Actor> findAll() {
-		return actorRepository.findAll();
+		return this.actorRepository.findAll();
 	}
 
-	public Actor findOne(Integer arg0) {
-		return actorRepository.findOne(arg0);
+	public Actor findOne(final Integer arg0) {
+		return this.actorRepository.findOne(arg0);
 	}
 
-	public <S extends Actor> S save(S arg0) {
-		return actorRepository.save(arg0);
+	public <S extends Actor> S save(final S arg0) {
+		return this.actorRepository.save(arg0);
 	}
-	
-	
 
+	public Actor findByPrincipal() {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		final Actor a = this.actorRepository.findByUserAccountId(userAccount.getId());
+		return a;
+	}
+
+	public Actor reconstruct(final ActorRegisterForm arf, final BindingResult binding) {
+		Actor result;
+		Assert.isTrue(arf.isAcceptedTerms());
+		Assert.isTrue(arf.getPassword().equals(arf.getRepeatPassword()));
+
+		result = this.create();
+		result.getUserAccount().setUsername(arf.getUsername());
+		result.getUserAccount().setPassword(arf.getPassword());
+		result.setName(arf.getName());
+		result.setSurname(arf.getSurname());
+		result.setEmail(arf.getEmail());
+		result.setBirthDate(arf.getBirthDate());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	public void hashPassword(final Actor a) {
+		final String oldPs = a.getUserAccount().getPassword();
+		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		final String hash = encoder.encodePassword(oldPs, null);
+		final UserAccount old = a.getUserAccount();
+		old.setPassword(hash);
+		final UserAccount newOne = this.userAccountRepository.save(old);
+		a.setUserAccount(newOne);
+	}
 }

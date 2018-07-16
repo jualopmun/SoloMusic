@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.List;
@@ -7,34 +8,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.UserSpaceRepository;
+import domain.UserSpace;
 
 @Service
 @Transactional
 public class UserSpaceService {
-	
+
 	@Autowired
-	private UserSpaceRepository userSpaceRepository;
-	
+	private UserSpaceRepository	userSpaceRepository;
+
+
 	public UserSpaceService() {
 		super();
 	}
 
-	public void delete(UserSpaceRepository arg0) {
-		userSpaceRepository.delete(arg0);
+	public void delete(final UserSpace arg0) {
+		this.userSpaceRepository.delete(arg0);
 	}
 
-	public List<UserSpaceRepository> findAll() {
-		return userSpaceRepository.findAll();
+	public List<UserSpace> findAll() {
+		return this.userSpaceRepository.findAll();
 	}
 
-	public UserSpaceRepository findOne(Integer arg0) {
-		return userSpaceRepository.findOne(arg0);
+	public UserSpace findOne(final Integer arg0) {
+		return this.userSpaceRepository.findOne(arg0);
 	}
 
-	public <S extends UserSpaceRepository> S save(S arg0) {
-		return userSpaceRepository.save(arg0);
+	public <S extends UserSpace> S save(final S arg0) {
+		return this.userSpaceRepository.save(arg0);
 	}
-	
-	
 
 }

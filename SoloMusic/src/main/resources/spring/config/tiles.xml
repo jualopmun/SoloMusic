@@ -13,7 +13,7 @@
 		<value>/views/welcome/tiles.xml</value>
 		<value>/views/folder/tiles.xml</value>
 		<value>/views/mailmessage/tiles.xml</value>
-
+		<value>/views/actor/tiles.xml</value>
 		
     	
     </util:list>

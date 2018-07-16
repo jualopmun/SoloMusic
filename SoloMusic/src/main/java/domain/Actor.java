@@ -3,12 +3,10 @@ package domain;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -17,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -27,107 +24,105 @@ import security.UserAccount;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public abstract class Actor extends DomainEntity {
+public class Actor extends DomainEntity {
 
 	// Attributes
 	// ====================================================================================
 	//Actor=User
-	
-	
-	private String name;
-	private String surname;
-	private String email;
-	private Date birthDate;
-	private Boolean isPremium;
+
+	private String						name;
+	private String						surname;
+	private String						email;
+	private Date						birthDate;
+	private Boolean						isPremium;
 	//Relations
-	private Collection<Advertisement> ownerAdvertisement;
-	private Collection<Advertisement> registersAdvertisement;
-	private UserSpace userSpace;
-	private Collection<Folder>	folders;
-	private UserAccount			userAccount;
-	private Collection<Actor> followers;
-	private Collection<Actor> followeds;
-	
-	
+	private Collection<Advertisement>	ownerAdvertisement;
+	private Collection<Advertisement>	registersAdvertisement;
+	private UserSpace					userSpace;
+	private Collection<Folder>			folders;
+	private UserAccount					userAccount;
+	private Collection<Actor>			followers;
+	private Collection<Actor>			followeds;
+
 
 	@NotNull
 	@NotBlank
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
-	
+
 	@NotNull
 	@NotBlank
 	public String getSurname() {
-		return surname;
+		return this.surname;
 	}
 
-	public void setSurname(String surname) {
+	public void setSurname(final String surname) {
 		this.surname = surname;
 	}
-	
+
 	@NotNull
 	@Email
 	@NotBlank
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	public Date getBirthDate() {
-		return birthDate;
+		return this.birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(final Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	
-	
+
 	public Boolean getIsPremium() {
-		return isPremium;
+		return this.isPremium;
 	}
 
-	public void setIsPremium(Boolean isPremium) {
+	public void setIsPremium(final Boolean isPremium) {
 		this.isPremium = isPremium;
 	}
-	
+
 	@NotNull
-	@OneToMany(mappedBy="actorOwener")
+	@OneToMany(mappedBy = "actorOwener")
 	public Collection<Advertisement> getOwnerAdvertisement() {
-		return ownerAdvertisement;
+		return this.ownerAdvertisement;
 	}
 
-	public void setOwnerAdvertisement(Collection<Advertisement> ownerAdvertisement) {
+	public void setOwnerAdvertisement(final Collection<Advertisement> ownerAdvertisement) {
 		this.ownerAdvertisement = ownerAdvertisement;
 	}
-	
+
 	@NotNull
-	@ManyToMany(mappedBy="actorRegisters")
+	@ManyToMany(mappedBy = "actorRegisters")
 	public Collection<Advertisement> getRegistersAdvertisement() {
-		return registersAdvertisement;
+		return this.registersAdvertisement;
 	}
 
-	public void setRegistersAdvertisement(Collection<Advertisement> registersAdvertisement) {
+	public void setRegistersAdvertisement(final Collection<Advertisement> registersAdvertisement) {
 		this.registersAdvertisement = registersAdvertisement;
 	}
-	
-	@NotNull
+
+	//TODO: crear un UserSpace automáticamente con cada nuevo usuario
+	//	@NotNull
 	@OneToOne
 	public UserSpace getUserSpace() {
-		return userSpace;
+		return this.userSpace;
 	}
 
-	public void setUserSpace(UserSpace userSpace) {
+	public void setUserSpace(final UserSpace userSpace) {
 		this.userSpace = userSpace;
 	}
 
@@ -151,28 +146,25 @@ public abstract class Actor extends DomainEntity {
 	public void setUserAccount(final UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
-	
+
 	@NotNull
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public Collection<Actor> getFollowers() {
-		return followers;
+		return this.followers;
 	}
 
-	public void setFollowers(Collection<Actor> followers) {
+	public void setFollowers(final Collection<Actor> followers) {
 		this.followers = followers;
 	}
-	
+
 	@NotNull
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public Collection<Actor> getFolloweds() {
-		return followeds;
+		return this.followeds;
 	}
 
-	public void setFolloweds(Collection<Actor> followeds) {
+	public void setFolloweds(final Collection<Actor> followeds) {
 		this.followeds = followeds;
 	}
 
-
-	
-	
 }
