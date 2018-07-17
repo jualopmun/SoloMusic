@@ -30,7 +30,7 @@
 		<bean class="converters.StringToDonationConverter"/>
 		
 		<bean class="converters.GiftToStringConverter"/>
-		<bean class="converters.StringToFGiftConverter"/>
+		<bean class="converters.StringToGiftConverter"/>
 		
 		<bean class="converters.PerfomanceToStringConverter"/>
 		<bean class="converters.StringToPerfomanceConverter"/>
