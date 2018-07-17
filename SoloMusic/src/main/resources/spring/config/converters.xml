@@ -33,7 +33,7 @@
 		<bean class="converters.StringToGiftConverter"/>
 		
 		<bean class="converters.PerfomanceToStringConverter"/>
-		<bean class="converters.StringToPerfomanceConverter"/>
+		<bean class="converters.StringToPerformanceConverter"/>
 		
 		<bean class="converters.PlayListToStringConverter"/>
 		<bean class="converters.StringToPlayListConverter"/>
