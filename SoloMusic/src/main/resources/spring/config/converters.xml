@@ -23,6 +23,24 @@
 		<bean class="converters.FolderToStringConverter"/>
 		<bean class="converters.StringToFolderConverter"/>
 		
+		<bean class="converters.AdvertisementToStringConverter"/>
+		<bean class="converters.StringToAdvertisementConverter"/>
+		
+		<bean class="converters.DonationToStringConverter"/>
+		<bean class="converters.StringToDonationConverter"/>
+		
+		<bean class="converters.GiftToStringConverter"/>
+		<bean class="converters.StringToFGiftConverter"/>
+		
+		<bean class="converters.PerfomanceToStringConverter"/>
+		<bean class="converters.StringToPerfomanceConverter"/>
+		
+		<bean class="converters.PlayListToStringConverter"/>
+		<bean class="converters.StringToPlayListConverter"/>
+		
+		<bean class="converters.TrackToStringConverter"/>
+		<bean class="converters.StringToTrackConverter"/>
+		
 		<bean class="converters.MailMessageToStringConverter"/>
 		<bean class="converters.StringToMailMessageConverter"/>
 		

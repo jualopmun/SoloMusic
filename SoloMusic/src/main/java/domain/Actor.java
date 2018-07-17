@@ -148,7 +148,8 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToMany(cascade = CascadeType.ALL)
+	@Valid
+	@ManyToMany(mappedBy="followeds")
 	public Collection<Actor> getFollowers() {
 		return this.followers;
 	}
@@ -158,6 +159,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotNull
+	@Valid
 	@ManyToMany(cascade = CascadeType.ALL)
 	public Collection<Actor> getFolloweds() {
 		return this.followeds;

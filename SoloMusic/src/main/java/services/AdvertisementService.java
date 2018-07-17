@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import domain.Advertisement;
-import repositories.AdvertisermentRepository;
+import repositories.AdvertisementRepository;
 
 @Service
 @Transactional
 public class AdvertisementService {
 	
 	@Autowired
-	private AdvertisermentRepository advertisermentRepository;
+	private AdvertisementRepository advertisermentRepository;
 	
     public AdvertisementService() {
 		super();

@@ -16,7 +16,6 @@
 	<!-- User accounts -->
 
 
-
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="user1" />
 		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
@@ -55,6 +54,7 @@
 		</property>
 		<property name="messages">
 			<list>
+				<ref bean="mailmessage4"/>
 			</list>
 		</property>
 	</bean>
@@ -67,8 +67,8 @@
 		</property>
 		<property name="messages">
 			<list>
-				
-
+				<ref bean="mailmessage1"/>
+				<ref bean="mailmessage5"/>
 			</list>
 		</property>
 	</bean>
@@ -105,6 +105,8 @@
 		</property>
 		<property name="messages">
 			<list>
+				<ref bean="mailmessage2"/>
+				<ref bean="mailmessage6"/>
 			</list>
 		</property>
 	</bean>
@@ -130,6 +132,7 @@
 		</property>
 		<property name="messages">
 			<list>
+				<ref bean="mailmessage3"/>
 			</list>
 		</property>
 	</bean>
@@ -207,7 +210,7 @@
 	
 	
 	
-		<bean id="actor2" class="domain.Actor">
+	<bean id="actor2" class="domain.Actor">
 
 		<property name="name" value="Paco" />
 		<property name="surname" value="Kila" />
@@ -323,6 +326,85 @@
 
 	</bean>
 	
+	<!-- MailMessage -->
+	
+	
+<bean id="mailmessage1" class="domain.MailMessage" >
+	<property value="20/09/2018 12:50:22" name="sent"/>
+	<property value="Hola" name="subject"/>
+	<property value="Gracias por seguirme" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor1"/>
+	<property name="recipient" ref="actor2"/>
+</bean>
+
+<bean id="mailmessage2" class="domain.MailMessage" >
+	<property value="20/09/2018 12:50:22" name="sent"/>
+	<property value="Hola" name="subject"/>
+	<property value="Gracias por seguirme" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor1"/>
+	<property name="recipient" ref="actor2"/>
+</bean>
+
+
+<bean class="domain.MailMessage" id="mailmessage3">
+
+	<property value="20/09/2018 12:55:22" name="sent"/>
+	<property value="Hey!" name="subject"/>
+	<property value="Me gusta tu música" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor2"/>
+	<property name="recipient" ref="actor1"/>
+
+</bean>
+
+<bean class="domain.MailMessage" id="mailmessage4">
+
+	<property value="20/09/2018 12:55:22" name="sent"/>
+	<property value="Hey!" name="subject"/>
+	<property value="Me gusta tu música" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor2"/>
+	<property name="recipient" ref="actor1"/>
+
+</bean>
+
+<bean class="domain.MailMessage" id="mailmessage5">
+
+	<property value="20/09/2018 13:55:22" name="sent"/>
+	<property value="Gracias" name="subject"/>
+	<property value="Gracias por los halagos!" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor1"/>	
+	<property name="recipient" ref="actor2"/>
+
+</bean>
+
+<bean class="domain.MailMessage" id="mailmessage6">
+
+	<property value="20/09/2018 13:55:22" name="sent"/>
+	<property value="Gracias" name="subject"/>
+	<property value="Gracias por los halagos!" name="body"/>
+	<property name="priority" ref="LOW"/>
+	<property name="sender" ref="actor1"/>	
+	<property name="recipient" ref="actor2"/>
+
+</bean>
+			
+	<!-- Priority -->
+	
+<bean class="domain.Priority" id="HIGH">
+	<property value="HIGH" name="value"/>
+</bean>
+
+<bean class="domain.Priority" id="NEUTRAL">
+	<property value="NEUTRAL" name="value"/>
+</bean>
+
+<bean class="domain.Priority" id="LOW">
+	<property value="LOW" name="value"/>
+</bean>
 	
 	<!-- Events -->
 
