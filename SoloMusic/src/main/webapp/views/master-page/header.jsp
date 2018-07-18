@@ -50,7 +50,11 @@
 											
 							
 							</ul></li>
-			
+
+						
+						<li><a class="fNiv" href="actor/list.do"><spring:message
+									code="master.page.user.list" /></a></li>
+
 							
 											
 					</security:authorize>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,24 @@ public class ActorService {
 		return this.actorRepository.save(arg0);
 	}
 
+	public void follow(final Actor a) {
+		final Actor principal = this.findByPrincipal();
+		principal.getFolloweds().add(a);
+		this.save(principal);
+		a.getFollowers().add(principal);
+		this.save(a);
+	}
+
+	public void unfollow(final Actor a) {
+		final Actor principal = this.findByPrincipal();
+		a.getFollowers().remove(principal);
+		this.save(a);
+		principal.getFolloweds().remove(a);
+		this.save(principal);
+	}
+
+	//Other methods
+
 	public Actor findByPrincipal() {
 		final UserAccount userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
@@ -88,8 +107,6 @@ public class ActorService {
 
 	public Actor reconstruct(final ActorRegisterForm arf, final BindingResult binding) {
 		Actor result;
-		Assert.isTrue(arf.isAcceptedTerms());
-		Assert.isTrue(arf.getPassword().equals(arf.getRepeatPassword()));
 
 		result = this.create();
 		result.getUserAccount().setUsername(arf.getUsername());
@@ -97,7 +114,13 @@ public class ActorService {
 		result.setName(arf.getName());
 		result.setSurname(arf.getSurname());
 		result.setEmail(arf.getEmail());
-		result.setBirthDate(arf.getBirthDate());
+
+		final String[] campos = arf.getBirthDate().split("/");
+		final String day = campos[0].trim();
+		final String month = campos[1].trim();
+		final String year = campos[2].trim();
+		final DateTime dt = new DateTime(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), 0, 0);
+		result.setBirthDate(dt.toDate());
 
 		this.validator.validate(result, binding);
 

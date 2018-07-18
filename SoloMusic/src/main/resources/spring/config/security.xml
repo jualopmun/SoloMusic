@@ -60,8 +60,8 @@
 		<security:intercept-url pattern="/welcome/lssi.do"
 			access="permitAll" />
 			
-		<security:intercept-url pattern="/actor/create.do"
-			access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/create.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/actor/follow.do" access="isAuthenticated()" />
 
 		
 
