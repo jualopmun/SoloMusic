@@ -19,9 +19,14 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
+		<form:hidden path="perfomances" />
+		<form:hidden path="events" />
+		<form:hidden path="playLists" />
+		<form:hidden path="donations" />
 		
 		
 		<div class="form-group" style="width: 20%;">
+		<form:errors path="*" class="has-error" />
 
 			<label> <spring:message code="userspace.title" />
 			</label><br /> <input class="form-control" value="${userspace.title}"
@@ -56,7 +61,7 @@
 	  <spring:message code="actor.save" var="actorSaveHeader"/>
 		<spring:message code="actor.cancel" var="actorCancelHeader"/>
 		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
-		<input onclick="window.location='welcome/index.do'" class="btn btn-warning" type="button" name="cancel" value="${actorCancelHeader}"/>
+		<input onclick="window.location='userspace/user/view.do'" class="btn btn-warning" type="button" name="cancel" value="${actorCancelHeader}"/>
 
 	</form:form>
 </security:authorize>

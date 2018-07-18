@@ -31,8 +31,12 @@
 									code="master.page.login" /></a></li>
 						<li><a class="fNiv" href="actor/create.do"><spring:message
 									code="master.page.signup" /></a></li>
+					   <li><a class="fNiv" href="userspace/user/list.do"><spring:message
+									code="master.page.user.userspace.list" /></a></li>
+					
 					</security:authorize>
-
+					
+					
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.id" var="id" />
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -46,6 +50,7 @@
 											
 							
 							</ul></li>
+			
 							
 											
 					</security:authorize>
@@ -61,13 +66,14 @@
 			
 						<li><a href="userspace/user/view.do"><spring:message
 									code="master.page.user.userspace" /></a></li>
+					   <li><a class="fNiv" href="userspace/user/list.do"><spring:message
+									code="master.page.user.userspace.list" /></a></li>
 									</ul>
+					  
 					</security:authorize>
-					
-					
-					
-					
+			
 				</ul>
+				
 			</div>
 		</div>
 	</nav>

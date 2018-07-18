@@ -10,15 +10,27 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:if test="${p==null}">
+
+<security:authorize access="hasRole('USER')">
+<jstl:if test="${p==null and actor.userSpace==p}">
 <spring:message code="actor.new" var="actorNew"/>
 <input onclick="window.location='userspace/user/create.do'" class="btn btn-warning" type="button"  value="${actorNew}"/>
 </jstl:if>
 
-<jstl:if test="${p!=null}">
+<jstl:if test="${p!=null and actor.userSpace==p}">
 <spring:message code="actor.edit" var="actorEdit"/>
 <input onclick="window.location='userspace/user/edit.do'" class="btn btn-warning" type="button"  value="${actorEdit}"/>
 </jstl:if>
+<br/>
+
+
+
+
+
+</security:authorize>
+<!-- Ver los videos de youtube -->
+<spring:message code="actor.video" var="actorVideo"/>
+<input onclick="window.location='event/user/view.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorVideo}"/>
 <br/>
 <br/>
 <tr>
@@ -26,10 +38,11 @@
 			<spring:message code="userspace.title" />
 		</td>
 		
+		
 			<jstl:out value="${p.title}"/>
 		<td>
 		<br/>
-			
+		<br/>	
 			
 		
 		</td>

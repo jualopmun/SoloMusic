@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,10 @@ public class UserSpaceService {
 		}
 		return m;
 	}
+
+	public List<UserSpaceService> userSpacesearch(String text) {
+		return userSpaceRepository.userSpacesearch(text);
+	}
+	
+	
 }

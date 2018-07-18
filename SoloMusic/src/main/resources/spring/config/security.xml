@@ -24,14 +24,15 @@
 		<security:intercept-url pattern="/" access="permitAll" />
 		
 		<!-- USERSPACE -->
-		
+		<security:intercept-url access="permitAll" pattern="/userspace/user/spaceview.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/view.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/edit.do"/>
-
-
+		<security:intercept-url access="permitAll" pattern="/userspace/user/list.do"/>
 		
+		<!--EVENTS -->
+		<security:intercept-url access="permitAll" pattern="/event/user/view.do"/>
 
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />

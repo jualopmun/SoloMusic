@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +10,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
 import domain.UserSpace;
 import security.LoginService;
+import services.ActorService;
 import services.UserSpaceService;
 
 @Controller
@@ -25,6 +29,8 @@ public class UserSpaceController  extends AbstractController {
 	
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private ActorService actorService;
 	
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
@@ -34,6 +40,7 @@ public class UserSpaceController  extends AbstractController {
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
 			result.addObject("p", man.getUserSpace());
+			result.addObject("actor", man);
 			
 			
 		} catch (Throwable e) {
@@ -70,16 +77,60 @@ public class UserSpaceController  extends AbstractController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/user/spaceview", method = RequestMethod.GET)
+	public ModelAndView view2(@RequestParam int q) {
+		ModelAndView result;
+		
+		try {
+			
+			result = new ModelAndView("userspace/view");
+			result.addObject("requestURI", "/user/view.do");
+			
+			result.addObject("p", userSpaceService.findOne(q));
+			
+			
+			
+		} catch (Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		
+		try {
+			
+			result = new ModelAndView("userspace/list");
+			result.addObject("requestURI","userspace/user/list.do");
+			List<UserSpace> userspace= userSpaceService.findAll();
+			result.addObject("userspace",userspace);
+			
+			
+		} catch (Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+	
+	
+	
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveCreate(@Valid  UserSpace userSpace,  BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
+			for (final ObjectError e : binding.getAllErrors())
+				System.out.println(e.toString());
+
 			result = this.createNewModelAndView(userSpace, null);
-		} else {
+		} else
 			try {
-				
-				userSpaceService.save(userSpace);
+
+				this.userSpaceService.save(userSpace);
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
@@ -87,7 +138,6 @@ public class UserSpaceController  extends AbstractController {
 				th.printStackTrace();
 				result = this.createNewModelAndView(userSpace, "actor.commit.error");
 			}
-		}
 		return result;
 	}
 	
