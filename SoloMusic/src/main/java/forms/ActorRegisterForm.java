@@ -1,15 +1,6 @@
 
 package forms;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 public class ActorRegisterForm {
 
@@ -21,51 +12,40 @@ public class ActorRegisterForm {
 	private String	name;
 	private String	surname;
 	private String	email;
-	private Date	birthDate;
+	private String	birthDate;
 	private boolean	acceptedTerms;
 
 
 	//Getters
 
-	@Size(min = 5, max = 32)
-	@Column(unique = true)
 	public String getUsername() {
 		return this.username;
 	}
 
-	@Size(min = 5, max = 32)
 	public String getPassword() {
 		return this.password;
 	}
 
-	@Size(min = 5, max = 32)
 	public String getRepeatPassword() {
 		return this.repeatPassword;
 	}
 
-	@NotBlank
 	public String getName() {
 		return this.name;
 	}
 
-	@NotBlank
 	public String getSurname() {
 		return this.surname;
 	}
 
-	@NotNull
-	@Email
 	public String getEmail() {
 		return this.email;
 	}
 
-	@NotNull
-	@Past
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return this.birthDate;
 	}
 
-	@NotNull
 	public boolean isAcceptedTerms() {
 		return this.acceptedTerms;
 	}
@@ -96,7 +76,7 @@ public class ActorRegisterForm {
 		this.email = email;
 	}
 
-	public void setBirthDate(final Date birthDate) {
+	public void setBirthDate(final String birthDate) {
 		this.birthDate = birthDate;
 	}
 

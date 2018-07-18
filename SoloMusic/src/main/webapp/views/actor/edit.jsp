@@ -25,19 +25,19 @@
 	
 	<form:form id="form" action="${requestURI}" modelAttribute="arf">
 	
-		<acme:textbox code="actor.userAccount.username" path="username"/>
+		<acme:textbox2 code="actor.userAccount.username" path="username" errors="false"/>
 		<br/>
-		<acme:password code="actor.userAccount.password" path="password"/>
+		<acme:password2 code="actor.userAccount.password" path="password" errors="false"/>
 		<br/>
-		<acme:password code="actor.repeatPassword" path="repeatPassword"/>
+		<acme:password2 code="actor.repeatPassword" path="repeatPassword" errors="false"/>
 		<br/>
-		<acme:textbox code="actor.name" path="name"/>
+		<acme:textbox2 code="actor.name" path="name" errors="false"/>
 		<br/>
-		<acme:textbox code="actor.surname" path="surname"/>
+		<acme:textbox2 code="actor.surname" path="surname" errors="false"/>
 		<br/>
-		<acme:textbox code="actor.email" path="email"/>
+		<acme:textbox2 code="actor.email" path="email" errors="false"/>
 		<br/>
-		<acme:textbox code="actor.birthDate" path="birthDate"/>
+		<acme:textbox2 code="actor.birthDate" path="birthDate" errors="false"/>
 		<br/>
 	
 		<form:label path="acceptedTerms" >
@@ -45,7 +45,6 @@
 		</form:label>
 		<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
 		<form:checkbox path="acceptedTerms" required="required"/>
-		<form:errors path="acceptedTerms" cssClass="error" />
 		<br/>
 		
 		<input type="submit" name="save" value="${save}"/>&nbsp;

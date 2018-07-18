@@ -24,6 +24,11 @@
  
 <%@ attribute name="path" required="true" rtexprvalue="true" %>
 <%@ attribute name="code" required="true" rtexprvalue="true" %>
+<%@ attribute name="errors" required="false" %>
+
+<jstl:if test="${errors == null}">
+	<jstl:set var="errorV" value="true" />
+</jstl:if>
 
 <%-- Definition --%>
 
@@ -32,5 +37,8 @@
 		<spring:message code="${code}" />
 	</form:label>
 	<form:password class="form-control" path="${path}"/>
-	<form:errors path="${path}" cssClass="error" />
+	
+	<jstl:if test="${errorV eq true}">
+		<form:errors path="${path}" cssClass="error" />
+	</jstl:if>
 </div>

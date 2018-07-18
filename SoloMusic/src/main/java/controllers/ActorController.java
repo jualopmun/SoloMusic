@@ -1,15 +1,17 @@
 
 package controllers;
 
-import javax.validation.Valid;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.UserAccountRepository;
 import services.ActorService;
 import domain.Actor;
 import forms.ActorRegisterForm;
@@ -21,8 +23,25 @@ public class ActorController extends AbstractController {
 	//Services
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 
+	@Autowired
+	private UserAccountRepository	uar;
+
+
+	//Listing
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		final ModelAndView result;
+		final Collection<Actor> actors = this.actorService.findAll();
+
+		result = new ModelAndView("actor/list");
+		result.addObject("actors", actors);
+		result.addObject("requestURI", "actor/list.do");
+
+		return result;
+	}
 
 	//Creation
 
@@ -37,13 +56,27 @@ public class ActorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final ActorRegisterForm arf, final BindingResult binding) {
+	public ModelAndView save(final ActorRegisterForm arf, final BindingResult binding) {
 		ModelAndView result;
 
-		if (!arf.isAcceptedTerms())
-			binding.rejectValue("acceptedTerms", "acme.accepted.terms");
 		if (binding.hasErrors()) {
-			System.out.println(binding.getAllErrors());
+			if (this.uar.findActorByUsername(arf.getUsername()) != null)
+				binding.rejectValue("username", "acme.username.unique");
+			if (arf.getUsername().length() < 5 || arf.getUsername().length() > 32)
+				binding.rejectValue("username", "acme.password.size");
+			if (arf.getPassword().length() < 5 || arf.getPassword().length() > 32)
+				binding.rejectValue("password", "acme.password.size");
+			if (!arf.getRepeatPassword().equals(arf.getPassword()))
+				binding.rejectValue("repeatPassword", "acme.password.repeat");
+			if (arf.getName().isEmpty())
+				binding.rejectValue("name", "org.hibernate.validator.constraints.NotBlank.message");
+			if (arf.getSurname().isEmpty())
+				binding.rejectValue("surname", "org.hibernate.validator.constraints.NotBlank.message");
+			if (arf.getEmail().isEmpty())
+				binding.rejectValue("email", "javax.validator.constraints.email.message");
+			if (arf.getBirthDate().isEmpty())
+				binding.rejectValue("birthDate", "acme.date.invalid");
+			System.out.println(binding.getAllErrors().toString());
 			arf.setAcceptedTerms(false);
 			result = this.createEditModelAndView(arf, "actor.commit.error");
 		} else
@@ -58,6 +91,21 @@ public class ActorController extends AbstractController {
 			}
 		return result;
 	}
+
+	//Follow other actors
+
+	@RequestMapping(value = "/follow", method = RequestMethod.GET)
+	public ModelAndView follow(@RequestParam final Integer varId) {
+		final ModelAndView result;
+
+		final Actor actor = this.actorService.findOne(varId);
+
+		this.actorService.follow(actor);
+		result = new ModelAndView("redirect:list.do");
+
+		return result;
+	}
+
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final ActorRegisterForm arf) {
