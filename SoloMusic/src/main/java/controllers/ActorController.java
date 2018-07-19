@@ -101,11 +101,22 @@ public class ActorController extends AbstractController {
 		final Actor actor = this.actorService.findOne(varId);
 
 		this.actorService.follow(actor);
-		result = new ModelAndView("redirect:list.do");
+		result = new ModelAndView("redirect:/userspace/user/spaceview.do?varId=" + actor.getUserSpace().getId());
 
 		return result;
 	}
 
+	@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
+	public ModelAndView unfollow(@RequestParam final Integer varId) {
+		final ModelAndView result;
+
+		final Actor actor = this.actorService.findOne(varId);
+
+		this.actorService.unfollow(actor);
+		result = new ModelAndView("redirect:/userspace/user/spaceview.do?varId=" + actor.getUserSpace().getId());
+
+		return result;
+	}
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final ActorRegisterForm arf) {

@@ -1,46 +1,59 @@
+
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Advertisement;
 import repositories.AdvertisementRepository;
+import domain.Actor;
+import domain.Advertisement;
 
 @Service
 @Transactional
 public class AdvertisementService {
-	
+
 	@Autowired
-	private AdvertisementRepository advertisermentRepository;
-	
-    public AdvertisementService() {
+	private AdvertisementRepository	advertisermentRepository;
+
+	@Autowired
+	private ActorService			actorService;
+
+
+	public AdvertisementService() {
 		super();
 	}
 
+	public Advertisement create() {
+		final Advertisement ad = new Advertisement();
 
-	public void delete(Advertisement arg0) {
-		advertisermentRepository.delete(arg0);
+		ad.setActorOwener(this.actorService.findByPrincipal());
+		ad.setActorRegisters(new ArrayList<Actor>());
+
+		return ad;
 	}
 
-	public boolean exists(Integer arg0) {
-		return advertisermentRepository.exists(arg0);
+	public void delete(final Advertisement arg0) {
+		this.advertisermentRepository.delete(arg0);
+	}
+
+	public boolean exists(final Integer arg0) {
+		return this.advertisermentRepository.exists(arg0);
 	}
 
 	public List<Advertisement> findAll() {
-		return advertisermentRepository.findAll();
+		return this.advertisermentRepository.findAll();
 	}
 
-	public Advertisement findOne(Integer arg0) {
-		return advertisermentRepository.findOne(arg0);
+	public Advertisement findOne(final Integer arg0) {
+		return this.advertisermentRepository.findOne(arg0);
 	}
 
-	public <S extends Advertisement> S save(S arg0) {
-		return advertisermentRepository.save(arg0);
+	public <S extends Advertisement> S save(final S arg0) {
+		return this.advertisermentRepository.save(arg0);
 	}
-	
-	
 
 }

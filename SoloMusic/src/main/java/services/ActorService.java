@@ -136,4 +136,12 @@ public class ActorService {
 		final UserAccount newOne = this.userAccountRepository.save(old);
 		a.setUserAccount(newOne);
 	}
+
+	public Actor findByUserAccountId(final int id) {
+		return this.actorRepository.findByUserAccountId(id);
+	}
+
+	public Actor findByUserSpaceId(final int id) {
+		return this.actorRepository.findByUserSpaceId(id);
+	}
 }

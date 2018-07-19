@@ -89,8 +89,30 @@
 	</tr>
 	
 	<tr>
-	
+		<td>
+			<jstl:choose>
+				<jstl:when test="${followed eq false}">
+					<spring:url var="followUrl" value="/actor/follow.do">
+						<spring:param name="varId" value="${p.id}" />
+					</spring:url>
+					<spring:message code="userspace.follow" var="followMsg"/>
+				</jstl:when>
+				
+				<jstl:otherwise>
+					<spring:url var="followUrl" value="/actor/unfollow.do">
+						<spring:param name="varId" value="${p.id}" />
+					</spring:url>
+					<spring:message code="userspace.unfollow" var="followMsg"/>
+				</jstl:otherwise>
+			</jstl:choose>
 
+			<a href="${followUrl}"><jstl:out value="${followMsg}"/></a>
+		</td>
+		<td>
+		<br/>
 
-
-
+		
+		<br />
+		</td>
+		
+	</tr>
