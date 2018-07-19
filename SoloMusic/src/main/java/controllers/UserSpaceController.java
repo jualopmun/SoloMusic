@@ -37,12 +37,15 @@ public class UserSpaceController extends AbstractController {
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
-		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		
 		try {
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
+			if(LoginService.isAnyAuthenticated()) {
+			final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			result.addObject("p", man.getUserSpace());
 			result.addObject("actor", man);
+			}
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -83,14 +86,17 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		try {
+			result = new ModelAndView("userspace/view");
+			if(LoginService.isAnyAuthenticated()) {
 			final Actor a = this.actorService.findByUserSpaceId(q);
 			final boolean followed = a.getFollowers().contains(this.actorService.findByPrincipal());
-
-			result = new ModelAndView("userspace/view");
+			result.addObject("followed", followed);
+			}
+			
 			result.addObject("requestURI", "/user/view.do");
 
 			result.addObject("p", this.userSpaceService.findOne(q));
-			result.addObject("followed", followed);
+			
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

@@ -9,6 +9,10 @@
 		<put-attribute name="body" value="/views/event/view.jsp" />
 	</definition>
 	
+	<definition name="event/create" extends="master.page">
+		<put-attribute name="title" value="Crear eventos" />
+		<put-attribute name="body" value="/views/event/create.jsp" />
+	</definition>
 	
 
 </tiles-definitions>

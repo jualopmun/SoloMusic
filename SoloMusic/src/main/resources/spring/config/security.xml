@@ -33,7 +33,11 @@
 		
 		<!--EVENTS -->
 		<security:intercept-url access="permitAll" pattern="/event/user/view.do"/>
-
+		<security:intercept-url access="hasRole('USER')" pattern="/event/user/create.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/event/user/save.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/event/user/edit.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/event/user/delete.do"/>
+		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />
 		<security:intercept-url pattern="/images/**"
