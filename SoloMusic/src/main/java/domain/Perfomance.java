@@ -30,7 +30,6 @@ public class Perfomance extends DomainEntity {
 	}
 	
 	@NotBlank
-	@URL
 	public String getVideoUrl() {
 		return videoUrl;
 	}

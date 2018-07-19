@@ -28,9 +28,15 @@
 
 
 </security:authorize>
-<!-- Ver los videos de youtube -->
+<!-- Ver los eventos -->
 <spring:message code="actor.video" var="actorVideo"/>
 <input onclick="window.location='event/user/view.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorVideo}"/>
+<br/>
+<br/>
+<!-- Ver las actuaciones -->
+
+<spring:message code="actor.perfomance" var="actorPerfomance"/>
+<input onclick="window.location='perfomance/user/view.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorPerfomance}"/>
 <br/>
 <br/>
 <tr>

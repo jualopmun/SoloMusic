@@ -431,7 +431,7 @@
 	<bean id="perfomance1" class="domain.Perfomance">
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
-		<property name="videoUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="videoUrl" value="8m31lxggdHg" />
 
 
 	</bean>
@@ -439,7 +439,7 @@
 	<bean id="perfomance2" class="domain.Perfomance">
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
-		<property name="videoUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
+		<property name="videoUrl" value="8m31lxggdHg" />
 
 
 	</bean>

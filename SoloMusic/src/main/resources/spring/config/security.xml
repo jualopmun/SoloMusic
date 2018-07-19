@@ -38,6 +38,15 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/edit.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/delete.do"/>
 		
+		<!-- PERFOMANCE -->
+		
+		<security:intercept-url access="permitAll" pattern="/perfomance/user/view.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/create.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/save.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/edit.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/delete.do"/>
+		
+		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />
 		<security:intercept-url pattern="/images/**"

@@ -16,6 +16,7 @@
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/userspace/tiles.xml</value>
 		<value>/views/event/tiles.xml</value>
+		<value>/views/perfomance/tiles.xml</value>
     	
     </util:list>
 
