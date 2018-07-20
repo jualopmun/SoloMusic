@@ -25,7 +25,6 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav">
-					
 					<security:authorize access="isAnonymous()">
 						<li><a class="fNiv" href="security/login.do"><spring:message
 									code="master.page.login" /></a></li>
@@ -33,9 +32,7 @@
 									code="master.page.signup" /></a></li>
 					   <li><a class="fNiv" href="userspace/user/list.do"><spring:message
 									code="master.page.user.userspace.list" /></a></li>
-					
 					</security:authorize>
-					
 					
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.id" var="id" />
@@ -44,40 +41,26 @@
 							aria-expanded="false"><security:authentication
 									property="principal.username" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								
 								<li><a href="j_spring_security_logout"><spring:message
 											code="master.page.logout" /> </a></li>
-											
-							
-							</ul></li>
-
-						
-						<li><a class="fNiv" href="actor/list.do"><spring:message
-									code="master.page.user.list" /></a></li>
-
-							
-											
+							</ul>
+						</li>
 					</security:authorize>
 					
 					<security:authorize access="hasRole('USER')">
-					
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"><spring:message
 									code="master.page.userspace" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
-					
-			
-						<li><a href="userspace/user/view.do"><spring:message
+								<li><a href="userspace/user/view.do"><spring:message
 									code="master.page.user.userspace" /></a></li>
-					   <li><a class="fNiv" href="userspace/user/list.do"><spring:message
+					   			<li><a class="fNiv" href="userspace/user/list.do"><spring:message
 									code="master.page.user.userspace.list" /></a></li>
-									</ul>
-					  
+							</ul>
+					  	</li>
 					</security:authorize>
-			
 				</ul>
-				
 			</div>
 		</div>
 	</nav>

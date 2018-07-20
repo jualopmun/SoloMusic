@@ -194,13 +194,11 @@
 		</property>
 		<property name="followers">
 			<list>
-				<ref bean="actor2" />
 			</list>
 		</property>
 		
 		<property name="followeds">
 			<list>
-				<ref bean="actor2" />
 			</list>
 		</property>
 		
@@ -239,13 +237,11 @@
 		</property>
 		<property name="followers">
 			<list>
-				<ref bean="actor1" />
 			</list>
 		</property>
 		
 		<property name="followeds">
 			<list>
-				<ref bean="actor1" />
 			</list>
 		</property>
 		

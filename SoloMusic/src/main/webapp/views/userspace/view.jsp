@@ -23,16 +23,16 @@
 </jstl:if>
 <br/>
 
-
-
-
-
 </security:authorize>
+
+
 <!-- Ver los eventos -->
 <spring:message code="actor.video" var="actorVideo"/>
 <input onclick="window.location='event/user/view.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorVideo}"/>
 <br/>
 <br/>
+
+
 <!-- Ver las actuaciones -->
 
 <spring:message code="actor.perfomance" var="actorPerfomance"/>
@@ -44,13 +44,10 @@
 			<spring:message code="userspace.title" />
 		</td>
 		
-		
 			<jstl:out value="${p.title}"/>
 		<td>
 		<br/>
 		<br/>	
-			
-		
 		</td>
 	</tr>
 	
@@ -61,9 +58,6 @@
 		<jstl:out value="${p.description}"/>
 		<td>
 		<br/>	
-			
-			
-		
 		</td>
 	</tr>
 	
@@ -74,9 +68,6 @@
 		<img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${p.profileImg}"/>">
 		<td>
 		<br/>
-			
-			
-		
 		</td>
 	</tr>
 
@@ -87,38 +78,36 @@
 		</td>
 		<td>
 		<br/>
-
-		
 		<br />
 		</td>
-		
 	</tr>
-	
-	<tr>
-		<td>
-			<jstl:choose>
-				<jstl:when test="${followed eq false}">
-					<spring:url var="followUrl" value="/actor/follow.do">
-						<spring:param name="varId" value="${p.id}" />
-					</spring:url>
-					<spring:message code="userspace.follow" var="followMsg"/>
-				</jstl:when>
-				
-				<jstl:otherwise>
-					<spring:url var="followUrl" value="/actor/unfollow.do">
-						<spring:param name="varId" value="${p.id}" />
-					</spring:url>
-					<spring:message code="userspace.unfollow" var="followMsg"/>
-				</jstl:otherwise>
-			</jstl:choose>
 
-			<a href="${followUrl}"><jstl:out value="${followMsg}"/></a>
-		</td>
-		<td>
-		<br/>
-
+	<security:authorize access="hasRole('USER')">
+			<jstl:if test="${isPrincipal eq false}">
+			<tr>
+				<td>
+					<jstl:choose>
+						<jstl:when test="${followed eq false}">
+							<spring:url var="followUrl" value="/actor/follow.do">
+								<spring:param name="q" value="${a.id}" />
+							</spring:url>
+							<spring:message code="userspace.follow" var="followMsg"/>
+						</jstl:when>
+						
+						<jstl:otherwise>
+							<spring:url var="followUrl" value="/actor/unfollow.do">
+								<spring:param name="q" value="${a.id}" />
+							</spring:url>
+							<spring:message code="userspace.unfollow" var="followMsg"/>
+						</jstl:otherwise>
+					</jstl:choose>
 		
-		<br />
-		</td>
-		
-	</tr>
+					<input onclick="window.location='${followUrl}'" class="btn btn-warning" type="button"  value="${followMsg}"/>
+				</td>
+				<td>
+					<br/>
+					<br />
+				</td>
+			</tr>
+		</jstl:if>
+	</security:authorize>

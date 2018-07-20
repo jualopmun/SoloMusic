@@ -95,25 +95,33 @@ public class ActorController extends AbstractController {
 	//Follow other actors
 
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	public ModelAndView follow(@RequestParam final Integer varId) {
-		final ModelAndView result;
+	public ModelAndView follow(@RequestParam final Integer q) {
+		ModelAndView result;
+		final Actor actor = this.actorService.findOne(q);
 
-		final Actor actor = this.actorService.findOne(varId);
-
-		this.actorService.follow(actor);
-		result = new ModelAndView("redirect:/userspace/user/spaceview.do?varId=" + actor.getUserSpace().getId());
+		try {
+			this.actorService.follow(actor);
+			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
+		} catch (final Throwable oops) {
+			System.out.println(oops.toString());
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
-	public ModelAndView unfollow(@RequestParam final Integer varId) {
-		final ModelAndView result;
+	public ModelAndView unfollow(@RequestParam final Integer q) {
+		ModelAndView result;
+		final Actor actor = this.actorService.findOne(q);
 
-		final Actor actor = this.actorService.findOne(varId);
-
-		this.actorService.unfollow(actor);
-		result = new ModelAndView("redirect:/userspace/user/spaceview.do?varId=" + actor.getUserSpace().getId());
+		try {
+			this.actorService.unfollow(actor);
+			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
+		} catch (final Throwable oops) {
+			System.out.println(oops.toString());
+			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
+		}
 
 		return result;
 	}
