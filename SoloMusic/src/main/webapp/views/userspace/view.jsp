@@ -25,17 +25,18 @@
 	</jstl:if>
 	<br />
 
-
-
-
-
 </security:authorize>
+
+
 <!-- Ver los eventos -->
 <spring:message code="actor.video" var="actorVideo" />
 <input onclick="window.location='event/user/view.do?p=${p.id}'"
 	class="btn btn-warning" type="button" value="${actorVideo}" />
 <br />
 <br />
+
+
+
 <!-- Ver las actuaciones -->
 
 <spring:message code="actor.perfomance" var="actorPerfomance" />
@@ -71,33 +72,43 @@
 
 </tr>
 
-<tr>
-	<td><jstl:choose>
-			<jstl:when test="${followed eq false}">
-				<spring:url var="followUrl" value="/actor/follow.do">
-					<spring:param name="varId" value="${p.id}" />
-				</spring:url>
-				<spring:message code="userspace.follow" var="followMsg" />
-			</jstl:when>
 
-			<jstl:otherwise>
-				<spring:url var="followUrl" value="/actor/unfollow.do">
-					<spring:param name="varId" value="${p.id}" />
-				</spring:url>
-				<spring:message code="userspace.unfollow" var="followMsg" />
-			</jstl:otherwise>
-		</jstl:choose> <a href="${followUrl}"><jstl:out value="${followMsg}" /></a></td>
-	<td><br /> <br /></td>
-
-</tr>
 <br />
 <br />
+
+<security:authorize access="hasRole('USER')">
+			<jstl:if test="${isPrincipal eq false}">
+			<tr>
+				<td>
+					<jstl:choose>
+						<jstl:when test="${followed eq false}">
+							<spring:url var="followUrl" value="/actor/follow.do">
+								<spring:param name="q" value="${a.id}" />
+							</spring:url>
+							<spring:message code="userspace.follow" var="followMsg"/>
+						</jstl:when>
+						
+						<jstl:otherwise>
+							<spring:url var="followUrl" value="/actor/unfollow.do">
+								<spring:param name="q" value="${a.id}" />
+							</spring:url>
+							<spring:message code="userspace.unfollow" var="followMsg"/>
+						</jstl:otherwise>
+					</jstl:choose>
+		
+					<input onclick="window.location='${followUrl}'" class="btn btn-warning" type="button"  value="${followMsg}"/>
+				</td>
+				<td>
+					<br/>
+					<br />
+				</td>
+			</tr>
+		</jstl:if>
+	</security:authorize>
 
 <h1>
 	<spring:message code="donantions.titulo" />
 </h1>
-<br />
-<br />
 
 <!-- Crear donaciones -->
 <security:authorize access="hasRole('USER')">
@@ -119,26 +130,29 @@
 		<jstl:out value="${dona.title}" />
 		<td><br />
 	<tr>
+		
 		<td><spring:message code="dona.description" /></td>
 		<jstl:out value="${dona.description}" />
 		<td><br />
 	<tr>
 		<td><spring:message code="dona.price" /></td>
-		<jstl:out value="${dona.price}" /> Euros
-		 <!-- Editar donacion o borrarlo -->
+		<jstl:out value="${dona.price}" />Euros
+		<!-- Editar donacion o borrarlo -->
 		<td><br /> <br /> <security:authorize access="hasRole('USER')">
 				<jstl:if test="${actor.userSpace==p}">
 					<spring:message code="actor.edit" var="actorEdit" />
-					<input onclick="window.location='donation/user/edit.do?q=${dona.id}'"
+					<input
+						onclick="window.location='donation/user/edit.do?q=${dona.id}'"
 						class="btn btn-warning" type="button" value="${actorEdit}" />
 
 					<br />
 					<br />
 				</jstl:if>
-				
+
 				<jstl:if test="${actor.userSpace==p}">
 					<spring:message code="actor.delete" var="actorDelete" />
-					<input onclick="window.location='donation/user/delete.do?q=${dona.id}'"
+					<input
+						onclick="window.location='donation/user/delete.do?q=${dona.id}'"
 						class="btn btn-warning" type="button" value="${actorDelete}" />
 
 					<br />
@@ -148,4 +162,7 @@
 				<br />
 			</security:authorize>
 </jstl:forEach>
+
+
+
 

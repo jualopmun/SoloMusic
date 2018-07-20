@@ -37,14 +37,14 @@ public class UserSpaceController extends AbstractController {
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
-		
+
 		try {
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
-			if(LoginService.isAnyAuthenticated()) {
-			final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-			result.addObject("p", man.getUserSpace());
-			result.addObject("actor", man);
+			if (LoginService.isAnyAuthenticated()) {
+				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+				result.addObject("p", man.getUserSpace());
+				result.addObject("actor", man);
 			}
 
 		} catch (final Throwable e) {
@@ -84,19 +84,23 @@ public class UserSpaceController extends AbstractController {
 	@RequestMapping(value = "/user/spaceview", method = RequestMethod.GET)
 	public ModelAndView view2(@RequestParam final int q) {
 		ModelAndView result;
+		Actor a;
 
 		try {
 			result = new ModelAndView("userspace/view");
-			if(LoginService.isAnyAuthenticated()) {
-			final Actor a = this.actorService.findByUserSpaceId(q);
-			final boolean followed = a.getFollowers().contains(this.actorService.findByPrincipal());
-			result.addObject("followed", followed);
+
+			if (LoginService.isAnyAuthenticated()) {
+				a = this.actorService.findByUserSpaceId(q);
+				final boolean followed = a.getFollowers().contains(this.actorService.findByPrincipal());
+				final boolean isPrincipal = a.getId() == this.actorService.findByPrincipal().getId();
+				result.addObject("followed", followed);
+				result.addObject("isPrincipal", isPrincipal);
+				result.addObject("a", a);
 			}
-			
+
 			result.addObject("requestURI", "/user/view.do");
 
 			result.addObject("p", this.userSpaceService.findOne(q));
-			
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
