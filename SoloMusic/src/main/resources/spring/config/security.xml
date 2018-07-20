@@ -46,6 +46,14 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/edit.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/delete.do"/>
 		
+		<!--DONATIONS -->
+		
+		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/create.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/save.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/edit.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/delete.do"/>
+		
+		
 		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />

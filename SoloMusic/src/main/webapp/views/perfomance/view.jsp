@@ -102,14 +102,15 @@ for (var i=0; i<videos.length; i++) {
     var iframe = document.createElement("iframe");
     iframe.setAttribute("src",
           "https://www.youtube.com/embed/" + this.id
-        + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1"); 
+        + "?&fs=1&autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1"); 
     
     // The height and width of the iFrame should be the same as parent
     iframe.style.width  = this.style.width;
     iframe.style.height = this.style.height;
-       
+    iframe.add=true
     // Replace the YouTube thumbnail with YouTube HTML5 Player
     this.parentNode.replaceChild(iframe, this);
+    
 
   }; 
 }

@@ -42,7 +42,7 @@ public class Donation extends DomainEntity{
 		return price;
 	}
 	
-	@NotNull
+	
 	@OneToOne
 	public Gift getOffersGift() {
 		return offersGift;

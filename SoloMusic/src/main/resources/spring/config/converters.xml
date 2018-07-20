@@ -20,7 +20,7 @@
 	<util:list id="converters">
 		
 		<!--<bean class="converters.AuthorityToStringConverter" />-->
-		<bean class="converters.FolderToStringConverter"/>
+		<!-- <bean class="converters.FolderToStringConverter"/> -->
 		<bean class="converters.StringToFolderConverter"/>
 		
 		<bean class="converters.AdvertisementToStringConverter"/>

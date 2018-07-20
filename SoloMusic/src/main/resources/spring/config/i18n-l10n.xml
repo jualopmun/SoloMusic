@@ -17,6 +17,7 @@
 		<value>/views/userspace/messages</value>
 	    <value>/views/event/messages</value>
 	    <value>/views/perfomance/messages</value>
+	    <value>/views/donation/messages</value>
 		
 	
     </util:list>
