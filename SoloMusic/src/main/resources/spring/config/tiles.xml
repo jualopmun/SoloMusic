@@ -18,7 +18,8 @@
 		<value>/views/event/tiles.xml</value>
 		<value>/views/perfomance/tiles.xml</value>
 		<value>/views/donation/tiles.xml</value>
-    	
+    	<value>/views/playlist/tiles.xml</value>
+    	<value>/views/track/tiles.xml</value>
     </util:list>
 
 

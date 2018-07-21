@@ -18,6 +18,8 @@
 	    <value>/views/event/messages</value>
 	    <value>/views/perfomance/messages</value>
 	    <value>/views/donation/messages</value>
+	    <value>/views/playlist/messages</value>
+	    <value>/views/track/messages</value>
 		
 	
     </util:list>

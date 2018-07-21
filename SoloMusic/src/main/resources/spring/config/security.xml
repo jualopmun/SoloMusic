@@ -55,6 +55,15 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/delete.do"/>
 		
 		
+		<!-- PLAYLIST -->
+		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/create.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/save.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/delete.do"/>
+		
+		<!-- TRACK -->
+		<security:intercept-url access="hasRole('USER')" pattern="/track/user/create.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/track/user/save.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/track/user/delete.do"/>
 
 		<!-- ACTOR (USER) -->
 		
