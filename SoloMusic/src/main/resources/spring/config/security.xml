@@ -46,14 +46,12 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/edit.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/perfomance/user/delete.do"/>
 		
-
 		<!--DONATIONS -->
 		
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/edit.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/delete.do"/>
-		
 		
 		<!-- PLAYLIST -->
 		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/create.do"/>
@@ -70,6 +68,7 @@
 		<security:intercept-url pattern="/actor/create.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/actor/follow.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/actor/unfollow.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/actor/list.do" access="hasRole('USER')" />
 
 		
 		<security:intercept-url pattern="/favicon.ico"

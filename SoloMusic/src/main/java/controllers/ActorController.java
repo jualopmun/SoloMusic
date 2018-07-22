@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,14 @@ public class ActorController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final String q) {
 		final ModelAndView result;
-		final Collection<Actor> actors = this.actorService.findAll();
+		final Actor principal = this.actorService.findByPrincipal();
+		Collection<Actor> actors = new ArrayList<Actor>();
+		if (q == "followers")
+			actors = principal.getFollowers();
+		else
+			actors = principal.getFolloweds();
 
 		result = new ModelAndView("actor/list");
 		result.addObject("actors", actors);

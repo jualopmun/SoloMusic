@@ -17,8 +17,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
+<div class="front-page">
+	<img src="images/logo.jpg" alt="SoloMusic Co., Inc." style="width:28em;"/>
+	<h1 style="font-weight:bold;"><spring:message code="welcome.greeting"/></h1>
+</div>
 
-
-
-<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+<%-- <p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
+<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> --%>

@@ -41,12 +41,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- Ajax (Jquery) link -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <!-- Custom css -->
 <link rel="stylesheet" href="styles/acme.css">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
+
+<!-- Ajax (Jquery) link -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -66,16 +66,17 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
+	<br/>
+	
 	<div>
-		<h1>
-			<tiles:insertAttribute name="title" />
-		</h1>
 		<tiles:insertAttribute name="body" />
 		<jstl:if test="${message != null}">
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
 		</jstl:if>
 	</div>
+	<br/>
+	
 	<div>
 		<tiles:insertAttribute name="footer" />
 	</div>

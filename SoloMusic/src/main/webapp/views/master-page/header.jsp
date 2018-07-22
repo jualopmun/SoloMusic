@@ -15,13 +15,8 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<div>
-	<img src="images/logo.jpg" alt="SoloMusic Co., Inc." />
-</div>
-
-
-<div style="width: 60%">
-	<nav class="navbar navbar-default" style="margin-bottom: 0px">
+<div style="width: 100%">
+	<nav class="navbar navbar-default navbar-expand-xl" style="margin-bottom: 0px">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav">
@@ -41,6 +36,10 @@
 							aria-expanded="false"><security:authentication
 									property="principal.username" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li><a class="fNiv" href="actor/list.do?q=followers"><spring:message
+									code="master.page.user.followers" /></a></li>
+								<li><a class="fNiv" href="actor/list.do?q=followeds"><spring:message
+									code="master.page.user.followeds" /></a></li>
 								<li><a href="j_spring_security_logout"><spring:message
 											code="master.page.logout" /> </a></li>
 							</ul>
@@ -62,11 +61,19 @@
 					</security:authorize>
 				</ul>
 			</div>
+			
+			<div class="navbar-header">
+				<ul class="nav navbar-nav">
+					<security:authorize access="permitAll">
+						<li class="fNiv"><a href="welcome/index.do">
+							<img src="images/home-icon-silhouette.png"/></a>
+					</security:authorize>
+				</ul>
+			</div>
 		</div>
 	</nav>
-	<a href="?language=en"> <img src="images/flag_en.png" />
-	</a> <a href="?language=es"> <img src="images/flag_es.png" />
-	</a>
+	<a href="?language=en"> <img src="images/flag_en.png" /></a>
+	<a href="?language=es"> <img src="images/flag_es.png" /></a>
 </div>
 
 
