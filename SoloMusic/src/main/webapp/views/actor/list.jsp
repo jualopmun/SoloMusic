@@ -7,5 +7,5 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<acme:list requestURI="actor/list.do" list="actors" pagesize="10"
+<acme:list requestURI="actor/list.do" list="actors" pagesize="10" 
 	hidden_fields="birthDate,isPremium,ownerAdvertisement,registersAdvertisement,userSpace,folders,userAccount,followers,followeds"/>
