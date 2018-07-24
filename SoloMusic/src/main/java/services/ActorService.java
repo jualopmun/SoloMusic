@@ -106,7 +106,7 @@ public class ActorService {
 	}
 
 	public Actor reconstruct(final ActorRegisterForm arf, final BindingResult binding) {
-		Actor result;
+		Actor result = null;
 
 		result = this.create();
 		result.getUserAccount().setUsername(arf.getUsername());

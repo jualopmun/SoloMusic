@@ -1,8 +1,9 @@
 
 package forms;
 
+import domain.DomainEntity;
 
-public class ActorRegisterForm {
+public class ActorRegisterForm extends DomainEntity {
 
 	//Attributes
 

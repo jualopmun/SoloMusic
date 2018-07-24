@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -21,114 +22,101 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Advertisement extends DomainEntity {
-	
-	
+
 	//Atributos
-	private String title;
-	private String description;
-	private Date startDate;
-	private Date endDate;
-	private String locationUrl;
-	private String mainImg;
-	private Double price;
-	private Actor actorOwener;
-	private Collection<Actor> actorRegisters;
-	
-	
+
+	private String				title;
+	private String				description;
+	private Date				startDate;
+	private Date				endDate;
+	private String				locationUrl;
+	private String				mainImg;
+	private Double				price;
+	private Actor				actorOwener;
+	private Collection<Actor>	actorRegisters;
+
+
 	//Getters and setters
-	
+
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
-	
-	
+
 	@NotBlank
-	@Length(max=300)
+	@Length(max = 300)
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
-	
-	
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	public Date getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	public Date getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
-	
-	
-	
+
 	@URL
 	public String getLocationUrl() {
-		return locationUrl;
+		return this.locationUrl;
 	}
-	
-	
+
 	//De momento no pongo @URL ya que es una subida de imagen
 	public String getMainImg() {
-		return mainImg;
+		return this.mainImg;
 	}
-	
-	@Range(min=0)
+
+	@Range(min = 0)
 	public Double getPrice() {
-		return price;
+		return this.price;
 	}
-	
+
 	@NotNull
 	@ManyToOne
 	public Actor getActorOwener() {
-		return actorOwener;
+		return this.actorOwener;
 	}
-	
+
 	@NotNull
 	@ManyToMany
 	public Collection<Actor> getActorRegisters() {
-		return actorRegisters;
+		return this.actorRegisters;
 	}
-	
-	
-	
-	
-	public void setActorOwener(Actor actorOwener) {
+
+	public void setActorOwener(final Actor actorOwener) {
 		this.actorOwener = actorOwener;
 	}
 
-	
-
-	public void setActorRegisters(Collection<Actor> actorRegisters) {
+	public void setActorRegisters(final Collection<Actor> actorRegisters) {
 		this.actorRegisters = actorRegisters;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
 	}
-	public void setLocationUrl(String locationUrl) {
+	public void setLocationUrl(final String locationUrl) {
 		this.locationUrl = locationUrl;
 	}
-	public void setMainImg(String mainImg) {
+	public void setMainImg(final String mainImg) {
 		this.mainImg = mainImg;
 	}
-	public void setPrice(Double price) {
+	public void setPrice(final Double price) {
 		this.price = price;
 	}
-	
-	
-	
 
 }

@@ -36,10 +36,10 @@ public class AdvertisementController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		final Collection<Advertisement> ads = this.advertisementService.findAll();
+		final Collection<Advertisement> advertisements = this.advertisementService.findAll();
 
 		result = new ModelAndView("advertisement/list");
-		result.addObject("ads", ads);
+		result.addObject("advertisements", advertisements);
 		result.addObject("requestURI", "advertisement/list.do");
 
 		return result;

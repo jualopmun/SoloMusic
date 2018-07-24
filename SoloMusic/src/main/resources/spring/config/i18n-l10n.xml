@@ -20,8 +20,7 @@
 	    <value>/views/donation/messages</value>
 	    <value>/views/playlist/messages</value>
 	    <value>/views/track/messages</value>
-		
-	
+		<value>/views/advertisement/messages</value>
     </util:list>
 
 
