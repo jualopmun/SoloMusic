@@ -30,6 +30,7 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/edit.do"/>
 		<security:intercept-url access="permitAll" pattern="/userspace/user/list.do"/>
+		<security:intercept-url access="permitAll" pattern="/userspace/user/search.do"/>
 		
 		<!--EVENTS -->
 		<security:intercept-url access="permitAll" pattern="/event/user/view.do"/>

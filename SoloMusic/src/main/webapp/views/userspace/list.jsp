@@ -17,11 +17,12 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-
-
-
-
-
+ <div>
+ <form:form action="userspace/user/search.do">	
+  	 <input type="text" id="searchTerm" name="searchTerm"/>
+  	 <acme:submit name="search" code="userspace.search"/>
+  </form:form>
+</div>
 
 <display:table  keepStatus="true" name="userspace"
 	requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">

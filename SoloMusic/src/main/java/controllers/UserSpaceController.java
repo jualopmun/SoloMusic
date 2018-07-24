@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
+import domain.UserSpace;
 import security.LoginService;
 import services.ActorService;
 import services.UserSpaceService;
-import domain.Actor;
-import domain.UserSpace;
 
 @Controller
 @RequestMapping("userspace")
@@ -149,6 +151,25 @@ public class UserSpaceController extends AbstractController {
 			}
 		return result;
 	}
+	
+	
+	@RequestMapping(value = "/user/search", method = RequestMethod.POST, params = "search")
+	public ModelAndView search(@RequestParam("searchTerm") String searchTerm) {
+		ModelAndView result;
+		List<UserSpace> userSpacesearch = new ArrayList<UserSpace>();
+
+			try {
+				result = new ModelAndView("userspace/list");
+				result.addObject("requestURI", "userspace/user/list.do");
+				userSpacesearch = this.userSpaceService.userSpacesearch(searchTerm);
+				result.addObject("userspace", userSpacesearch);
+
+			} catch (final Throwable th) {
+				result = new ModelAndView("redirect:/welcome/index.do"); //posible vista 404?
+			}
+		return result;
+	}
+
 
 	protected ModelAndView createNewModelAndView(final UserSpace userSpace, final String message) {
 		ModelAndView result;

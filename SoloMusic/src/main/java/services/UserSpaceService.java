@@ -94,7 +94,7 @@ public class UserSpaceService {
 		return m;
 	}
 
-	public List<UserSpaceService> userSpacesearch(String text) {
+	public List<UserSpace> userSpacesearch(String text) {
 		return userSpaceRepository.userSpacesearch(text);
 	}
 	

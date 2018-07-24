@@ -16,6 +16,6 @@ public interface UserSpaceRepository extends JpaRepository<UserSpace, Integer> {
 	
 	//Metodo para buscar userspace
 	@Query("select a from UserSpace a where a.title =?1")
-    public List<UserSpaceService>	userSpacesearch(String text);
+    public List<UserSpace>	userSpacesearch(String text);
 
 }
