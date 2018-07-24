@@ -11,8 +11,6 @@
  ">
 
 
-
-
 	<!-- User accounts -->
 
 
@@ -43,10 +41,10 @@
 	</bean>
 
 
+	<!-- Folders -->
 
-<!-- Folders -->
 
-<bean id="folderInbox1" class="domain.Folder">
+	<bean id="folderInbox1" class="domain.Folder">
 		<property name="folderName" value="Inbox" />
 		<property name="folderChildren">
 			<list>

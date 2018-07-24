@@ -79,7 +79,8 @@
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${isPrincipal eq false}">
 		<tr>
-			<td><jstl:choose>
+			<td>
+				<jstl:choose>
 					<jstl:when test="${followed eq false}">
 						<spring:url var="followUrl" value="/actor/follow.do">
 							<spring:param name="q" value="${a.id}" />
@@ -93,9 +94,14 @@
 						</spring:url>
 						<spring:message code="userspace.unfollow" var="followMsg" />
 					</jstl:otherwise>
-				</jstl:choose> <input onclick="window.location='${followUrl}'"
-				class="btn btn-warning" type="button" value="${followMsg}" /></td>
-			<td><br /> <br /></td>
+				</jstl:choose>
+				<input onclick="window.location='${followUrl}'"
+					class="btn btn-warning" type="button" value="${followMsg}" />
+			</td>
+			<td>
+				<br />
+				<br />
+			</td>
 		</tr>
 	</jstl:if>
 </security:authorize>

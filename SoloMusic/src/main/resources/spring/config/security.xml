@@ -24,6 +24,7 @@
 		<security:intercept-url pattern="/" access="permitAll" />
 		
 		<!-- USERSPACE -->
+		
 		<security:intercept-url access="permitAll" pattern="/userspace/user/spaceview.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/view.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/save.do"/>
@@ -33,6 +34,7 @@
 		<security:intercept-url access="permitAll" pattern="/userspace/user/search.do"/>
 		
 		<!--EVENTS -->
+		
 		<security:intercept-url access="permitAll" pattern="/event/user/view.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/save.do"/>
@@ -55,11 +57,13 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/donation/user/delete.do"/>
 		
 		<!-- PLAYLIST -->
+		
 		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/playlist/user/delete.do"/>
 		
 		<!-- TRACK -->
+		
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/delete.do"/>
@@ -70,7 +74,10 @@
 		<security:intercept-url pattern="/actor/follow.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/actor/unfollow.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/actor/list.do" access="hasRole('USER')" />
+		
+		<!-- ADVERTISEMENT -->
 
+		<security:intercept-url pattern="/advertisement/list.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />

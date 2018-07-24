@@ -20,6 +20,7 @@
 		<value>/views/donation/tiles.xml</value>
     	<value>/views/playlist/tiles.xml</value>
     	<value>/views/track/tiles.xml</value>
+    	<value>/views/advertisement/tiles.xml</value>
     </util:list>
 
 

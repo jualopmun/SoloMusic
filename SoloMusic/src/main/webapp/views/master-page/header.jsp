@@ -59,6 +59,11 @@
 							</ul>
 					  	</li>
 					</security:authorize>
+					
+					<security:authorize access="permitAll">
+						<li><a class="fNiv" href="advertisement/list.do"><spring:message
+							code="master.page.advertisement.list" /></a></li>
+					</security:authorize>
 				</ul>
 			</div>
 			

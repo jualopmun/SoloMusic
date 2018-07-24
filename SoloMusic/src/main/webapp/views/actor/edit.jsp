@@ -23,7 +23,7 @@
 	<%-- Stored message variables --%>
 	<spring:message code="actor.save" var="save" />
 	
-	<form:form id="form" action="${requestURI}" modelAttribute="arf">
+	<form:form id="form" action="${requestURI}" modelAttribute="actor">
 	
 		<acme:textbox2 code="actor.userAccount.username" path="username" errors="false"/>
 		<br/>
@@ -44,7 +44,7 @@
 			<spring:message code="actor.terms.text" />
 		</form:label>
 		<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
-		<form:checkbox path="acceptedTerms" required="required"/>
+		<input type="checkbox" required="required"/>
 		<br/>
 		
 		<input type="submit" name="save" value="${save}"/>&nbsp;
