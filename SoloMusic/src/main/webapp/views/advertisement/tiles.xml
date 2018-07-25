@@ -4,9 +4,9 @@
 
 <tiles-definitions>
 
-	<definition name="advertismenet/create" extends="master.page">
+	<definition name="advertismenet/edit" extends="master.page">
 		<put-attribute name="title" value="New ad" />
-		<put-attribute name="body" value="/views/advertismenet/create.jsp" />
+		<put-attribute name="body" value="/views/advertismenet/edit.jsp" />
 	</definition>
 	
 	<definition name="advertismenet/view" extends="master.page">

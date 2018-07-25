@@ -17,35 +17,37 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table  keepStatus="true" name="userspace"
-	requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
-	<spring:message code="userspace.profileimg" var="profileImg"/>
-	<display:column title="${profileImg}" sortable="false">
-		<img style="max-width: 80px; max-height: 80px;"
-			src="<jstl:out value="${row.profileImg}"/>">
-	</display:column>
+<security:authorize access="hasRole('USER')">
+
+	<spring:message code="advertisement.create" var="create" />
 	
-	<spring:message code="userspace.title" var="title"/>
-	<display:column property="title" title="${title}"
-		sortable="false" />
-	
-	<spring:message code="userspace.description" var="description"/>
-	<display:column property="description" title="${description}"
-		sortable="false" />
-	
-	<spring:message code="userspace.contact" var="contact"/>		
-	<display:column property="contact" title="${contact}"
-		sortable="false" />
-   <spring:message code="userspace.view" var="view"/>
-   <spring:message code="userspace.viewer" var="viewer"/>	
-   <display:column title="${view}" sortable="false">
+	<input onclick="window.location='advertisement/create.do'"
+		class="btn btn-warning" type="button" value="${create}" />
+	<br/>
 			
-				<a href="userspace/user/spaceview.do?q=${row.id}"><jstl:out value="${viewer}" /></a>
-			
+</security:authorize>
+
+
+<security:authorize access="permitAll">
+
+	<spring:message code="advertisement.title" var="title" />
+	<spring:message code="advertisement.price" var="price" />
+	<spring:message code="advertisement.view" var="view" />
+	
+	<display:table  keepStatus="true" name="advertisements"
+		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
+		
+		<display:column sortable="false">
+			<img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${row.mainImg}"/>">
 		</display:column>
+		
+		<display:column property="title" title="${title}" sortable="false" />
+		
+		<display:column property="price" title="${price}" sortable="false" />
+		
+	  	<display:column sortable="false">
+			<a href="advertisement/view.do?q=${row.id}"><jstl:out value="${view}" /></a>
+		</display:column>
+	</display:table>
 
-</display:table>
-
-
-
-
+</security:authorize>

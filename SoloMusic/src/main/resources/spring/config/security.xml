@@ -78,6 +78,10 @@
 		<!-- ADVERTISEMENT -->
 
 		<security:intercept-url pattern="/advertisement/list.do" access="permitAll" />
+		<security:intercept-url pattern="/advertisement/view.do" access="permitAll" />
+		<security:intercept-url pattern="/advertisement/edit.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/advertisement/create.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/advertisement/user/list.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />

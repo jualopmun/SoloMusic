@@ -10,10 +10,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:forEach var="advertisement" items="advertisements">
+<security:authorize access="permitAll">
+
+<table>
 	<tr>
-		<td><spring:message code="advertisement.title" /></td>
-		<jstl:out value="${advertisement.title}" />
-		<td><br /> <br /></td>
+		<td><img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${advertisement.mainImg}"/>"></td>	
+		<td><jstl:out value="${advertisement.title}" /></td>
 	</tr>
-</jstl:forEach>
+	<tr>
+		<td><spring:message code="advertisement.description" /></td>
+		<td><jstl:out value="${advertisement.description}" /></td>
+	</tr>
+	<tr>
+		<td><spring:message code="advertisement.locationUrl" /></td>
+		<td><jstl:out value="${advertisement.locationUrl}" /></td>
+	</tr>
+	<tr>
+		<td><spring:message code="advertisement.price" /></td>
+		<td><jstl:out value="${advertisement.price}" /></td>
+	</tr>
+</table>
+
+</security:authorize>

@@ -62,6 +62,20 @@ public class AdvertisementController extends AbstractController {
 		return result;
 	}
 
+	//Viewing
+
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public ModelAndView view(@RequestParam final int q) {
+		final ModelAndView result;
+		final Advertisement advertisement = this.advertisementService.findOne(q);
+
+		result = new ModelAndView("advertisement/view");
+		result.addObject("advertisement", advertisement);
+		result.addObject("requestURI", "advertisement/view.do");
+
+		return result;
+	}
+
 	//Creation
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -94,7 +108,7 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.save(advertisement);
-				result = new ModelAndView("redirect:/advertisement/manager/list.do");
+				result = new ModelAndView("redirect:/advertisement/user/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
 			}
@@ -112,7 +126,7 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.delete(advertisement);
-				result = new ModelAndView("redirect:/advertisement/manager/list.do");
+				result = new ModelAndView("redirect:/advertisement/user/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
 			}
