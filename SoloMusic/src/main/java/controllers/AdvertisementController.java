@@ -4,6 +4,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -46,18 +48,18 @@ public class AdvertisementController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
-	public ModelAndView listUser(@RequestParam final int varId) {
+	public ModelAndView listUser(@RequestParam final int q) {
 		final ModelAndView result;
 		final Actor user = this.actorService.findByPrincipal();
-		Collection<Advertisement> ads = new ArrayList<Advertisement>();
-		if (varId == 0)
-			ads = user.getOwnerAdvertisement();
+		Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
+		if (q == 0)
+			advertisements = user.getOwnerAdvertisement();
 		else
-			ads = user.getRegistersAdvertisement();
+			advertisements = user.getRegistersAdvertisement();
 
 		result = new ModelAndView("advertisement/list");
-		result.addObject("ads", ads);
-		result.addObject("requestURI", "advertisement/list.do");
+		result.addObject("advertisements", advertisements);
+		result.addObject("requestURI", "advertisement/user/list.do");
 
 		return result;
 	}
@@ -90,9 +92,9 @@ public class AdvertisementController extends AbstractController {
 	//Edition
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int varId) {
+	public ModelAndView edit(@RequestParam final int q) {
 		final ModelAndView result;
-		final Advertisement advertisement = this.advertisementService.findOne(varId);
+		final Advertisement advertisement = this.advertisementService.findOne(q);
 		Assert.notNull(advertisement);
 		result = this.createEditModelAndView(advertisement);
 
@@ -100,7 +102,7 @@ public class AdvertisementController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Advertisement advertisement, final BindingResult binding) {
+	public ModelAndView save(@Valid final Advertisement advertisement, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
@@ -108,8 +110,9 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.save(advertisement);
-				result = new ModelAndView("redirect:/advertisement/user/list.do");
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 			} catch (final Throwable oops) {
+				System.out.println(oops.toString());
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
 			}
 		return result;
@@ -126,7 +129,7 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.delete(advertisement);
-				result = new ModelAndView("redirect:/advertisement/user/list.do");
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
 			}

@@ -40,6 +40,8 @@
 									code="master.page.user.followers" /></a></li>
 								<li><a class="fNiv" href="actor/list.do?q=followeds"><spring:message
 									code="master.page.user.followeds" /></a></li>
+								<li><a class="fNiv" href="advertisement/user/list.do?q=0"><spring:message
+									code="master.page.user.advertisement.list" /></a></li>
 								<li><a href="j_spring_security_logout"><spring:message
 											code="master.page.logout" /> </a></li>
 							</ul>

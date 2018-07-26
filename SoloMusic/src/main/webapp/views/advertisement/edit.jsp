@@ -13,9 +13,10 @@
 <security:authorize access="hasRole('USER')">
 
 	<spring:message code="advertisement.save" var="save"/>
+	<spring:message code="advertisement.delete" var="delete"/>
 	<spring:message code="advertisement.cancel" var="cancel"/>
 
-	<form:form action="advertisement/save.do" modelAttribute="advertisement">
+	<form:form action="${requestURI}" modelAttribute="advertisement">
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
@@ -62,7 +63,8 @@
 		</div>
 		
 		<input type="submit" class="btn btn-primary" name="save" value="${save}" />
-		<input onclick="window.location='advertisement/user/list.do'" class="btn btn-warning" type="button" name="cancel" value="${cancel}"/>
+		<input type="submit" class="btn btn-primary" name="delete" value="${delete}"/>
+		<input onclick="window.location='advertisement/user/list.do?q=0'" class="btn btn-warning" type="button" name="cancel" value="${cancel}"/>
 
 	</form:form>
 </security:authorize>

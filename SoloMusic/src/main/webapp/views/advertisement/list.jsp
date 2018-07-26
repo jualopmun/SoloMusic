@@ -33,6 +33,7 @@
 	<spring:message code="advertisement.title" var="title" />
 	<spring:message code="advertisement.price" var="price" />
 	<spring:message code="advertisement.view" var="view" />
+	<spring:message code="advertisement.edit" var="edit" />
 	
 	<display:table  keepStatus="true" name="advertisements"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
@@ -48,6 +49,13 @@
 	  	<display:column sortable="false">
 			<a href="advertisement/view.do?q=${row.id}"><jstl:out value="${view}" /></a>
 		</display:column>
+		
+		<jstl:if test="${requestURI != 'advertisement/list.do'}">
+			<display:column sortable="false">
+				<a href="advertisement/edit.do?q=${row.id}"><jstl:out value="${edit}" /></a>
+			</display:column>
+		</jstl:if>
+		
 	</display:table>
 
 </security:authorize>
