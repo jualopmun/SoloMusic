@@ -24,7 +24,6 @@
 		<form:hidden path="actorRegisters" />
 		
 		<div class="form-group" style="width: 20%;">
-			<form:errors path="*" class="has-error" />
 	
 				<label><spring:message code="advertisement.title" /></label>
 				<input class="form-control" value="${advertisement.title}" type="text" name="title" />

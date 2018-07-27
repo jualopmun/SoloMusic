@@ -149,7 +149,7 @@ public class Actor extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToMany(mappedBy="followeds")
+	@ManyToMany(mappedBy = "followeds")
 	public Collection<Actor> getFollowers() {
 		return this.followers;
 	}
