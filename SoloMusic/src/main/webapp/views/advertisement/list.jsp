@@ -20,11 +20,21 @@
 <security:authorize access="hasRole('USER')">
 
 	<spring:message code="advertisement.create" var="create" />
+	<spring:message code="advertisement.owned" var="owned" />
+	<spring:message code="advertisement.registered" var="registered" />
 	
 	<input onclick="window.location='advertisement/create.do'"
 		class="btn btn-warning" type="button" value="${create}" />
 	<br/>
+	<br/>
 			
+	<jstl:if test="${requestURI != 'advertisement/list.do'}">
+		<a href="advertisement/user/list.do?q=0"><jstl:out value="${owned}"/></a>&nbsp
+		<a href="advertisement/user/list.do?q=1"><jstl:out value="${registered}"/></a>
+		<br/>
+		<br/>
+	</jstl:if>
+	
 </security:authorize>
 
 
@@ -50,7 +60,7 @@
 			<a href="advertisement/view.do?q=${row.id}"><jstl:out value="${view}" /></a>
 		</display:column>
 		
-		<jstl:if test="${requestURI != 'advertisement/list.do'}">
+		<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">
 			<display:column sortable="false">
 				<a href="advertisement/edit.do?q=${row.id}"><jstl:out value="${edit}" /></a>
 			</display:column>

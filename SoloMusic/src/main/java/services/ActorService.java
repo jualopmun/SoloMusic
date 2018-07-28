@@ -37,9 +37,6 @@ public class ActorService {
 	@Autowired
 	private UserAccountRepository	userAccountRepository;
 
-	@Autowired
-	private UserSpaceService		userSpaceService;
-
 
 	public ActorService() {
 		super();

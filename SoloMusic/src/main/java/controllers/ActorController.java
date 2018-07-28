@@ -48,8 +48,6 @@ public class ActorController extends AbstractController {
 		result.addObject("varid", q);
 		result.addObject("requestURI", "actor/list.do");
 
-		System.out.println(actors.toString());
-
 		return result;
 	}
 

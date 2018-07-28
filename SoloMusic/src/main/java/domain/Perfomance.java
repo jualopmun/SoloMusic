@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -6,44 +7,41 @@ import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Perfomance extends DomainEntity {
-	
+
 	//Atributos
-	private String title;
-	private String description;
-	private String videoUrl;
-	
+	private String	title;
+	private String	description;
+	private String	videoUrl;
+
+
 	@NotBlank
-	@Length(max=50)
+	@Length(max = 50)
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
-	
+
 	@NotBlank
-	@Length(max=300)
+	@Length(max = 300)
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
-	
+
 	@NotBlank
 	public String getVideoUrl() {
-		return videoUrl;
+		return this.videoUrl;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
-	public void setVideoUrl(String videoUrl) {
+	public void setVideoUrl(final String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-	
-	
-	
 
 }

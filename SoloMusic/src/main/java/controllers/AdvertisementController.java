@@ -7,6 +7,8 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -59,7 +61,7 @@ public class AdvertisementController extends AbstractController {
 
 		result = new ModelAndView("advertisement/list");
 		result.addObject("advertisements", advertisements);
-		result.addObject("requestURI", "advertisement/user/list.do");
+		result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
 
 		return result;
 	}
@@ -70,9 +72,20 @@ public class AdvertisementController extends AbstractController {
 	public ModelAndView view(@RequestParam final int q) {
 		final ModelAndView result;
 		final Advertisement advertisement = this.advertisementService.findOne(q);
+		boolean isOwner = false;
+		boolean isRegistered = false;
+
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication.getAuthorities().toArray()[0].equals("USER")) {
+			final Actor principal = this.actorService.findByPrincipal();
+			isOwner = advertisement.getActorOwener().getId() == principal.getId();
+			isRegistered = advertisement.getActorRegisters().contains(principal);
+		}
 
 		result = new ModelAndView("advertisement/view");
 		result.addObject("advertisement", advertisement);
+		result.addObject("isOwner", isOwner);
+		result.addObject("isRegistered", isRegistered);
 		result.addObject("requestURI", "advertisement/view.do");
 
 		return result;
@@ -110,7 +123,7 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.save(advertisement);
-				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
+				result = this.listUser(0);
 			} catch (final Throwable oops) {
 				System.out.println(oops.toString());
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
@@ -129,10 +142,42 @@ public class AdvertisementController extends AbstractController {
 		else
 			try {
 				this.advertisementService.delete(advertisement);
-				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
+				result = this.listUser(0);
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
 			}
+		return result;
+	}
+
+	//Registering
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register(@RequestParam final int q) {
+		ModelAndView result;
+		final Advertisement advertisement = this.advertisementService.findOne(q);
+
+		try {
+			this.advertisementService.register(advertisement);
+			result = this.listUser(1);
+		} catch (final Throwable oops) {
+			result = this.listUser(1);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/unregister", method = RequestMethod.GET)
+	public ModelAndView unregister(@RequestParam final int q) {
+		ModelAndView result;
+		final Advertisement advertisement = this.advertisementService.findOne(q);
+
+		try {
+			this.advertisementService.unregister(advertisement);
+			result = this.listUser(1);
+		} catch (final Throwable oops) {
+			result = this.listUser(1);
+		}
+
 		return result;
 	}
 

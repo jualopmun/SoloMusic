@@ -56,4 +56,16 @@ public class AdvertisementService {
 		return this.advertisermentRepository.save(arg0);
 	}
 
+	public Advertisement register(final Advertisement a) {
+		final Actor principal = this.actorService.findByPrincipal();
+		a.getActorRegisters().add(principal);
+		return this.save(a);
+	}
+
+	public Advertisement unregister(final Advertisement a) {
+		final Actor principal = this.actorService.findByPrincipal();
+		a.getActorRegisters().remove(principal);
+		return this.save(a);
+	}
+
 }

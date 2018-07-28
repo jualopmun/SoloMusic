@@ -11,7 +11,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<div class="btn-group btn-group-xs" role="group" aria-label="label">
+<div class="btn-group btn-group-xs">
 	<button onclick="javascript:location.href='folder/actor/create.do'"
 		type="button" class="btn btn-default">
 		<spring:message code="folder.new" />

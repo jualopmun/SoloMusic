@@ -1,3 +1,4 @@
+
 package controllers;
 
 import javax.validation.Valid;
@@ -10,25 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Event;
-import domain.PlayList;
-import security.LoginService;
 import services.PlayListService;
+import domain.PlayList;
 
 @Controller
 @RequestMapping("playlist")
 public class PlayListController extends AbstractController {
 
 	@Autowired
-	private PlayListService playListService;
+	private PlayListService	playListService;
+
 
 	@RequestMapping(value = "user/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 
 		try {
-			PlayList playList = playListService.create();
+			final PlayList playList = this.playListService.create();
 			result = this.createEditModelAndView(playList, null);
 
 		} catch (final Throwable e) {
@@ -40,12 +39,12 @@ public class PlayListController extends AbstractController {
 	}
 
 	@RequestMapping(value = "user/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam int q) {
+	public ModelAndView delete(@RequestParam final int q) {
 		ModelAndView result;
 		try {
 
-			PlayList playList = playListService.findOne(q);
-			playListService.delete(playList);
+			final PlayList playList = this.playListService.findOne(q);
+			this.playListService.delete(playList);
 			result = new ModelAndView("redirect:/userspace/user/view.do");
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -56,16 +55,15 @@ public class PlayListController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveCreate(@Valid PlayList playList, BindingResult binding) {
+	public ModelAndView saveCreate(@Valid final PlayList playList, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
-
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(playList, null);
-		} else
+		else
 			try {
 
-				playListService.save(playList);
+				this.playListService.save(playList);
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
@@ -76,7 +74,7 @@ public class PlayListController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(PlayList playList) {
+	protected ModelAndView createEditModelAndView(final PlayList playList) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(playList, null);
@@ -84,7 +82,7 @@ public class PlayListController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(PlayList playList, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final PlayList playList, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("playlist/create");

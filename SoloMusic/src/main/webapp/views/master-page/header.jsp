@@ -32,8 +32,7 @@
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.id" var="id" />
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false"><security:authentication
+							data-toggle="dropdown"><security:authentication
 									property="principal.username" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a class="fNiv" href="actor/list.do?q=followers"><spring:message
@@ -50,8 +49,7 @@
 					
 					<security:authorize access="hasRole('USER')">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false"><spring:message
+							data-toggle="dropdown"><spring:message
 									code="master.page.userspace" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="userspace/user/view.do"><spring:message

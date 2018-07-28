@@ -2,7 +2,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,8 @@ import org.springframework.util.Assert;
 import repositories.UserSpaceRepository;
 import security.LoginService;
 import domain.Actor;
-
 import domain.Donation;
 import domain.Event;
-
 import domain.Perfomance;
 import domain.PlayList;
 import domain.UserSpace;
@@ -26,26 +23,26 @@ import domain.UserSpace;
 public class UserSpaceService {
 
 	@Autowired
-	private UserSpaceRepository userSpaceRepository;
+	private UserSpaceRepository	userSpaceRepository;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService		loginService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+
 
 	public UserSpaceService() {
 		super();
 	}
 
-	public  UserSpace create() {
-		UserSpace userSpace = new UserSpace();
+	public UserSpace create() {
+		final UserSpace userSpace = new UserSpace();
 		userSpace.setTitle(new String());
 		userSpace.setDescription(new String());
 		userSpace.setProfileImg(new String());
 		userSpace.setContact(new String());
 
-		
 		return userSpace;
 
 	}
@@ -62,20 +59,19 @@ public class UserSpaceService {
 		return this.userSpaceRepository.findOne(arg0);
 	}
 
-	public boolean exists(Integer arg0) {
-		return userSpaceRepository.exists(arg0);
+	public boolean exists(final Integer arg0) {
+		return this.userSpaceRepository.exists(arg0);
 	}
 
-	public UserSpace save(UserSpace userSpace) {
+	public UserSpace save(final UserSpace userSpace) {
 		Assert.notNull(userSpace);
 		UserSpace m = null;
 		System.out.println(userSpace.getContact());
-		Actor man = (Actor) loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		if (this.exists(userSpace.getId())) {
 
 			m = this.findOne(userSpace.getId());
 
-		
 			m.setTitle(userSpace.getTitle());
 			m.setDescription(userSpace.getDescription());
 			m.setProfileImg(userSpace.getProfileImg());
@@ -88,15 +84,14 @@ public class UserSpaceService {
 			userSpace.setPlayLists(new ArrayList<PlayList>());
 			m = this.userSpaceRepository.save(userSpace);
 			man.setUserSpace(m);
-			actorService.save(man);
+			this.actorService.save(man);
 
 		}
 		return m;
 	}
 
-	public List<UserSpace> userSpacesearch(String text) {
-		return userSpaceRepository.userSpacesearch(text);
+	public List<UserSpace> userSpacesearch(final String text) {
+		return this.userSpaceRepository.userSpacesearch(text);
 	}
-	
-	
+
 }

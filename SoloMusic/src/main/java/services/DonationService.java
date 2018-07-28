@@ -1,6 +1,6 @@
+
 package services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,63 +8,62 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Actor;
-import domain.Donation;
-import domain.Event;
-import domain.Gift;
 import repositories.DonationRepository;
 import security.LoginService;
+import domain.Actor;
+import domain.Donation;
 
 @Service
 @Transactional
 public class DonationService {
 
 	@Autowired
-	private DonationRepository donationRepository;
+	private DonationRepository	donationRepository;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService		loginService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+
 
 	public DonationService() {
 		super();
 	}
-	
+
 	public Donation create() {
-		Donation donation= new Donation();
+		final Donation donation = new Donation();
 		donation.setTitle(new String());
 		donation.setDescription(new String());
 		donation.setPrice(new Double(0.));
 		return donation;
 	}
 
-	public void delete(Donation donation) {
-		Actor man = (Actor) loginService.findActorByUsername(LoginService.getPrincipal().getId());
+	public void delete(final Donation donation) {
+		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		Assert.isTrue(man.getUserSpace().getDonations().contains(donation));
-		donationRepository.delete(donation);
+		this.donationRepository.delete(donation);
 		man.getUserSpace().getDonations().remove(donation);
-		actorService.save(man);
+		this.actorService.save(man);
 	}
 
-	public boolean exists(Integer arg0) {
-		return donationRepository.exists(arg0);
+	public boolean exists(final Integer arg0) {
+		return this.donationRepository.exists(arg0);
 	}
 
 	public List<Donation> findAll() {
-		return donationRepository.findAll();
+		return this.donationRepository.findAll();
 	}
 
-	public Donation findOne(Integer arg0) {
-		return donationRepository.findOne(arg0);
+	public Donation findOne(final Integer arg0) {
+		return this.donationRepository.findOne(arg0);
 	}
 
-	public Donation save(Donation donation) {
+	public Donation save(final Donation donation) {
 		Assert.notNull(donation);
 		Donation m = null;
 
-		Actor man = (Actor) loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		if (this.exists(donation.getId())) {
 			Assert.isTrue(man.getUserSpace().getDonations().contains(donation));
 			m = this.findOne(donation.getId());
@@ -75,11 +74,11 @@ public class DonationService {
 
 			m = this.donationRepository.save(m);
 		} else {
-			
+
 			m = this.donationRepository.save(donation);
-			
+
 			man.getUserSpace().getDonations().add(m);
-			actorService.save(man);
+			this.actorService.save(man);
 
 		}
 		return m;

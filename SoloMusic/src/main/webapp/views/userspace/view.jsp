@@ -60,8 +60,8 @@
 
 <tr>
 	<td><spring:message code="userspace.profileimg" /></td>
-	<img style="max-width: 80px; max-height: 80px;"
-		src="<jstl:out value="${p.profileImg}"/>">
+	<td><img style="max-width: 80px; max-height: 80px;"
+		src="<jstl:out value="${p.profileImg}"/>"></td>
 	<td><br /></td>
 </tr>
 
@@ -136,8 +136,8 @@
 		<td><br />
 	<tr>
 		<td><spring:message code="dona.price" /></td>
-		<jstl:out value="${dona.price}" />
-		Euros
+		<td><jstl:out value="${dona.price}" /> Euros</td>
+		
 		<!-- Editar donacion o borrarlo -->
 		<td><br /> <br /> <security:authorize access="hasRole('USER')">
 				<jstl:if test="${actor.userSpace==p}">
@@ -191,9 +191,10 @@
 		<jstl:out value="${play.description}" />
 		<td><br />
 	<tr>
-		<h2>
-			<spring:message code="play.track" />
-		</h2>
+		<td>
+			<h2><spring:message code="play.track" /></h2>
+		</td>
+		
 		<jstl:forEach var="track" items="${play.tracks}">
 			<tr>
 				<td><spring:message code="dona.title" /></td>

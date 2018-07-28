@@ -31,4 +31,35 @@
 	</tr>
 </table>
 
+<!-- Registro -->
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${isOwner eq false}">
+		<tr>
+			<td>
+				<jstl:choose>
+					<jstl:when test="${isRegistered eq false}">
+						<spring:url var="registerUrl" value="/advertisement/register.do">
+							<spring:param name="q" value="${advertisement.id}" />
+						</spring:url>
+						<spring:message code="advertisement.register" var="registerMsg" />
+					</jstl:when>
+
+					<jstl:otherwise>
+						<spring:url var="registerUrl" value="/advertisement/unregister.do">
+							<spring:param name="q" value="${advertisement.id}" />
+						</spring:url>
+						<spring:message code="advertisement.unregister" var="registerMsg" />
+					</jstl:otherwise>
+				</jstl:choose>
+				<input onclick="window.location='${registerUrl}'"
+					class="btn btn-warning" type="button" value="${registerMsg}" />
+			</td>
+			<td>
+				<br />
+				<br />
+			</td>
+		</tr>
+	</jstl:if>
+</security:authorize>
+
 </security:authorize>
