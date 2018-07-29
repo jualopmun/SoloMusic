@@ -18,7 +18,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form action="j_spring_security_check" modelAttribute="credentials">
-	<!--  
+	<%--  
 	<form:label path="username">
 		<spring:message code="security.username" />
 	</form:label>
@@ -32,7 +32,7 @@
 	<form:password path="password" />	
 	<form:errors class="error" path="password" />
 	<br />
--->
+--%>
 	<jstl:if test="${showError == true}">
 		<acme:errors code="security.login.failed" />
 	</jstl:if>

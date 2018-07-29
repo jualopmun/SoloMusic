@@ -36,16 +36,16 @@
  type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
-<!-- Bootstrap links -->
+<%-- Bootstrap links --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- Custom css -->
+<%-- Custom css --%>
 <link rel="stylesheet" href="styles/acme.css">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
-<!-- Ajax (Jquery) link -->
+<%-- Ajax (Jquery) link --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">

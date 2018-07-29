@@ -31,7 +31,7 @@
 	</tr>
 </table>
 
-<!-- Registro -->
+<%-- Registro --%>
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${isOwner eq false}">
 		<tr>
