@@ -1,15 +1,12 @@
 package controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import domain.PlayList;
 import domain.Track;
@@ -62,27 +59,56 @@ public class TrackController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveCreate(@Valid Track track, BindingResult binding) {
+//	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
+//	public ModelAndView saveCreate(@Valid Track track, BindingResult binding) {
+//		ModelAndView result;
+//
+//		if (binding.hasErrors()) {
+//
+//			result = this.createEditModelAndView(track, null);
+//		} else
+//			try {
+//
+//				trackService.save(track,playList.getId());
+//
+//				result = new ModelAndView("redirect:/userspace/user/view.do");
+//
+//			} catch (final Throwable th) {
+//				th.printStackTrace();
+//				result = this.createEditModelAndView(track, "actor.commit.error");
+//			}
+//		return result;
+//	}
+
+	
+	@RequestMapping(value = "/user/save", method = RequestMethod.POST)
+	public ModelAndView saveCreate(@RequestParam("file") MultipartFile file, @RequestParam("title") String title,
+			@RequestParam("duration") String duration) {
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
+		if (file == null || title == null || title.isEmpty() || duration == null || duration.isEmpty()
+				|| playList== null) {
 
-			result = this.createEditModelAndView(track, null);
+			result = new ModelAndView("track/create");
+			result.addObject("track", null);
+			result.addObject("message", "actor.commit.error");
+			result.addObject("requestURI", "user/create.do");
 		} else
 			try {
 
-				trackService.save(track,playList.getId());
+				trackService.save(title,duration,file,playList.getId());
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
 			} catch (final Throwable th) {
 				th.printStackTrace();
-				result = this.createEditModelAndView(track, "actor.commit.error");
+				result = new ModelAndView("track/create");
+				result.addObject("track", null);
+				result.addObject("message", "actor.commit.error");
+				result.addObject("requestURI", "user/create.do");
 			}
 		return result;
 	}
-
 	
 	
 	

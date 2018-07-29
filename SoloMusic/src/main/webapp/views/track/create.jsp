@@ -15,30 +15,24 @@
 
 <security:authorize access="hasRole('USER')">
 
-	<form:form action="track/user/save.do" modelAttribute="track">
-
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		
-		
+	<form:form action="track/user/save.do" enctype="multipart/form-data">
 		
 		<div class="form-group" style="width: 20%;">
 		<form:errors path="*" class="has-error" />
 
 			<label> <spring:message code="event.title" />
-			</label><br /> <input class="form-control" value="${track.title}"
+			</label><br /> <input class="form-control"
 				type="text" name="title" />
-			<form:errors cssClass="error" path="title" />
-			
 			<br />
 		    
 			<label> <spring:message code="track.duration" />
-			</label><br /> <input class="form-control" value="${track.duration}"
+			</label><br /> <input class="form-control"
 				type="text" name="duration" />
-			<form:errors cssClass="error" path="duration" />
-			
 			<br />
 			
+			<label> <spring:message code="track.duration" />
+			</label><br /> <input class="form-control"
+				type="file" name="file" accept=".mp3" />
 			</div>
 			
 	  <spring:message code="actor.save" var="actorSaveHeader"/>

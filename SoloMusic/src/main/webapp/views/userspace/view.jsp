@@ -31,8 +31,7 @@
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${isPrincipal eq false}">
 		<tr>
-			<td>
-				<jstl:choose>
+			<td><jstl:choose>
 					<jstl:when test="${followed eq false}">
 						<spring:url var="followUrl" value="/actor/follow.do">
 							<spring:param name="q" value="${a.id}" />
@@ -46,13 +45,11 @@
 						</spring:url>
 						<spring:message code="userspace.unfollow" var="followMsg" />
 					</jstl:otherwise>
-				</jstl:choose>
-				<input onclick="window.location='${followUrl}'"
-					class="btn btn-warning" type="button" value="${followMsg}" />
-			</td>
+				</jstl:choose> <input onclick="window.location='${followUrl}'"
+				class="btn btn-warning" type="button" value="${followMsg}" /></td>
 		</tr>
-		<br/>
-		<br/>
+		<br />
+		<br />
 	</jstl:if>
 </security:authorize>
 
@@ -79,7 +76,7 @@
 		<td><spring:message code="userspace.description" /></td>
 		<td><jstl:out value="${p.description}" /></td>
 	</tr>
-	
+
 	<tr>
 		<td><spring:message code="userspace.profileimg" /></td>
 		<td><img style="max-width: 80px; max-height: 80px;"
@@ -97,7 +94,7 @@
 <h1>
 	<spring:message code="donantions.titulo" />
 </h1>
-	
+
 <%-- Crear donaciones --%>
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${actor.userSpace==p}">
@@ -108,7 +105,7 @@
 	<br />
 	<br />
 </security:authorize>
-	
+
 <%-- DONACIONES --%>
 
 <table>
@@ -124,26 +121,22 @@
 		<tr>
 			<td><spring:message code="dona.price" /></td>
 			<td><jstl:out value="${dona.price}" /> Euros</td>
-			
+
 			<%-- Editar donacion o borrarlo --%>
 			<security:authorize access="hasRole('USER')">
-				<td>
-					<jstl:if test="${actor.userSpace==p}">
+				<td><jstl:if test="${actor.userSpace==p}">
 						<spring:message code="actor.edit" var="actorEdit" />
-							<input
-								onclick="window.location='donation/user/edit.do?q=${dona.id}'"
-								class="btn btn-warning" type="button" value="${actorEdit}" />
-					</jstl:if>
-		
-					<jstl:if test="${actor.userSpace==p}">
+						<input
+							onclick="window.location='donation/user/edit.do?q=${dona.id}'"
+							class="btn btn-warning" type="button" value="${actorEdit}" />
+					</jstl:if> <jstl:if test="${actor.userSpace==p}">
 						<spring:message code="actor.delete" var="actorDelete" />
 						<input
 							onclick="window.location='donation/user/delete.do?q=${dona.id}'"
 							class="btn btn-warning" type="button" value="${actorDelete}" />
 						<br />
 						<br />
-					</jstl:if>
-				</td>
+					</jstl:if></td>
 			</security:authorize>
 	</jstl:forEach>
 </table>
@@ -176,7 +169,9 @@
 			<td><jstl:out value="${play.description}" /></td>
 		</tr>
 		<tr>
-			<td><h2><spring:message code="play.track" /></h2></td>
+			<td><h2>
+					<spring:message code="play.track" />
+				</h2></td>
 		</tr>
 		<jstl:forEach var="track" items="${play.tracks}">
 			<tr>
@@ -188,26 +183,31 @@
 				<td><jstl:out value="${track.duration}" /></td>
 			</tr>
 			<tr>
-				<td>
-					<jstl:if test="${actor.userSpace==p}">
+				<td><spring:message code="track.duration" /></td>
+				<td><audio controls>
+						<source src="${track.file}" type="audio/mp3">
+						Your browser does not support the audio element.
+					</audio></td>
+			</tr>
+			<tr>
+				<td><jstl:if test="${actor.userSpace==p}">
 						<spring:message code="actor.delete.track" var="actorDeleteTrack" />
 						<input
 							onclick="window.location='track/user/delete.do?q=${track.id}'"
 							class="btn btn-warning" type="button" value="${actorDeleteTrack}" />
-					</jstl:if>
-				</td>
+					</jstl:if></td>
 			</tr>
-			</jstl:forEach>
-			<jstl:if test="${actor.userSpace==p}">
-				<spring:message code="actor.new.track" var="actorNewTrack" />
-				<input onclick="window.location='track/user/create.do?q=${play.id}'"
-					class="btn btn-warning" type="button" value="${actorNewTrack}" />
-				<spring:message code="actor.delete" var="actorDelete" />
-				<input
-					onclick="window.location='playlist/user/delete.do?q=${play.id}'"
-					class="btn btn-warning" type="button" value="${actorDelete}" />
-				<br />
-				<br />
-			</jstl:if>
+		</jstl:forEach>
+		<jstl:if test="${actor.userSpace==p}">
+			<spring:message code="actor.new.track" var="actorNewTrack" />
+			<input onclick="window.location='track/user/create.do?q=${play.id}'"
+				class="btn btn-warning" type="button" value="${actorNewTrack}" />
+			<spring:message code="actor.delete" var="actorDelete" />
+			<input
+				onclick="window.location='playlist/user/delete.do?q=${play.id}'"
+				class="btn btn-warning" type="button" value="${actorDelete}" />
+			<br />
+			<br />
+		</jstl:if>
 	</jstl:forEach>
 </table>
