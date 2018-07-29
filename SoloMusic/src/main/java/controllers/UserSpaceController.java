@@ -1,12 +1,17 @@
 
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -17,8 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
+import services.TrackService;
 import services.UserSpaceService;
 import domain.Actor;
+import domain.Track;
 import domain.UserSpace;
 
 @Controller
@@ -33,6 +40,9 @@ public class UserSpaceController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
+	
+	@Autowired
+	private TrackService 	trackService;
 
 
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
@@ -126,6 +136,25 @@ public class UserSpaceController extends AbstractController {
 		}
 
 		return result;
+	}
+	
+	@RequestMapping(value = "/user/play", method = RequestMethod.GET,
+	        produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	public HttpEntity<byte[]> downloadRecipientFile(@RequestParam int q) throws IOException,
+	        ServletException {
+	   
+		Track track = trackService.findOne(q);
+	    if (track == null || track.getFile() == null
+	            || track.getFile().length <= 0) {
+	        throw new ServletException("No clip found/clip has not data, id="
+	                + q);
+	    }
+	    HttpHeaders header = new HttpHeaders();
+	  
+	    //header.setContentType(new MediaType("audio", "mp3"));
+	    header.setContentType(new MediaType("audio", "vnd.mp3"));
+	    header.setContentLength(track.getFile().length);
+	    return new HttpEntity<byte[]>(track.getFile(), header);
 	}
 
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")

@@ -25,12 +25,9 @@
 				type="text" name="title" />
 			<br />
 		    
-			<label> <spring:message code="track.duration" />
-			</label><br /> <input class="form-control"
-				type="text" name="duration" />
-			<br />
 			
-			<label> <spring:message code="track.duration" />
+			
+			<label> <spring:message code="track.file" />
 			</label><br /> <input class="form-control"
 				type="file" name="file" accept=".mp3" />
 			</div>

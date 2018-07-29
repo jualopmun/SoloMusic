@@ -55,15 +55,19 @@
 
 
 <%-- Ver los eventos --%>
+<jstl:if test="${!p.events.isEmpty() or p!=null}">
 <spring:message code="actor.video" var="actorVideo" />
+
 <input onclick="window.location='event/user/view.do?p=${p.id}'"
 	class="btn btn-warning" type="button" value="${actorVideo}" />
-
+</jstl:if>
 <%-- Ver las actuaciones --%>
-
+<jstl:if test="${!p.perfomances.isEmpty() or p!=null}">
 <spring:message code="actor.perfomance" var="actorPerfomance" />
+
 <input onclick="window.location='perfomance/user/view.do?p=${p.id}'"
 	class="btn btn-warning" type="button" value="${actorPerfomance}" />
+</jstl:if>
 <br />
 <br />
 
@@ -178,14 +182,11 @@
 				<td><spring:message code="dona.title" /></td>
 				<td><jstl:out value="${track.title}" /></td>
 			</tr>
+			
 			<tr>
 				<td><spring:message code="track.duration" /></td>
-				<td><jstl:out value="${track.duration}" /></td>
-			</tr>
-			<tr>
-				<td><spring:message code="track.duration" /></td>
-				<td><audio controls>
-						<source src="${track.file}" type="audio/mp3">
+				<td><audio controls controlsList="nodownload">
+						<source src="userspace/user/play.do?q=${track.id}" type="audio/mp3" onmouseout="true">
 						Your browser does not support the audio element.
 					</audio></td>
 			</tr>
@@ -197,8 +198,7 @@
 							class="btn btn-warning" type="button" value="${actorDeleteTrack}" />
 					</jstl:if></td>
 			</tr>
-		</jstl:forEach>
-		<jstl:if test="${actor.userSpace==p}">
+				<jstl:if test="${actor.userSpace==p}">
 			<spring:message code="actor.new.track" var="actorNewTrack" />
 			<input onclick="window.location='track/user/create.do?q=${play.id}'"
 				class="btn btn-warning" type="button" value="${actorNewTrack}" />
@@ -209,5 +209,7 @@
 			<br />
 			<br />
 		</jstl:if>
+		</jstl:forEach>
+	
 	</jstl:forEach>
 </table>

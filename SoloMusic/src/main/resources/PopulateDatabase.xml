@@ -442,14 +442,14 @@
 
 	<bean id="track1" class="domain.Track">
 		<property name="title" value="title1" />
-		<property name="duration" value="4" />
+		
 		
 
 	</bean>
 	
 	<bean id="track2" class="domain.Track">
 		<property name="title" value="title2" />
-		<property name="duration" value="5" />
+		
 		
 
 	</bean>

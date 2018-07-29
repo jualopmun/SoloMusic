@@ -1,10 +1,23 @@
 package controllers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -82,11 +95,10 @@ public class TrackController extends AbstractController {
 
 	
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST)
-	public ModelAndView saveCreate(@RequestParam("file") MultipartFile file, @RequestParam("title") String title,
-			@RequestParam("duration") String duration) {
+	public ModelAndView saveCreate(@RequestParam("file") MultipartFile file, @RequestParam("title") String title) {
 		ModelAndView result;
 
-		if (file == null || title == null || title.isEmpty() || duration == null || duration.isEmpty()
+		if (file == null || title == null || title.isEmpty()
 				|| playList== null) {
 
 			result = new ModelAndView("track/create");
@@ -96,7 +108,7 @@ public class TrackController extends AbstractController {
 		} else
 			try {
 
-				trackService.save(title,duration,file,playList.getId());
+				trackService.save(title,file,playList.getId());
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
@@ -111,6 +123,8 @@ public class TrackController extends AbstractController {
 	}
 	
 	
+	
+
 	
 	
 	protected ModelAndView createEditModelAndView(Track track) {
@@ -131,5 +145,7 @@ public class TrackController extends AbstractController {
 
 		return result;
 	}
+	
+	
 
 }

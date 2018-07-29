@@ -67,6 +67,7 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/track/user/delete.do"/>
+		<security:intercept-url access="permitAll" pattern="/userspace/user/play.do"/>
 
 		<!-- ACTOR (USER) -->
 		

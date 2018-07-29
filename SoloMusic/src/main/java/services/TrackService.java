@@ -37,7 +37,7 @@ public class TrackService {
 	public Track create() {
 		final Track track = new Track();
 		track.setTitle(new String());
-		track.setDuration(new Integer(0));
+		
 		return track;
 	}
 
@@ -78,11 +78,11 @@ public class TrackService {
 		return this.trackRepository.exists(arg0);
 	}
 
-	public void save(String title, String duration, MultipartFile file, Integer playlistId) {
+	public void save(String title, MultipartFile file, Integer playlistId) {
 		Track track = new Track();
 		
 		try {
-			track.setDuration(new Integer(duration));
+		
 			track.setFile(file.getBytes());
 			track.setTitle(title);
 			
