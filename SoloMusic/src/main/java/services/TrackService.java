@@ -43,7 +43,8 @@ public class TrackService {
 
 	public void delete(final Track track) {
 		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-		Assert.isTrue(man.getUserSpace().getPlayLists().contains(this.trackRepository.comprobarTrack(track.getId())));
+		//Assert.isTrue(man.getUserSpace().getPlayLists().contains(this.trackRepository.comprobarTrack(track.getId())));
+	
 		this.trackRepository.delete(track);
 
 	}

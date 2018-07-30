@@ -11,6 +11,11 @@
 		<put-attribute name="body" value="/views/track/create.jsp" />
 	</definition>
 	
+	<definition name="track/delete" extends="master.page">
+		<put-attribute name="title" value="Delete track" />
+		<put-attribute name="body" value="/views/track/edit.jsp" />
+	</definition>
+	
 	
 
 

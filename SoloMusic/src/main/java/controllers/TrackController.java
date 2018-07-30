@@ -1,23 +1,12 @@
 package controllers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,8 +49,17 @@ public class TrackController extends AbstractController {
 	public ModelAndView delete(@RequestParam int q) {
 		ModelAndView result;
 		try {
-
 			Track track = trackService.findOne(q);
+			for(PlayList playlist: playListService.findAll()) {
+				if(playlist.getTracks().contains(track)) {
+					Collection<Track> tracks = playlist.getTracks();
+					tracks.remove(track);
+					playlist.setTracks(tracks);
+					
+					playListService.save(playlist);
+				}
+			}
+			
 			trackService.delete(track);
 			result = new ModelAndView("redirect:/userspace/user/view.do");
 		} catch (final Throwable e) {
@@ -72,26 +70,7 @@ public class TrackController extends AbstractController {
 
 	}
 
-//	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
-//	public ModelAndView saveCreate(@Valid Track track, BindingResult binding) {
-//		ModelAndView result;
-//
-//		if (binding.hasErrors()) {
-//
-//			result = this.createEditModelAndView(track, null);
-//		} else
-//			try {
-//
-//				trackService.save(track,playList.getId());
-//
-//				result = new ModelAndView("redirect:/userspace/user/view.do");
-//
-//			} catch (final Throwable th) {
-//				th.printStackTrace();
-//				result = this.createEditModelAndView(track, "actor.commit.error");
-//			}
-//		return result;
-//	}
+ 
 
 	
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST)

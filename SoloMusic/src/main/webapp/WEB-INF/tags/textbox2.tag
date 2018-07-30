@@ -31,9 +31,6 @@
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
-<jstl:if test="${errors == null}">
-	<jstl:set var="errorV" value="true" />
-</jstl:if>
 
 <%-- Definition --%>
 
@@ -43,7 +40,5 @@
 	</form:label>	
 	<form:input class="form-control" path="${path}" readonly="${readonly}" />	
 	
-	<jstl:if test="${errorV eq true}">
 		<form:errors path="${path}"  cssClass="error" />
-	</jstl:if>
 </div>	

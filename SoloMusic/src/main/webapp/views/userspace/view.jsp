@@ -172,6 +172,18 @@
 			<td><spring:message code="dona.description" /></td>
 			<td><jstl:out value="${play.description}" /></td>
 		</tr>
+		<jstl:if test="${actor.userSpace==p}">
+		<tr>
+			
+		<td>
+			<spring:message code="actor.delete" var="actorDelete" />
+			<input
+				onclick="window.location='playlist/user/delete.do?q=${play.id}'"
+				class="btn btn-warning" type="button" value="${actorDelete}" />
+		</td>
+		
+		</tr>
+		</jstl:if>
 		<tr>
 			<td><h2>
 					<spring:message code="play.track" />
@@ -191,25 +203,20 @@
 					</audio></td>
 			</tr>
 			<tr>
-				<td><jstl:if test="${actor.userSpace==p}">
+				
+		</jstl:forEach>
+		<jstl:if test="${actor.userSpace==p}">
+		<td>
 						<spring:message code="actor.delete.track" var="actorDeleteTrack" />
 						<input
 							onclick="window.location='track/user/delete.do?q=${track.id}'"
 							class="btn btn-warning" type="button" value="${actorDeleteTrack}" />
-					</jstl:if></td>
-			</tr>
-				<jstl:if test="${actor.userSpace==p}">
-			<spring:message code="actor.new.track" var="actorNewTrack" />
+					</td>
+		<td>
+		<spring:message code="actor.new.track" var="actorNewTrack" />
 			<input onclick="window.location='track/user/create.do?q=${play.id}'"
 				class="btn btn-warning" type="button" value="${actorNewTrack}" />
-			<spring:message code="actor.delete" var="actorDelete" />
-			<input
-				onclick="window.location='playlist/user/delete.do?q=${play.id}'"
-				class="btn btn-warning" type="button" value="${actorDelete}" />
-			<br />
-			<br />
+		</td>
 		</jstl:if>
-		</jstl:forEach>
-	
 	</jstl:forEach>
 </table>

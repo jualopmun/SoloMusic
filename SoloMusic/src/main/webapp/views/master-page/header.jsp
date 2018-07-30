@@ -25,8 +25,7 @@
 									code="master.page.login" /></a></li>
 						<li><a class="fNiv" href="actor/create.do"><spring:message
 									code="master.page.signup" /></a></li>
-					   <li><a class="fNiv" href="userspace/user/list.do"><spring:message
-									code="master.page.user.userspace.list" /></a></li>
+					   
 					</security:authorize>
 					
 					<security:authorize access="isAuthenticated()">
@@ -60,7 +59,7 @@
 					  	</li>
 					</security:authorize>
 					
-					<security:authorize access="permitAll">
+					<security:authorize access="hasRole('USER')">
 						<li><a class="fNiv" href="advertisement/list.do"><spring:message
 							code="master.page.advertisement.list" /></a></li>
 					</security:authorize>
