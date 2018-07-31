@@ -22,16 +22,15 @@ import forms.ActorRegisterForm;
 @RequestMapping("actor")
 public class ActorController extends AbstractController {
 
-	//Services
+	// Services
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService actorService;
 
+	// @Autowired
+	// private UserAccountRepository uar;
 
-	//	@Autowired
-	//	private UserAccountRepository	uar;
-
-	//Listing
+	// Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final String q) {
@@ -51,7 +50,7 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	//Creation
+	// Creation
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -68,23 +67,30 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			//			if (this.uar.findActorByUsername(actor.getUserAccount().getUsername()) != null)
-			//				binding.rejectValue("userAccount.username", "acme.username.unique");
-			//			if (actor.getUserAccount().getUsername().length() < 5 || actor.getUserAccount().getUsername().length() > 32)
-			//				binding.rejectValue("userAccount.username", "acme.password.size");
-			//			if (actor.getUserAccount().getPassword().length() < 5 || actor.getUserAccount().getPassword().length() > 32)
-			//				binding.rejectValue("userAccount.password", "acme.password.size");
-			//			if (!actor.getRepeatPassword().equals(actor.getPassword()))
-			//				binding.rejectValue("repeatPassword", "acme.password.repeat");
-			//			if (actor.getName().isEmpty())
-			//				binding.rejectValue("name", "org.hibernate.validator.constraints.NotBlank.message");
-			//			if (actor.getSurname().isEmpty())
-			//				binding.rejectValue("surname", "org.hibernate.validator.constraints.NotBlank.message");
-			//			if (actor.getEmail().isEmpty())
-			//				binding.rejectValue("email", "javax.validator.constraints.email.message");
-			//			if (actor.getBirthDate().toString().isEmpty())
-			//				binding.rejectValue("birthDate", "acme.date.invalid");
-			//			System.out.println(binding.getAllErrors().toString());
+			// if (this.uar.findActorByUsername(actor.getUserAccount().getUsername()) !=
+			// null)
+			// binding.rejectValue("userAccount.username", "acme.username.unique");
+			// if (actor.getUserAccount().getUsername().length() < 5 ||
+			// actor.getUserAccount().getUsername().length() > 32)
+			// binding.rejectValue("userAccount.username", "acme.password.size");
+			// if (actor.getUserAccount().getPassword().length() < 5 ||
+			// actor.getUserAccount().getPassword().length() > 32)
+			// binding.rejectValue("userAccount.password", "acme.password.size");
+			if (!actor.getRepeatPassword().equals(actor.getPassword())) {
+				binding.rejectValue("repeatPassword", "acme.password.repeat","error");
+				throw new IllegalArgumentException();
+			}
+			// if (actor.getName().isEmpty())
+			// binding.rejectValue("name",
+			// "org.hibernate.validator.constraints.NotBlank.message");
+			// if (actor.getSurname().isEmpty())
+			// binding.rejectValue("surname",
+			// "org.hibernate.validator.constraints.NotBlank.message");
+			// if (actor.getEmail().isEmpty())
+			// binding.rejectValue("email", "javax.validator.constraints.email.message");
+			// if (actor.getBirthDate().toString().isEmpty())
+			// binding.rejectValue("birthDate", "acme.date.invalid");
+			// System.out.println(binding.getAllErrors().toString());
 			actor.setAcceptedTerms(false);
 			result = this.createEditModelAndView(actor);
 		} else
@@ -100,7 +106,7 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	//Follow other actors
+	// Follow other actors
 
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
 	public ModelAndView follow(@RequestParam final Integer q) {
@@ -132,7 +138,7 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	//Ancillary methods
+	// Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final ActorRegisterForm actor) {
 		ModelAndView result;

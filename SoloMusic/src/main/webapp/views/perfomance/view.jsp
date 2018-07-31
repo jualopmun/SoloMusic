@@ -14,11 +14,12 @@
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${actor.userSpace==userSpace}">
-		<spring:message code="event.new" var="actorNew"/>
+		<spring:message code="performance.new" var="actorNew"/>
 		<input onclick="window.location='perfomance/user/create.do'" class="btn btn-warning" type="button"  value="${actorNew}"/>
 		<br />
 	</jstl:if>
 </security:authorize>
+<br/>
 
 <jstl:forEach var="p" items="${perfomance}">
 	<table>

@@ -162,9 +162,7 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			for (final ObjectError e : binding.getAllErrors())
-				System.out.println(e.toString());
-
+			
 			result = this.createNewModelAndView(userSpace, null);
 		} else
 			try {

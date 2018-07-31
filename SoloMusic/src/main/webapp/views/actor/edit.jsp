@@ -23,7 +23,7 @@
 	<%-- Stored message variables --%>
 	<spring:message code="actor.save" var="save" />
 	
-	<form:form id="form" action="${requestURI}" modelAttribute="actor">
+	<form:form id="form" action="${requestURI}" modelAttribute="actor" >
 	
 		<acme:textbox2 code="actor.userAccount.username" path="username" errors="false"/>
 		<br/>

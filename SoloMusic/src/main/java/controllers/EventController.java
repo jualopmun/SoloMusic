@@ -80,7 +80,7 @@ public class EventController extends AbstractController {
 		ModelAndView result;
 		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
-
+			
 			final Event event = this.eventService.findOne(p);
 
 			result = this.createEditModelAndView(event, null);
@@ -118,6 +118,7 @@ public class EventController extends AbstractController {
 			result = this.createEditModelAndView(event, null);
 		else
 			try {
+				
 
 				this.eventService.save(event);
 

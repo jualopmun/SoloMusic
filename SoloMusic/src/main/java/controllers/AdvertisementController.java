@@ -1,8 +1,11 @@
 
 package controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -105,9 +108,12 @@ public class AdvertisementController extends AbstractController {
 	//Edition
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int q) {
+	public ModelAndView edit(@RequestParam final int q) throws ParseException {
 		final ModelAndView result;
+		
 		final Advertisement advertisement = this.advertisementService.findOne(q);
+		
+		
 		Assert.notNull(advertisement);
 		result = this.createEditModelAndView(advertisement);
 
@@ -117,11 +123,16 @@ public class AdvertisementController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Advertisement advertisement, final BindingResult binding) {
 		ModelAndView result;
-
+		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(advertisement);
 		else
 			try {
+				if (advertisement.getStartDate().after(advertisement.getEndDate())) {
+					binding.rejectValue("endDate", "acme.date.later","error");
+					throw new IllegalArgumentException();
+				}
+				
 				this.advertisementService.save(advertisement);
 				result = this.listUser(0);
 			} catch (final Throwable oops) {

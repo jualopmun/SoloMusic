@@ -9,6 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <security:authorize access="hasRole('USER')">
 
@@ -44,14 +45,16 @@
 				<input class="form-control" value="${advertisement.mainImg}" type="text" name="mainImg" />
 				<form:errors cssClass="error" path="mainImg" />
 				<br />
-				
-				<label><spring:message code="advertisement.startDate" /></label>
-				<input class="form-control" value="${advertisement.startDate}" type="text" name="startDate" placeholder="dd/mm/yyyy"/>
+
+				<label> <spring:message code="advertisement.startDate" />
+				</label><br /> <input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.startDate}"/>'
+					type="text" name="startDate" placeholder="dd/MM/yyyy"  />
 				<form:errors cssClass="error" path="startDate" />
 				<br />
 				
 				<label><spring:message code="advertisement.endDate" /></label>
-				<input class="form-control" value="${advertisement.endDate}" type="text" name="endDate" placeholder="dd/mm/yyyy"/>
+				<input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.endDate}"/>'
+				type="text" name="endDate" placeholder="dd/MM/yyyy" />
 				<form:errors cssClass="error" path="endDate" />
 				<br />
 				
