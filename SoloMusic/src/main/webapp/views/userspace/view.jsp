@@ -53,7 +53,6 @@
 	</jstl:if>
 </security:authorize>
 
-
 <%-- Ver los eventos --%>
 <jstl:if test="${!p.events.isEmpty() or p!=null}">
 <spring:message code="actor.video" var="actorVideo" />
@@ -71,87 +70,10 @@
 <br />
 <br />
 
-<table>
-	<tr>
-		<td><spring:message code="userspace.title" /></td>
-		<td><jstl:out value="${p.title}" /></td>
-	</tr>
-	<tr>
-		<td><spring:message code="userspace.description" /></td>
-		<td><jstl:out value="${p.description}" /></td>
-	</tr>
-
-	<tr>
-		<td><spring:message code="userspace.profileimg" /></td>
-		<td><img style="max-width: 80px; max-height: 80px;"
-			src="<jstl:out value="${p.profileImg}"/>"></td>
-	</tr>
-	<tr>
-		<td><spring:message code="userspace.contact" /></td>
-		<td><jstl:out value="${p.contact}" /></td>
-	</tr>
-</table>
-
-<br />
-<br />
-
-<h1>
-	<spring:message code="donantions.titulo" />
-</h1>
-
-<%-- Crear donaciones --%>
-<security:authorize access="hasRole('USER')">
-	<jstl:if test="${actor.userSpace==p}">
-		<spring:message code="actor.new" var="actorNew" />
-		<input onclick="window.location='donation/user/create.do'"
-			class="btn btn-warning" type="button" value="${actorNew}" />
-	</jstl:if>
-	<br />
-	<br />
-</security:authorize>
-
-<%-- DONACIONES --%>
-
-<table>
-	<jstl:forEach var="dona" items="${p.donations}">
-		<tr>
-			<td><spring:message code="dona.title" /></td>
-			<td><jstl:out value="${dona.title}" /></td>
-		<tr>
-		<tr>
-			<td><spring:message code="dona.description" /></td>
-			<td><jstl:out value="${dona.description}" /></td>
-		</tr>
-		<tr>
-			<td><spring:message code="dona.price" /></td>
-			<td><jstl:out value="${dona.price}" /> Euros</td>
-
-			<%-- Editar donacion o borrarlo --%>
-			<security:authorize access="hasRole('USER')">
-				<td><jstl:if test="${actor.userSpace==p}">
-						<spring:message code="actor.edit" var="actorEdit" />
-						<input
-							onclick="window.location='donation/user/edit.do?q=${dona.id}'"
-							class="btn btn-warning" type="button" value="${actorEdit}" />
-					</jstl:if> <jstl:if test="${actor.userSpace==p}">
-						<spring:message code="actor.delete" var="actorDelete" />
-						<input
-							onclick="window.location='donation/user/delete.do?q=${dona.id}'"
-							class="btn btn-warning" type="button" value="${actorDelete}" />
-						<br />
-						<br />
-					</jstl:if></td>
-			</security:authorize>
-	</jstl:forEach>
-</table>
-<br />
-<br />
-
 <%-- PLAYLIST Y TRACK --%>
-
-<h1>
+<h2>
 	<spring:message code="playlist"></spring:message>
-</h1>
+</h2>
 
 <jstl:if test="${actor.userSpace==p}">
 	<spring:message code="actor.new" var="actorNew" />
@@ -162,7 +84,100 @@
 	<br />
 </jstl:if>
 
-<table>
+<jstl:forEach var="play" items="${p.playLists}">
+	<jstl:forEach var="track" items="${play.tracks}">
+		<audio controls controlsList="nodownload">
+			<source src="userspace/user/play.do?q=${track.id}" type="audio/mp3" onmouseout="true">
+			Your browser does not support the audio element.
+		</audio>
+		<br/>
+		<br/>
+	</jstl:forEach>
+</jstl:forEach>
+
+<table style="width: 75%;">
+	<tr>
+		<td>
+			<h2>
+				<spring:message code="userspace.info" />
+			</h2>
+			<br/>
+			<br/>
+			<table style="width: 100%;">
+				<tr>
+					<td><spring:message code="userspace.title" /></td>
+					<td><jstl:out value="${p.title}" /></td>
+				</tr>
+				<tr>
+					<td><spring:message code="userspace.description" /></td>
+					<td><jstl:out value="${p.description}" /></td>
+				</tr>
+			
+				<tr>
+					<td><spring:message code="userspace.profileimg" /></td>
+					<td><img style="max-width: 80px; max-height: 80px;"
+						src="<jstl:out value="${p.profileImg}"/>"></td>
+				</tr>
+				<tr>
+					<td><spring:message code="userspace.contact" /></td>
+					<td><jstl:out value="${p.contact}" /></td>
+				</tr>
+			</table>
+		</td>
+		<%-- DONACIONES --%>
+		<td>
+			<h2>
+				<spring:message code="donantions.titulo" />
+			</h2>
+			
+			<%-- Crear donaciones --%>
+			<security:authorize access="hasRole('USER')">
+				<jstl:if test="${isPrincipal eq false}">
+					<spring:message code="actor.new" var="actorNew" />
+					<input onclick="window.location='donation/user/create.do'"
+						class="btn btn-warning" type="button" value="${actorNew}" />
+				</jstl:if>
+				<br />
+				<br />
+			</security:authorize>
+			<jstl:forEach var="dona" items="${p.donations}">
+				<table style="width: 100%;">
+					<tr>
+						<td><spring:message code="dona.title" /></td>
+						<td><jstl:out value="${dona.title}" /></td>
+					<tr>
+					<tr>
+						<td><spring:message code="dona.description" /></td>
+						<td><jstl:out value="${dona.description}" /></td>
+					</tr>
+					<tr>
+						<td><spring:message code="dona.price" /></td>
+						<td><jstl:out value="${dona.price}" /> Euros</td>
+			
+						<%-- Editar donacion o borrarlo 
+						<security:authorize access="hasRole('USER')">
+							<td><jstl:if test="${actor.userSpace==p}">
+									<spring:message code="actor.edit" var="actorEdit" />
+									<input
+										onclick="window.location='donation/user/edit.do?q=${dona.id}'"
+										class="btn btn-warning" type="button" value="${actorEdit}" />
+								</jstl:if> <jstl:if test="${actor.userSpace==p}">
+									<spring:message code="actor.delete" var="actorDelete" />
+									<input
+										onclick="window.location='donation/user/delete.do?q=${dona.id}'"
+										class="btn btn-warning" type="button" value="${actorDelete}" />
+									<br />
+									<br />
+								</jstl:if></td>
+						</security:authorize>--%>
+				</table>
+				<br/>
+			</jstl:forEach>
+		</td>
+	<tr>
+</table>
+
+<%--<table>
 	<jstl:forEach var="play" items="${p.playLists}">
 		<tr>
 			<td><spring:message code="dona.title" /></td>
@@ -185,9 +200,11 @@
 		</tr>
 		</jstl:if>
 		<tr>
-			<td><h2>
+			<td>
+				<h2>
 					<spring:message code="play.track" />
-				</h2></td>
+				</h2>
+			</td>
 		</tr>
 		<jstl:forEach var="track" items="${play.tracks}">
 			<tr>
@@ -219,4 +236,4 @@
 		</td>
 		</jstl:if>
 	</jstl:forEach>
-</table>
+</table> --%>

@@ -53,3 +53,8 @@
 		</tr>
 	</jstl:forEach>
 </table>
+<br/>
+<br/>
+
+<spring:message code="event.back" var="back"/>
+<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-warning" type="button" name="cancel" value="${back}"/>
