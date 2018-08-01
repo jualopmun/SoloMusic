@@ -1,40 +1,41 @@
+
 package controllers;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.PlayList;
-import domain.Track;
 import services.PlayListService;
 import services.TrackService;
+import domain.PlayList;
+import domain.Track;
 
 @Controller
 @RequestMapping("track")
 public class TrackController extends AbstractController {
 
 	@Autowired
-	private TrackService trackService;
+	private TrackService	trackService;
 
 	@Autowired
-	private PlayListService playListService;
+	private PlayListService	playListService;
 
-	public PlayList playList = null;
+	public PlayList			playList	= null;
+
 
 	@RequestMapping(value = "user/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam int q) {
+	public ModelAndView create(@RequestParam final int q) {
 		ModelAndView result;
 
 		try {
-			Track track = trackService.create();
-			playList = playListService.findOne(q);
+			final Track track = this.trackService.create();
+			this.playList = this.playListService.findOne(q);
 			result = this.createEditModelAndView(track, null);
 
 		} catch (final Throwable e) {
@@ -46,21 +47,20 @@ public class TrackController extends AbstractController {
 	}
 
 	@RequestMapping(value = "user/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam int q) {
+	public ModelAndView delete(@RequestParam final int q) {
 		ModelAndView result;
 		try {
-			Track track = trackService.findOne(q);
-			for (PlayList playlist : playListService.findAll()) {
+			final Track track = this.trackService.findOne(q);
+			for (final PlayList playlist : this.playListService.findAll())
 				if (playlist.getTracks().contains(track)) {
-					Collection<Track> tracks = playlist.getTracks();
+					final Collection<Track> tracks = playlist.getTracks();
 					tracks.remove(track);
 					playlist.setTracks(tracks);
 
-					playListService.save(playlist);
+					this.playListService.save(playlist);
 				}
-			}
 
-			trackService.delete(track);
+			this.trackService.delete(track);
 			result = new ModelAndView("redirect:/userspace/user/view.do");
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -71,7 +71,7 @@ public class TrackController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST)
-	public ModelAndView saveCreate(@RequestParam("file") MultipartFile file, @RequestParam("title") String title) {
+	public ModelAndView saveCreate(@RequestParam("file") final MultipartFile file, @RequestParam("title") final String title) {
 		ModelAndView result;
 
 		if (title.isEmpty()) {
@@ -107,7 +107,7 @@ public class TrackController extends AbstractController {
 		else
 			try {
 
-				trackService.save(title, file, playList.getId());
+				this.trackService.save(title, file, this.playList.getId());
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
@@ -121,7 +121,7 @@ public class TrackController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Track track) {
+	protected ModelAndView createEditModelAndView(final Track track) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(track, null);
@@ -129,7 +129,7 @@ public class TrackController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Track track, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Track track, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("track/create");

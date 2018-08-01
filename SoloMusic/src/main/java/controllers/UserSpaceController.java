@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +39,9 @@ public class UserSpaceController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
-	
+
 	@Autowired
-	private TrackService 	trackService;
+	private TrackService		trackService;
 
 
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
@@ -137,34 +136,30 @@ public class UserSpaceController extends AbstractController {
 
 		return result;
 	}
-	
-	@RequestMapping(value = "/user/play", method = RequestMethod.GET,
-	        produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
-	public HttpEntity<byte[]> downloadRecipientFile(@RequestParam int q) throws IOException,
-	        ServletException {
-	   
-		Track track = trackService.findOne(q);
-	    if (track == null || track.getFile() == null
-	            || track.getFile().length <= 0) {
-	        throw new ServletException("No clip found/clip has not data, id="
-	                + q);
-	    }
-	    HttpHeaders header = new HttpHeaders();
-	  
-	    //header.setContentType(new MediaType("audio", "mp3"));
-	    header.setContentType(new MediaType("audio", "vnd.mp3"));
-	    header.setContentLength(track.getFile().length);
-	    return new HttpEntity<byte[]>(track.getFile(), header);
+
+	@RequestMapping(value = "/user/play", method = RequestMethod.GET, produces = {
+		MediaType.APPLICATION_OCTET_STREAM_VALUE
+	})
+	public HttpEntity<byte[]> downloadRecipientFile(@RequestParam final int q) throws IOException, ServletException {
+
+		final Track track = this.trackService.findOne(q);
+		if (track == null || track.getFile() == null || track.getFile().length <= 0)
+			throw new ServletException("No clip found/clip has not data, id=" + q);
+		final HttpHeaders header = new HttpHeaders();
+
+		//header.setContentType(new MediaType("audio", "mp3"));
+		header.setContentType(new MediaType("audio", "vnd.mp3"));
+		header.setContentLength(track.getFile().length);
+		return new HttpEntity<byte[]>(track.getFile(), header);
 	}
 
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveCreate(@Valid final UserSpace userSpace, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
-			
+		if (binding.hasErrors())
 			result = this.createNewModelAndView(userSpace, null);
-		} else
+		else
 			try {
 
 				this.userSpaceService.save(userSpace);

@@ -22,33 +22,31 @@
 
 	<%-- Stored message variables --%>
 	<spring:message code="actor.save" var="save" />
+	<spring:message code="actor.cancel" var="cancel" />
 	
 	<form:form id="form" action="${requestURI}" modelAttribute="actor" >
 	
-		<acme:textbox2 code="actor.userAccount.username" path="username" errors="false"/>
+		<acme:textbox2 code="actor.userAccount.username" path="userAccount.username" />
 		<br/>
-		<acme:password2 code="actor.userAccount.password" path="password" errors="false"/>
+		<acme:password2 code="actor.userAccount.password" path="userAccount.password" />
 		<br/>
-		<acme:password2 code="actor.repeatPassword" path="repeatPassword" errors="false"/>
+		<acme:textbox2 code="actor.name" path="name" />
 		<br/>
-		<acme:textbox2 code="actor.name" path="name" errors="false"/>
+		<acme:textbox2 code="actor.surname" path="surname" />
 		<br/>
-		<acme:textbox2 code="actor.surname" path="surname" errors="false"/>
+		<acme:textbox2 code="actor.email" path="email" />
 		<br/>
-		<acme:textbox2 code="actor.email" path="email" errors="false"/>
-		<br/>
-		<acme:textbox2 code="actor.birthDate" path="birthDate" errors="false"/>
+		<acme:textbox2 code="actor.birthDate" path="birthDate" />
 		<br/>
 	
-		<form:label path="acceptedTerms" >
-			<spring:message code="actor.terms.text" />
-		</form:label>
+		<spring:message code="actor.terms.text" />
 		<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
 		<input type="checkbox" required="required"/>
 		<br/>
 		
-		<input type="submit" name="save" value="${save}"/>&nbsp;
-		<acme:cancel code="actor.cancel" url="welcome/index.do"/>
+		<input class="btn btn-warning" type="submit" name="save" value="${save}"/>&nbsp;
+		<input onclick="window.location='welcome/index.do'"
+			class="btn btn-warning" type="button" value="${cancel}" />
 	
 	</form:form>
 </security:authorize>

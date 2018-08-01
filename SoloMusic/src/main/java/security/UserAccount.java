@@ -35,7 +35,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 
 	// Constructors -----------------------------------------------------------
 
-	private static final long serialVersionUID = 7254823034213841482L;
+	private static final long	serialVersionUID	= 7254823034213841482L;
 
 
 	public UserAccount() {
@@ -44,8 +44,8 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		this.authorities = new ArrayList<Authority>();
 	}
 
-	// Attributes -------------------------------------------------------------
 
+	// Attributes -------------------------------------------------------------
 
 	// UserDetails interface --------------------------------------------------
 
@@ -57,10 +57,10 @@ public class UserAccount extends DomainEntity implements UserDetails {
 
 	@NotNull
 	public Boolean getBanned() {
-		return banned;
+		return this.banned;
 	}
 
-	public void setBanned(Boolean banned) {
+	public void setBanned(final Boolean banned) {
 		this.banned = banned;
 	}
 

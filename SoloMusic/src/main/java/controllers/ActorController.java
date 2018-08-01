@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import domain.Actor;
-import forms.ActorRegisterForm;
 
 @Controller
 @RequestMapping("actor")
@@ -25,7 +24,8 @@ public class ActorController extends AbstractController {
 	// Services
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService	actorService;
+
 
 	// @Autowired
 	// private UserAccountRepository uar;
@@ -55,7 +55,7 @@ public class ActorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		final ActorRegisterForm actor = new ActorRegisterForm();
+		final Actor actor = new Actor();
 
 		result = this.createEditModelAndView(actor);
 
@@ -63,44 +63,17 @@ public class ActorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final ActorRegisterForm actor, final BindingResult binding) {
+	public ModelAndView save(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
-			// if (this.uar.findActorByUsername(actor.getUserAccount().getUsername()) !=
-			// null)
-			// binding.rejectValue("userAccount.username", "acme.username.unique");
-			// if (actor.getUserAccount().getUsername().length() < 5 ||
-			// actor.getUserAccount().getUsername().length() > 32)
-			// binding.rejectValue("userAccount.username", "acme.password.size");
-			// if (actor.getUserAccount().getPassword().length() < 5 ||
-			// actor.getUserAccount().getPassword().length() > 32)
-			// binding.rejectValue("userAccount.password", "acme.password.size");
-			if (!actor.getRepeatPassword().equals(actor.getPassword())) {
-				binding.rejectValue("repeatPassword", "acme.password.repeat","error");
-				throw new IllegalArgumentException();
-			}
-			// if (actor.getName().isEmpty())
-			// binding.rejectValue("name",
-			// "org.hibernate.validator.constraints.NotBlank.message");
-			// if (actor.getSurname().isEmpty())
-			// binding.rejectValue("surname",
-			// "org.hibernate.validator.constraints.NotBlank.message");
-			// if (actor.getEmail().isEmpty())
-			// binding.rejectValue("email", "javax.validator.constraints.email.message");
-			// if (actor.getBirthDate().toString().isEmpty())
-			// binding.rejectValue("birthDate", "acme.date.invalid");
-			// System.out.println(binding.getAllErrors().toString());
-			actor.setAcceptedTerms(false);
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(actor);
-		} else
+		else
 			try {
-				final Actor a = this.actorService.reconstruct(actor, binding);
-				this.actorService.hashPassword(a);
-				this.actorService.save(a);
+				this.actorService.hashPassword(actor);
+				this.actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
-				System.out.println(oops.toString());
 				result = this.createEditModelAndView(actor, "actor.commit.error");
 			}
 		return result;
@@ -140,7 +113,7 @@ public class ActorController extends AbstractController {
 
 	// Ancillary methods
 
-	protected ModelAndView createEditModelAndView(final ActorRegisterForm actor) {
+	protected ModelAndView createEditModelAndView(final Actor actor) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(actor, null);
@@ -148,7 +121,7 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final ActorRegisterForm actor, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Actor actor, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("actor/edit");
