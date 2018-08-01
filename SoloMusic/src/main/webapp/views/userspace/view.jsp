@@ -28,7 +28,9 @@
 
 </security:authorize>
 
+<jstl:if test="${p!=null}">
 <security:authorize access="hasRole('USER')">
+
 	<jstl:if test="${isPrincipal eq false}">
 		<tr>
 			<td><jstl:choose>
@@ -232,3 +234,4 @@
 	
 
 </table>
+</jstl:if>

@@ -23,9 +23,9 @@
 		
 		
 		
-		<div class="form-group" style="width: 20%;">
+		
 		<form:errors path="*" class="has-error" />
-
+<div class="form-group" style="width: 55%;">
 			<label> <spring:message code="event.title" />
 			</label><br /> <input class="form-control" value="${event.title}"
 				type="text" name="title" />
@@ -48,12 +48,14 @@
 			<br /> <br />
 			
 			<label> <spring:message code="event.startDate" />
-			</label><br /> <input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${event.startDate}"/>'
+			
+			</label><br /> <input class="form-control"
 				type="text" name="startDate" placeholder="dd/MM/yyyy" />
 			<form:errors cssClass="error" path="startDate" />
 			
 			<br />
 			</div>
+			
 			
 			
 	  <spring:message code="actor.save" var="actorSaveHeader"/>

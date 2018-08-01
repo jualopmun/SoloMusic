@@ -36,6 +36,7 @@
 		<form:hidden path="folders" />
 		<form:hidden path="userAccount.banned" />
 		
+
 		<acme:textbox2 code="actor.userAccount.username" path="userAccount.username" />
 		<br/>
 		<acme:password2 code="actor.userAccount.password" path="userAccount.password" />
@@ -45,10 +46,14 @@
 		<acme:textbox2 code="actor.surname" path="surname" />
 		<br/>
 		<acme:textbox2 code="actor.email" path="email" />
+		
 		<br/>
-		<acme:textbox2 code="actor.birthDate" path="birthDate"  />
-		<br/>
-	
+		<div class="form-group" style="width: 55%;">
+		<label> <spring:message code="actor.birthDate" />
+			</label><br /> <input class="form-control"
+				type="text" name="birthDate" placeholder="dd/MM/yyyy" />
+			<form:errors cssClass="error" path="birthDate" />
+	</div>
 		<spring:message code="actor.terms.text" />
 		<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
 		<input type="checkbox" required="required"/>
