@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +56,7 @@ public class ActorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		final Actor actor = new Actor();
+		Actor actor=actorService.create();
 
 		result = this.createEditModelAndView(actor);
 
@@ -66,11 +67,15 @@ public class ActorController extends AbstractController {
 	public ModelAndView save(@Valid final Actor actor, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			for(ObjectError e:binding.getAllErrors()) {
+				System.out.println(e.toString());
+			}
 			result = this.createEditModelAndView(actor);
+		}
 		else
 			try {
-				this.actorService.hashPassword(actor);
+				
 				this.actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {

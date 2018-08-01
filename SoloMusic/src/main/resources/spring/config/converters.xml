@@ -19,9 +19,14 @@
 
 	<util:list id="converters">
 		
-		<!--<bean class="converters.AuthorityToStringConverter" />-->
-		<!-- <bean class="converters.FolderToStringConverter"/> -->
+		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.StringToAuthorityConverter" />
+		
+		<bean class="converters.UserAccountToStringConverter" />
+		<bean class="converters.StringToUserAccountConverter" />
+		
 		<bean class="converters.StringToFolderConverter"/>
+		<bean class="converters.FolderToStringConverter"/>
 		
 		<bean class="converters.AdvertisementToStringConverter"/>
 		<bean class="converters.StringToAdvertisementConverter"/>

@@ -25,7 +25,17 @@
 	<spring:message code="actor.cancel" var="cancel" />
 	
 	<form:form id="form" action="${requestURI}" modelAttribute="actor" >
-	
+		
+		<form:hidden path="id" />
+		<form:hidden path="version" />
+		<form:hidden path="userAccount.authorities" />
+		<form:hidden path="followers" />
+		<form:hidden path="followeds" />
+		<form:hidden path="ownerAdvertisement" />
+		<form:hidden path="registersAdvertisement" />
+		<form:hidden path="folders" />
+		<form:hidden path="userAccount.banned" />
+		
 		<acme:textbox2 code="actor.userAccount.username" path="userAccount.username" />
 		<br/>
 		<acme:password2 code="actor.userAccount.password" path="userAccount.password" />
@@ -36,7 +46,7 @@
 		<br/>
 		<acme:textbox2 code="actor.email" path="email" />
 		<br/>
-		<acme:textbox2 code="actor.birthDate" path="birthDate" />
+		<acme:textbox2 code="actor.birthDate" path="birthDate"  />
 		<br/>
 	
 		<spring:message code="actor.terms.text" />

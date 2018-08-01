@@ -20,11 +20,6 @@
 		<div class="form-group" style="width: 20%;">
 		<form:errors path="*" class="has-error" />
 
-			<label> <spring:message code="event.title" />
-			</label><br /> <input class="form-control"
-				type="text" name="title" />
-			<br />
-		    
 			
 			
 			<label> <spring:message code="track.file" />

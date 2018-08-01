@@ -78,17 +78,18 @@ public class TrackService {
 		return this.trackRepository.exists(arg0);
 	}
 
-	public void save(final String title, final MultipartFile file, final Integer playlistId) {
+	public void save( final MultipartFile file, final Integer playlistId) {
 		Track track = new Track();
 
 		try {
 
 			track.setFile(file.getBytes());
-			track.setTitle(title);
+			track.setTitle(file.getOriginalFilename());
 
 		} catch (final Exception e) {
 			track = null;
 		}
+		
 
 		track = this.trackRepository.save(track);
 

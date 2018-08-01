@@ -43,20 +43,25 @@ public class ActorService {
 	}
 
 	public Actor create() {
-		final Authority a = new Authority();
-		a.setAuthority(Authority.USER);
-		final UserAccount account = new UserAccount();
-		account.setAuthorities(Arrays.asList(a));
-		account.setBanned(false);
+		
 
 		//TODO: generación automática del UserSpace, Folders, etc.
 		final Actor actor = new Actor();
-		actor.setUserAccount(account);
+		
 		actor.setOwnerAdvertisement(new ArrayList<Advertisement>());
 		actor.setRegistersAdvertisement(new ArrayList<Advertisement>());
 		actor.setFolders(new ArrayList<Folder>());
 		actor.setFolloweds(new ArrayList<Actor>());
 		actor.setFollowers(new ArrayList<Actor>());
+		
+		
+		Authority a = new Authority();
+		a.setAuthority(Authority.USER);
+	    UserAccount account = new UserAccount();
+		account.setAuthorities(Arrays.asList(a));
+		account.setBanned(false);
+		actor.setUserAccount(account);
+		
 
 		return actor;
 	}
@@ -73,8 +78,12 @@ public class ActorService {
 		return this.actorRepository.findOne(arg0);
 	}
 
-	public <S extends Actor> S save(final S arg0) {
-		return this.actorRepository.save(arg0);
+	public Actor save(Actor actor) {
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		actor.getUserAccount().setPassword(encoder.encodePassword(actor.getUserAccount().getPassword(), null));
+		
+		return this.actorRepository.save(actor);
+		
 	}
 
 	public void follow(final Actor a) {

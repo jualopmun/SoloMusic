@@ -71,17 +71,10 @@ public class TrackController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST)
-	public ModelAndView saveCreate(@RequestParam("file") final MultipartFile file, @RequestParam("title") final String title) {
+	public ModelAndView saveCreate(@RequestParam("file") final MultipartFile file) {
 		ModelAndView result;
 
-		if (title.isEmpty()) {
-			result = new ModelAndView("track/create");
-			result.addObject("track", null);
-			result.addObject("message", "track.title.error");
-
-			result.addObject("requestURI", "user/create.do");
-			return result;
-		} else if (file.isEmpty()) {
+	 if (file.isEmpty()) {
 			result = new ModelAndView("track/create");
 			result.addObject("track", null);
 			result.addObject("message", "file.null.error");
@@ -107,7 +100,7 @@ public class TrackController extends AbstractController {
 		else
 			try {
 
-				this.trackService.save(title, file, this.playList.getId());
+				this.trackService.save(file, this.playList.getId());
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
