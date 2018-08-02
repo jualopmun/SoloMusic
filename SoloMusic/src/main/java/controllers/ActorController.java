@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import domain.Actor;
+import security.LoginService;
 
 @Controller
 @RequestMapping("actor")
@@ -26,6 +27,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+	
+	@Autowired
+	private LoginService loginService;
 
 
 	// @Autowired
@@ -111,6 +115,47 @@ public class ActorController extends AbstractController {
 			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
+		}
+
+		return result;
+	}
+	
+	//Premium
+	@RequestMapping(value = "/premium", method = RequestMethod.GET)
+	public ModelAndView premium() {
+		final ModelAndView result;
+		final Actor actor = this.actorService.findByPrincipal();
+		result = new ModelAndView("actor/premium");
+		result.addObject("actor", actor);
+		return result;
+	}
+	
+	@RequestMapping(value = "/user/premium", method = RequestMethod.GET)
+	public ModelAndView goPremium() {
+		 ModelAndView result;
+		 
+
+		try {
+			actorService.hacerPremium();
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/user/nopremium", method = RequestMethod.GET)
+	public ModelAndView gonoPremium() {
+		 ModelAndView result;
+		 
+
+		try {
+			actorService.hacernoPremium();
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;

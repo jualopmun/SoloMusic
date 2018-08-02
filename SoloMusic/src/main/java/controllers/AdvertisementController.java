@@ -44,6 +44,8 @@ public class AdvertisementController extends AbstractController {
 		final Collection<Advertisement> advertisements = this.advertisementService.findAll();
 
 		result = new ModelAndView("advertisement/list");
+		Actor actor = actorService.findByPrincipal();
+		result.addObject("actor", actor);
 		result.addObject("advertisements", advertisements);
 		result.addObject("requestURI", "advertisement/list.do");
 
@@ -61,7 +63,9 @@ public class AdvertisementController extends AbstractController {
 			advertisements = user.getRegistersAdvertisement();
 
 		result = new ModelAndView("advertisement/list");
+		Actor actor = actorService.findByPrincipal();
 		result.addObject("advertisements", advertisements);
+		result.addObject("actor", actor);
 		result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
 
 		return result;
@@ -96,9 +100,15 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		final ModelAndView result;
-		final Advertisement advertisement = this.advertisementService.create();
+		 ModelAndView result;
+		try {
+		  Actor principal = this.actorService.findByPrincipal();	
+		  Assert.isTrue(principal.getIsPremium());
+		 Advertisement advertisement = this.advertisementService.create();
 		result = this.createEditModelAndView(advertisement);
+		}catch(final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -107,12 +117,17 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int q) throws ParseException {
-		final ModelAndView result;
-
+		 ModelAndView result;
+		try {
+		 Actor principal = this.actorService.findByPrincipal();	
+		 Assert.isTrue(principal.getIsPremium());
 		final Advertisement advertisement = this.advertisementService.findOne(q);
 
 		Assert.notNull(advertisement);
 		result = this.createEditModelAndView(advertisement);
+		}catch(final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -125,6 +140,8 @@ public class AdvertisementController extends AbstractController {
 			result = this.createEditModelAndView(advertisement);
 		else
 			try {
+				  Actor principal = this.actorService.findByPrincipal();	
+				  Assert.isTrue(principal.getIsPremium());
 				if (advertisement.getStartDate().after(advertisement.getEndDate())) {
 					binding.rejectValue("endDate", "acme.date.later", "error");
 					throw new IllegalArgumentException();

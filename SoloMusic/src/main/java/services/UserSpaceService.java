@@ -23,14 +23,13 @@ import domain.UserSpace;
 public class UserSpaceService {
 
 	@Autowired
-	private UserSpaceRepository	userSpaceRepository;
+	private UserSpaceRepository userSpaceRepository;
 
 	@Autowired
-	private LoginService		loginService;
+	private LoginService loginService;
 
 	@Autowired
-	private ActorService		actorService;
-
+	private ActorService actorService;
 
 	public UserSpaceService() {
 		super();
@@ -93,5 +92,7 @@ public class UserSpaceService {
 	public List<UserSpace> userSpacesearch(final String text) {
 		return this.userSpaceRepository.userSpacesearch(text);
 	}
+
+	
 
 }

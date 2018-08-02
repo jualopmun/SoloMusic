@@ -29,39 +29,38 @@ import forms.ActorRegisterForm;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository actorRepository;
 
 	@Autowired
-	private Validator				validator;
+	private Validator validator;
 
 	@Autowired
-	private UserAccountRepository	userAccountRepository;
+	private UserAccountRepository userAccountRepository;
 
+	@Autowired
+	private LoginService loginService;
 
 	public ActorService() {
 		super();
 	}
 
 	public Actor create() {
-		
 
-		//TODO: generación automática del UserSpace, Folders, etc.
+		// TODO: generación automática del UserSpace, Folders, etc.
 		final Actor actor = new Actor();
-		
+
 		actor.setOwnerAdvertisement(new ArrayList<Advertisement>());
 		actor.setRegistersAdvertisement(new ArrayList<Advertisement>());
 		actor.setFolders(new ArrayList<Folder>());
 		actor.setFolloweds(new ArrayList<Actor>());
 		actor.setFollowers(new ArrayList<Actor>());
-		
-		
+
 		Authority a = new Authority();
 		a.setAuthority(Authority.USER);
-	    UserAccount account = new UserAccount();
+		UserAccount account = new UserAccount();
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
 		actor.setUserAccount(account);
-		
 
 		return actor;
 	}
@@ -81,9 +80,9 @@ public class ActorService {
 	public Actor save(Actor actor) {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		actor.getUserAccount().setPassword(encoder.encodePassword(actor.getUserAccount().getPassword(), null));
-		
+
 		return this.actorRepository.save(actor);
-		
+
 	}
 
 	public void follow(final Actor a) {
@@ -102,7 +101,7 @@ public class ActorService {
 		this.save(principal);
 	}
 
-	//Other methods
+	// Other methods
 
 	public Actor findByPrincipal() {
 		final UserAccount userAccount = LoginService.getPrincipal();
@@ -149,5 +148,22 @@ public class ActorService {
 
 	public Actor findByUserSpaceId(final int id) {
 		return this.actorRepository.findByUserSpaceId(id);
+	}
+
+	// Hacerte premium
+	public Actor hacerPremium() {
+		Actor a = loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		a.setIsPremium(true);
+
+		return actorRepository.save(a);
+
+	}
+
+	public Actor hacernoPremium() {
+		Actor a = loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		a.setIsPremium(false);
+
+		return actorRepository.save(a);
+
 	}
 }

@@ -22,9 +22,18 @@
 	<spring:message code="advertisement.create" var="create" />
 	<spring:message code="advertisement.owned" var="owned" />
 	<spring:message code="advertisement.registered" var="registered" />
-	
+	<spring:message code="advertisement.premium" var="mustPremium" />
+	<spring:message code="actor.dobepremium" var="dopremium" />
+	<jstl:if test="${actor.isPremium==true }">
 	<input onclick="window.location='advertisement/create.do'"
 		class="btn btn-warning" type="button" value="${create}" />
+   </jstl:if>
+  
+   <jstl:if test="${actor.isPremium==false }">
+   <input onclick="window.location='actor/premium.do'"
+		class="btn btn-warning" type="button" value="${dopremium}" />
+	
+   </jstl:if>
 	<br/>
 	<br/>
 			
@@ -61,9 +70,16 @@
 		</display:column>
 		
 		<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">
+		<jstl:if test="${actor.isPremium==true}">
 			<display:column sortable="false">
 				<a href="advertisement/edit.do?q=${row.id}"><jstl:out value="${edit}" /></a>
 			</display:column>
+			</jstl:if>
+			<jstl:if test="${actor.isPremium==false}">
+			<display:column sortable="false">
+				<jstl:out value="${mustPremium}" />
+			</display:column>
+			</jstl:if>
 		</jstl:if>
 		
 	</display:table>
