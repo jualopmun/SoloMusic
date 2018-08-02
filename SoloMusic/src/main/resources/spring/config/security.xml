@@ -36,6 +36,7 @@
 		<!--EVENTS -->
 		
 		<security:intercept-url access="permitAll" pattern="/event/user/view.do"/>
+		<security:intercept-url access="permitAll" pattern="/event/user/location.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/edit.do"/>

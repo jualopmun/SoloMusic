@@ -1,0 +1,19 @@
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+ 	
+	<definition name="track/create" extends="master.page">
+		<put-attribute name="title" value="Crear pista" />
+		<put-attribute name="body" value="/views/track/create.jsp" />
+	</definition>
+	
+	<definition name="track/delete" extends="master.page">
+		<put-attribute name="title" value="Borrar pista" />
+		<put-attribute name="body" value="/views/track/edit.jsp" />
+	</definition>
+	
+
+</tiles-definitions>

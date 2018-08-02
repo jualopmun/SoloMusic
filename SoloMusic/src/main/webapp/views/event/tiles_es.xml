@@ -13,6 +13,11 @@
 		<put-attribute name="title" value="Crear eventos" />
 		<put-attribute name="body" value="/views/event/create.jsp" />
 	</definition>
+	<definition name="event/location" extends="master.page">
+		<put-attribute name="title" value="Localización" />
+		<put-attribute name="body" value="/views/event/location.jsp" />
+	</definition>
+	
 	
 
 </tiles-definitions>

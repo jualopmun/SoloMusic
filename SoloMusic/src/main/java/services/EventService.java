@@ -71,11 +71,20 @@ public class EventService {
 
 			m.setTitle(event.getTitle());
 			m.setDescription(event.getDescription());
-			m.setLocationUrl(event.getLocationUrl());
+			String local=event.getLocationUrl();
+			String[] parsear= local.split("@");
+			String[] parsear2=parsear[1].split(",");
+			m.setLocationUrl(parsear2[0]+","+parsear2[1]);
+			
+		
 			m.setStartDate(event.getStartDate());
 			m = this.eventRepository.save(m);
 		} else {
-
+			String local=event.getLocationUrl();
+			String[] parsear= local.split("@");
+			String[] parsear2=parsear[1].split(",");
+			event.setLocationUrl(parsear2[0]+","+parsear2[1]);
+			
 			m = this.eventRepository.save(event);
 			man.getUserSpace().getEvents().add(m);
 			this.actorService.save(man);

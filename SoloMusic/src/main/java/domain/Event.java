@@ -38,7 +38,7 @@ public class Event extends DomainEntity {
 		return description;
 	}
 	
-	@URL
+	
 	public String getLocationUrl() {
 		return locationUrl;
 	}

@@ -1,0 +1,21 @@
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="event/view" extends="master.page">
+		<put-attribute name="title" value="Events" />
+		<put-attribute name="body" value="/views/event/view.jsp" />
+	</definition>
+	
+	<definition name="event/create" extends="master.page">
+		<put-attribute name="title" value="Create events" />
+		<put-attribute name="body" value="/views/event/create.jsp" />
+	</definition>
+	
+	
+
+
+
+</tiles-definitions>

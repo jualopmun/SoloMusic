@@ -74,6 +74,25 @@ public class EventController extends AbstractController {
 		return result;
 
 	}
+	
+	@RequestMapping(value = "/user/location", method = RequestMethod.GET)
+	public ModelAndView location(@RequestParam final int p) {
+		ModelAndView result;
+
+		try {
+			
+			result = new ModelAndView("event/location");
+
+			Event event= eventService.findOne(p);
+
+			result.addObject("event", event);
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
 
 	@RequestMapping(value = "user/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int p) {
@@ -119,6 +138,11 @@ public class EventController extends AbstractController {
 		else
 			try {
 				
+				if (!event.getLocationUrl().contains("https://www.google.es/maps/place/")) {
+
+					binding.rejectValue("locationUrl", "event.location.error", "error");
+					throw new IllegalArgumentException();
+				}
 
 				this.eventService.save(event);
 

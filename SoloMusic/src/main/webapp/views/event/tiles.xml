@@ -14,6 +14,11 @@
 		<put-attribute name="body" value="/views/event/create.jsp" />
 	</definition>
 	
+	<definition name="event/location" extends="master.page">
+		<put-attribute name="title" value="location" />
+		<put-attribute name="body" value="/views/event/location.jsp" />
+	</definition>
+	
 	
 
 

@@ -21,6 +21,7 @@
 		<br />
 	</jstl:if>
 </security:authorize>
+<spring:message code="event.location" var="location"/>
 
 <table>
 	<jstl:forEach var="p" items="${event}">
@@ -28,14 +29,17 @@
 			<td><spring:message code="event.title" /></td>
 			<td><jstl:out value="${p.title}" /></td>
 		</tr>
+		
+		
+		
+		
 		<tr>
 			<td><spring:message code="event.description" /></td>
 			<td><jstl:out value="${p.description}" /></td>
 		</tr>
-		<tr>
+		<tr >
 			<td><spring:message code="event.locationUrl" /></td>
-			<td><a href="<jstl:out value="${p.locationUrl}" />"><jstl:out
-						value="${p.locationUrl}" /></a></td>
+			<td><a href='event/user/location.do?p=${p.id}'><jstl:out value="${location}" /></a></td>
 		</tr>
 		<tr>
 			<td><spring:message code="event.startDate" /></td>
@@ -65,7 +69,10 @@
 <br />
 <br />
 
+
+
 <spring:message code="event.back" var="back" />
 <input
-	onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'"
+	onclick="window.location='userspace/user/view.do'"
 	class="btn btn-warning" type="button" name="cancel" value="${back}" />
+	
