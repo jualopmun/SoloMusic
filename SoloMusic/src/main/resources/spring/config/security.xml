@@ -79,6 +79,8 @@
 		<security:intercept-url pattern="/actor/premium.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/actor/user/premium.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/actor/user/nopremium.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/actor/advertisement/list.do" access="hasRole('USER')" />
+		
 		<!-- ADVERTISEMENT -->
 
 		<security:intercept-url pattern="/advertisement/list.do" access="permitAll" />

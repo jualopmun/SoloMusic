@@ -17,24 +17,34 @@
 	
 	<display:column property="name" title="${name} ${surname}" sortable="false" />
 	
-	<jstl:choose>
-		<jstl:when test="${varid == 'followers'}">
-			<spring:url var="followUrl" value="/actor/follow.do">
-				<spring:param name="q" value="${row.id}" />
-			</spring:url>
-			<spring:message code="userspace.follow" var="followMsg" />
-		</jstl:when>
-
-		<jstl:otherwise>
-			<spring:url var="followUrl" value="/actor/unfollow.do">
-				<spring:param name="q" value="${row.id}" />
-			</spring:url>
-			<spring:message code="userspace.unfollow" var="followMsg" />
-		</jstl:otherwise>
-	</jstl:choose>
-
+	<spring:url var="userSpaceUrl" value="/userspace/user/spaceview.do">
+		<spring:param name="q" value="${row.userSpace.id}" />
+	</spring:url>
+	<spring:message code="actor.userSpace" var="userSpaceMsg" />
 	<display:column sortable="false">
-		<input onclick="window.location='${followUrl}'"	class="btn btn-warning" type="button" value="${followMsg}" />
+		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-warning" type="button" value="${userSpaceMsg}" />
 	</display:column>
+	
+	<jstl:if test="${requestURI == 'actor/list.do'}">
+		<jstl:choose>
+			<jstl:when test="${varid == 'followers'}">
+				<spring:url var="followUrl" value="/actor/follow.do">
+					<spring:param name="q" value="${row.id}" />
+				</spring:url>
+				<spring:message code="userspace.follow" var="followMsg" />
+			</jstl:when>
+	
+			<jstl:otherwise>
+				<spring:url var="followUrl" value="/actor/unfollow.do">
+					<spring:param name="q" value="${row.id}" />
+				</spring:url>
+				<spring:message code="userspace.unfollow" var="followMsg" />
+			</jstl:otherwise>
+		</jstl:choose>
+
+		<display:column sortable="false">
+			<input onclick="window.location='${followUrl}'"	class="btn btn-warning" type="button" value="${followMsg}" />
+		</display:column>
+	</jstl:if>
 	
 </display:table>

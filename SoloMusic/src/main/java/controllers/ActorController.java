@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.AdvertisementService;
 import domain.Actor;
-import security.LoginService;
+import domain.Advertisement;
 
 @Controller
 @RequestMapping("actor")
@@ -26,14 +27,11 @@ public class ActorController extends AbstractController {
 	// Services
 
 	@Autowired
-	private ActorService	actorService;
-	
+	private ActorService			actorService;
+
 	@Autowired
-	private LoginService loginService;
+	private AdvertisementService	advertisementService;
 
-
-	// @Autowired
-	// private UserAccountRepository uar;
 
 	// Listing
 
@@ -55,12 +53,28 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/advertisement/list", method = RequestMethod.GET)
+	public ModelAndView listRegistered(@RequestParam final int q) {
+		final ModelAndView result;
+		final Advertisement advertisement = this.advertisementService.findOne(q);
+		final Collection<Actor> actors = new ArrayList<Actor>();
+		for (final Actor a : this.actorService.findAll())
+			if (a.getRegistersAdvertisement().contains(advertisement))
+				actors.add(a);
+
+		result = new ModelAndView("actor/list");
+		result.addObject("actors", actors);
+		result.addObject("requestURI", "actor/list.do");
+
+		return result;
+	}
+
 	// Creation
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		Actor actor=actorService.create();
+		final Actor actor = this.actorService.create();
 
 		result = this.createEditModelAndView(actor);
 
@@ -72,14 +86,12 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			for(ObjectError e:binding.getAllErrors()) {
+			for (final ObjectError e : binding.getAllErrors())
 				System.out.println(e.toString());
-			}
 			result = this.createEditModelAndView(actor);
-		}
-		else
+		} else
 			try {
-				
+
 				this.actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
@@ -119,7 +131,7 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
+
 	//Premium
 	@RequestMapping(value = "/premium", method = RequestMethod.GET)
 	public ModelAndView premium() {
@@ -129,14 +141,13 @@ public class ActorController extends AbstractController {
 		result.addObject("actor", actor);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/user/premium", method = RequestMethod.GET)
 	public ModelAndView goPremium() {
-		 ModelAndView result;
-		 
+		ModelAndView result;
 
 		try {
-			actorService.hacerPremium();
+			this.actorService.hacerPremium();
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -144,15 +155,13 @@ public class ActorController extends AbstractController {
 
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "/user/nopremium", method = RequestMethod.GET)
 	public ModelAndView gonoPremium() {
-		 ModelAndView result;
-		 
+		ModelAndView result;
 
 		try {
-			actorService.hacernoPremium();
+			this.actorService.hacernoPremium();
 			result = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");

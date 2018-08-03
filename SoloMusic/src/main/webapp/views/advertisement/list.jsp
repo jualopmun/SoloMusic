@@ -69,6 +69,14 @@
 			<a href="advertisement/view.do?q=${row.id}"><jstl:out value="${view}" /></a>
 		</display:column>
 		
+		<spring:url var="registeredUrl" value="/actor/advertisement/list.do" >
+			<spring:param name="q" value="${row.id}" />
+		</spring:url>
+		<spring:message code="advertisement.registered" var="registered" />
+		<display:column sortable="false">
+			<input onclick="window.location='${registeredUrl}'"	class="btn btn-warning" type="button" value="${registered}" />
+		</display:column>
+		
 		<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">
 		<jstl:if test="${actor.isPremium==true}">
 			<display:column sortable="false">

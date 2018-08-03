@@ -43,13 +43,15 @@
 	<spring:message code="userspace.contact" var="contact"/>		
 	<display:column property="contact" title="${contact}"
 		sortable="false" />
-   <spring:message code="userspace.view" var="view"/>
    <spring:message code="userspace.viewer" var="viewer"/>	
-   <display:column title="${view}" sortable="false">
-			
-				<a href="userspace/user/spaceview.do?q=${row.id}"><jstl:out value="${viewer}" /></a>
-			
-		</display:column>
+   
+	<spring:url var="userSpaceUrl" value="/userspace/user/spaceview.do">
+		<spring:param name="q" value="${row.id}" />
+	</spring:url>
+	<spring:message code="userspace.view" var="view" />
+	<display:column sortable="false">
+		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-warning" type="button" value="${view}" />
+	</display:column>
 
 </display:table>
 
