@@ -14,23 +14,24 @@
 
 
 <security:authorize access="hasRole('USER')">
+<spring:message code="advertisement.cancel" var="cancel"/>
 
-	<form:form action="track/user/save.do" enctype="multipart/form-data">
+	<form:form action="advertisement/user/up.do" enctype="multipart/form-data">
 		
 		<div class="form-group" style="width: 20%;">
 		<form:errors path="*" class="has-error" />
 
 			
 			
-			<label> <spring:message code="track.file" />
+			<label> <spring:message code="advertisement.mainImg" />
 			</label><br /> <input class="form-control"
-				type="file" name="file" accept=".jpg" />
+				type="file" name="mainImg" accept=".jpg" />
 			</div>
 			
 	  <spring:message code="actor.save" var="actorSaveHeader"/>
 		<spring:message code="actor.cancel" var="actorCancelHeader"/>
 		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
-		<input onclick="window.location='userspace/user/view.do'" class="btn btn-warning" type="button" name="cancel" value="${actorCancelHeader}"/>
+		<input onclick="window.location='advertisement/user/list.do?q=0'" class="btn btn-warning" type="button" name="cancel" value="${cancel}"/>
 
 	</form:form>
 </security:authorize>

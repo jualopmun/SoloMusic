@@ -1,13 +1,18 @@
 
 package controllers;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.servlet.ServletException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,12 +21,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdvertisementService;
 import domain.Actor;
 import domain.Advertisement;
+import domain.UserSpace;
+import security.LoginService;
 
 @Controller
 @RequestMapping("advertisement")
@@ -34,6 +42,8 @@ public class AdvertisementController extends AbstractController {
 
 	@Autowired
 	private AdvertisementService	advertisementService;
+	
+	public Integer advertisementId;
 
 
 	//Listing
@@ -205,6 +215,90 @@ public class AdvertisementController extends AbstractController {
 
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	//subir imagen
+	
+	
+	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_OCTET_STREAM_VALUE
+		})
+		public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam  int q) throws IOException, ServletException {
+
+			Advertisement advertisement = advertisementService.findOne(q);
+			if (advertisement == null || advertisement.getMainImg() == null || advertisement.getMainImg().length <= 0)
+				throw new ServletException("No clip found/clip has not data, id=" + q);
+			final HttpHeaders header = new HttpHeaders();
+			
+			//header.setContentType(new MediaType("audio", "mp3"));
+			header.setContentType(new MediaType("image", "jpg"));
+			header.setContentLength(advertisement.getMainImg().length);
+			
+			return new HttpEntity<byte[]>(advertisement.getMainImg(), header);
+		}
+	@RequestMapping(value = "image/upload", method = RequestMethod.GET)
+	public ModelAndView uploadImage(@RequestParam int q) {
+		ModelAndView result;
+		
+		try {
+			 Advertisement  advertisement = advertisementService.findOne(q);
+			
+			result = this.createEditModelAndViewUpload(advertisement, null);
+			advertisementId=advertisement.getId();
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+
+		}
+		return result;
+
+	}
+	@RequestMapping(value = "/user/up", method = RequestMethod.POST)
+	public ModelAndView saveCreate(@RequestParam("mainImg") final MultipartFile file) {
+		ModelAndView result;
+
+	 if (file.isEmpty()) {
+		 result = new ModelAndView("advertisement/upload");
+			result.addObject("advertisement", null);
+			result.addObject("message", "file.null.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		}
+
+		else if (!file.getOriginalFilename().contains(".jpg")) {
+			result = new ModelAndView("advertisement/upload");
+			result.addObject("advertisement", null);
+			result.addObject("message", "file.format.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		} else if (file.getSize() >= 268435455) {
+			result = new ModelAndView("advertisement/upload");
+			result.addObject("advertisement", null);
+			result.addObject("message", "file.format.error.image");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+
+		}
+
+		else
+			try {
+
+				advertisementService.saveJpg(file, advertisementId);
+				result = this.listUser(0);
+
+			} catch (final Throwable th) {
+				th.printStackTrace();
+				result = new ModelAndView("track/create");
+				result.addObject("track", null);
+				result.addObject("message", "actor.commit.error");
+				result.addObject("requestURI", "user/create.do");
+			}
+		return result;
+	}
 
 	//Ancillary methods
 
@@ -220,6 +314,27 @@ public class AdvertisementController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("advertisement/edit");
+		result.addObject("advertisement", advertisement);
+		result.addObject("message", messageCode);
+		result.addObject("requestURI", "advertisement/edit.do");
+
+		return result;
+	}
+	
+	
+	
+	protected ModelAndView createEditModelAndViewUpload(final Advertisement advertisement) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(advertisement, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewUpload(final Advertisement advertisement, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("advertisement/upload");
 		result.addObject("advertisement", advertisement);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "advertisement/edit.do");

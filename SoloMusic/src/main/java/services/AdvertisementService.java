@@ -2,15 +2,19 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import repositories.AdvertisementRepository;
 import domain.Actor;
 import domain.Advertisement;
+import domain.PlayList;
+import domain.Track;
 
 @Service
 @Transactional
@@ -66,6 +70,26 @@ public class AdvertisementService {
 		final Actor principal = this.actorService.findByPrincipal();
 		a.getActorRegisters().remove(principal);
 		return this.save(a);
+	}
+	
+	public void saveJpg( final MultipartFile file, final Integer advertisementid) {
+		Advertisement advertisement = advertisermentRepository.findOne(advertisementid);
+		Actor principal = this.actorService.findByPrincipal();
+		try {
+
+			advertisement.setMainImg(file.getBytes());;
+			
+		} catch (final Exception e) {
+			advertisement = null;
+		}
+		
+
+		advertisement = this.advertisermentRepository.save(advertisement);
+
+		principal.getOwnerAdvertisement().add(advertisement);
+
+		actorService.save(principal);
+
 	}
 
 }

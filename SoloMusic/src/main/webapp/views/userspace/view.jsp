@@ -10,7 +10,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${p==null and actor.userSpace==p}">
 		<spring:message code="actor.new" var="actorNew" />
@@ -94,9 +93,15 @@
 				</tr>
 
 				<tr>
+				<spring:message code="userspace.upload.archive" var="actoUpload"></spring:message>
+				
 					<td><spring:message code="userspace.profileimg" /></td>
 					<td><img style="max-width: 80px; max-height: 80px;"
-						src="<jstl:out value="${p.profileImg}"/>"></td>
+						src="userspace/view/image.do?q=${p.id}"></td>
+							<jstl:if test="${actor.userSpace==p}">	
+				    <td><input onclick="window.location='userspace/dowload/upload.do'"
+				class="btn btn-warning" type="button" value="${actoUpload}" /></td>
+				</jstl:if>
 				</tr>
 				<tr>
 					<td><spring:message code="userspace.contact" /></td>

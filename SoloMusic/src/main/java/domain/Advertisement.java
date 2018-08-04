@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -30,7 +31,7 @@ public class Advertisement extends DomainEntity {
 	private Date				startDate;
 	private Date				endDate;
 	private String				locationUrl;
-	private String				mainImg;
+	private byte[]				mainImg;
 	private Double				price;
 	private Actor				actorOwener;
 	private Collection<Actor>	actorRegisters;
@@ -68,7 +69,8 @@ public class Advertisement extends DomainEntity {
 	}
 
 	//De momento no pongo @URL ya que es una subida de imagen
-	public String getMainImg() {
+	@Column(columnDefinition = "LONGBLOB")
+	public byte[] getMainImg() {
 		return this.mainImg;
 	}
 
@@ -112,7 +114,7 @@ public class Advertisement extends DomainEntity {
 	public void setLocationUrl(final String locationUrl) {
 		this.locationUrl = locationUrl;
 	}
-	public void setMainImg(final String mainImg) {
+	public void setMainImg(final byte[] mainImg) {
 		this.mainImg = mainImg;
 	}
 	public void setPrice(final Double price) {

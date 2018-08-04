@@ -43,11 +43,7 @@
 				class="form-control" />
 			<form:errors cssClass="error" path="description" />
 			
-			<br /> <label> <spring:message code="userspace.profileimg" />
-			</label><br /> <input class="form-control" value="${userSpace.profileImg}"
-				type="text" name="profileImg" />
-			<form:errors cssClass="error" path="profileImg" />
-			<br /> <br />
+			
 			
 			<label> <spring:message code="userspace.contact" />
 			</label><br /> <input class="form-control" value="${userSpace.contact}"

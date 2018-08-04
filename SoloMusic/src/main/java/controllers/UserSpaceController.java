@@ -2,12 +2,15 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
@@ -189,11 +193,111 @@ public class UserSpaceController extends AbstractController {
 		}
 		return result;
 	}
+	
+	
+	//Subir imagen
+	
+	
+	
+	@RequestMapping(value = "dowload/upload", method = RequestMethod.GET)
+	public ModelAndView uploadImage() {
+		ModelAndView result;
+		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		try {
+			 UserSpace userSpace = man.getUserSpace();
+			
+			result = this.createNewModelAndViewUpload(userSpace, null);
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+
+		}
+		return result;
+
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_OCTET_STREAM_VALUE
+		})
+		public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam  int q) throws IOException, ServletException {
+
+			UserSpace userSpace = userSpaceService.findOne(q);
+			if (userSpace == null || userSpace.getProfileImg() == null || userSpace.getProfileImg().length <= 0)
+				throw new ServletException("No clip found/clip has not data, id=" + q);
+			final HttpHeaders header = new HttpHeaders();
+			
+			//header.setContentType(new MediaType("audio", "mp3"));
+			header.setContentType(new MediaType("image", "jpg"));
+			header.setContentLength(userSpace.getProfileImg().length);
+			
+			return new HttpEntity<byte[]>(userSpace.getProfileImg(), header);
+		}
+
+	@RequestMapping(value = "/user/up", method = RequestMethod.POST)
+	public ModelAndView saveJpg(@RequestParam("profileImg") final MultipartFile file) {
+		ModelAndView result;
+
+	 if (file.isEmpty()) {
+			result = new ModelAndView("userspace/upload");
+			result.addObject("userspace", null);
+			result.addObject("message", "file.null.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		}
+
+		else if (!file.getOriginalFilename().contains(".jpg")) {
+			result = new ModelAndView("userspace/upload");
+			result.addObject("userspace", null);
+			result.addObject("message", "file.format.error.image");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		} else if (file.getSize() >= 268435455) {
+			result = new ModelAndView("userspace/upload");
+			result.addObject("userspace", null);
+			result.addObject("message", "file.size.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+
+		}
+
+		else
+			try {
+
+			   userSpaceService.saveJpg(file);
+
+				result = new ModelAndView("redirect:/userspace/user/view.do");
+
+			} catch (final Throwable th) {
+				th.printStackTrace();
+				result = new ModelAndView("userspace/upload");
+				result.addObject("userspace", null);
+				result.addObject("message", "actor.commit.error");
+				result.addObject("requestURI", "user/create.do");
+			}
+		return result;
+	}
+	
+	
+	
+	
 
 	protected ModelAndView createNewModelAndView(final UserSpace userSpace, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("userspace/create");
+		result.addObject("userSpace", userSpace);
+
+		result.addObject("message", message);
+		return result;
+	}
+	
+	protected ModelAndView createNewModelAndViewUpload(final UserSpace userSpace, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("userspace/upload");
 		result.addObject("userSpace", userSpace);
 
 		result.addObject("message", message);

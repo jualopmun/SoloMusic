@@ -2,12 +2,14 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import repositories.UserSpaceRepository;
 import security.LoginService;
@@ -16,6 +18,7 @@ import domain.Donation;
 import domain.Event;
 import domain.Perfomance;
 import domain.PlayList;
+import domain.Track;
 import domain.UserSpace;
 
 @Service
@@ -39,7 +42,6 @@ public class UserSpaceService {
 		final UserSpace userSpace = new UserSpace();
 		userSpace.setTitle(new String());
 		userSpace.setDescription(new String());
-		userSpace.setProfileImg(new String());
 		userSpace.setContact(new String());
 
 		return userSpace;
@@ -91,6 +93,24 @@ public class UserSpaceService {
 
 	public List<UserSpace> userSpacesearch(final String text) {
 		return this.userSpaceRepository.userSpacesearch(text);
+	}
+	
+	public void saveJpg( final MultipartFile file) {
+		UserSpace userspace =loginService.findActorByUsername(LoginService.getPrincipal().getId()).getUserSpace();
+
+		try {
+
+			userspace.setProfileImg(file.getBytes());
+
+		} catch (final Exception e) {
+			userspace = null;
+		}
+		
+
+		userSpaceRepository.save(userspace);
+
+		
+
 	}
 
 	

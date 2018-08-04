@@ -30,6 +30,9 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/create.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/edit.do"/>
+		<security:intercept-url access="permitAll" pattern="/userspace/view/image.do"/>
+		<security:intercept-url access="permitAll" pattern="/userspace/dowload/upload.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/up.do"/>
 		<security:intercept-url access="permitAll" pattern="/userspace/user/list.do"/>
 		<security:intercept-url access="permitAll" pattern="/userspace/user/search.do"/>
 		
@@ -90,6 +93,12 @@
 		<security:intercept-url pattern="/advertisement/user/*" access="hasRole('USER')" />
 		<security:intercept-url pattern="/advertisement/register.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/advertisement/unregister.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/advertisement/view/image.do" access="permitAll" />
+		<security:intercept-url pattern="/advertisement/image/upload.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/advertisement/user/up.do" access="hasRole('USER')" />
+		
+		
+		
 		
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />

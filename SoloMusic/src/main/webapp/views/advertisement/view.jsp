@@ -14,7 +14,8 @@
 
 <table>
 	<tr>
-		<td><img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${advertisement.mainImg}"/>"></td>	
+		<td><img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${advertisement.id}"/></td>
+		
 		<td><jstl:out value="${advertisement.title}" /></td>
 	</tr>
 	<tr>

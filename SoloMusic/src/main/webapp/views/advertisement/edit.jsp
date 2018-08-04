@@ -41,10 +41,8 @@
 				<form:errors cssClass="error" path="locationUrl" />
 				<br />
 				
-				<label><spring:message code="advertisement.mainImg" /></label>
-				<input class="form-control" value="${advertisement.mainImg}" type="text" name="mainImg" />
-				<form:errors cssClass="error" path="mainImg" />
-				<br />
+				
+
 
 				<label> <spring:message code="advertisement.startDate" />
 				</label><br /> <input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.startDate}"/>'

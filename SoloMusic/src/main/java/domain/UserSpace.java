@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class UserSpace extends DomainEntity {
 	//Atributos
 	private String title;
 	private String description;
-	private String profileImg;
+	private byte[] profileImg;
 	private String contact;
 	
 	//Relaciones
@@ -44,7 +45,8 @@ public class UserSpace extends DomainEntity {
 	}
 	
 	//De momento no pongo @URL ya que es una subida de imagen
-	public String getProfileImg() {
+	@Column(columnDefinition = "LONGBLOB")
+	public byte[] getProfileImg() {
 		return profileImg;
 	}
 	
@@ -81,7 +83,7 @@ public class UserSpace extends DomainEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setProfileImg(String profileImg) {
+	public void setProfileImg(byte[] profileImg) {
 		this.profileImg = profileImg;
 	}
 	public void setContact(String contact) {

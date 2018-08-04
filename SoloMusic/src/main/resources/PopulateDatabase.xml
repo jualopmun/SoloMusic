@@ -255,7 +255,6 @@
 		<property name="startDate" value="16/07/2017 21:45" />
 		<property name="endDate" value="21/07/2017 21:49" />
 		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
-		<property name="mainImg" value="www.imagen.com" />
 		<property name="price" value="4.2" />
 		<property name="actorOwener" ref="actor1" />
 		<property name="actorRegisters">
@@ -272,7 +271,6 @@
 		<property name="startDate" value="16/07/2017 21:45" />
 		<property name="endDate" value="21/07/2017 21:49" />
 		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
-		<property name="mainImg" value="www.imagen.com" />
 		<property name="price" value="4.4" />
 		<property name="actorOwener" ref="actor2" />
 		<property name="actorRegisters">
@@ -484,7 +482,6 @@
 	<bean id="userSpace1" class="domain.UserSpace">
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
-		<property name="profileImg" value="profileImg1" />
 		<property name="contact" value="contact1" />
 		<property name="events">
 			<list>
@@ -513,7 +510,6 @@
 	<bean id="userSpace2" class="domain.UserSpace">
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
-		<property name="profileImg" value="profileImg2" />
 		<property name="contact" value="contact2" />
 		<property name="events">
 			<list>

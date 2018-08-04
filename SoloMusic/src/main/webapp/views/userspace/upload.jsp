@@ -15,16 +15,16 @@
 
 <security:authorize access="hasRole('USER')">
 
-	<form:form action="track/user/save.do" enctype="multipart/form-data">
+	<form:form action="userspace/user/up.do" enctype="multipart/form-data">
 		
 		<div class="form-group" style="width: 20%;">
 		<form:errors path="*" class="has-error" />
 
 			
 			
-			<label> <spring:message code="track.file" />
+			<label> <spring:message code="userspace.profileimg" />
 			</label><br /> <input class="form-control"
-				type="file" name="file" accept=".jpg" />
+				type="file" name="profileImg" accept=".jpg" />
 			</div>
 			
 	  <spring:message code="actor.save" var="actorSaveHeader"/>

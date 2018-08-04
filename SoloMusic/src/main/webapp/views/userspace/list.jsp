@@ -29,7 +29,7 @@
 	<spring:message code="userspace.profileimg" var="profileImg"/>
 	<display:column title="${profileImg}" sortable="false">
 		<img style="max-width: 80px; max-height: 80px;"
-			src="<jstl:out value="${row.profileImg}"/>">
+			src="userspace/view/image.do?q=${row.id}"/>
 	</display:column>
 	
 	<spring:message code="userspace.title" var="title"/>

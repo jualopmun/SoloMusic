@@ -53,12 +53,13 @@
 	<spring:message code="advertisement.price" var="price" />
 	<spring:message code="advertisement.view" var="view" />
 	<spring:message code="advertisement.edit" var="edit" />
+	<spring:message code="userspace.profileimg" var="editImage" />
 	
 	<display:table  keepStatus="true" name="advertisements"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		
 		<display:column sortable="false">
-			<img style="max-width: 80px; max-height: 80px;" src="<jstl:out value="${row.mainImg}"/>">
+			<img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${row.id}" />
 		</display:column>
 		
 		<display:column property="title" title="${title}" sortable="false" />
@@ -81,6 +82,9 @@
 		<jstl:if test="${actor.isPremium==true}">
 			<display:column sortable="false">
 				<a href="advertisement/edit.do?q=${row.id}"><jstl:out value="${edit}" /></a>
+			</display:column>
+			<display:column sortable="false">
+				<a href="advertisement/image/upload.do?q=${row.id}"><jstl:out value="${editImage}" /></a>
 			</display:column>
 			</jstl:if>
 			<jstl:if test="${actor.isPremium==false}">
