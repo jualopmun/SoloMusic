@@ -19,9 +19,13 @@
 		<script>
 function myMap() {
   var local="${event.locationUrl}"
-  var separar=local.split(",");
+
+   var  parsear= local.split("@");
+   var parsear2=parsear[1].split(",");
+   console.log(parsear2);
+
   
-  var myCenter = new google.maps.LatLng(parseFloat(separar[0]),parseFloat(separar[1]));
+  var myCenter = new google.maps.LatLng(parseFloat(parsear2[0]),parseFloat(parsear2[1]));
   var mapCanvas = document.getElementById("map");
   var mapOptions = {center: myCenter, zoom: 15};
   var map = new google.maps.Map(mapCanvas, mapOptions);
