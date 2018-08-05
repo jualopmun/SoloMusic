@@ -263,13 +263,13 @@
 	<input name="save" type="submit" class="btn btn-primary" value="<spring:message code="<%=saved_text %>"/>">
 <%
 	if(cancel != null) {
-		//<input onclick="${cancel}" type="button" class="btn btn-warning" value="<spring:message code="acme.cancel" />">
+		//<input onclick="${cancel}" type="button" class="btn btn-danger" value="<spring:message code="acme.cancel" />">
 %>
-	<input onclick="window.history.back()" type="button" class="btn btn-warning" value="<spring:message code="acme.cancel" />">
+	<input onclick="window.history.back()" type="button" class="btn btn-danger" value="<spring:message code="acme.cancel" />">
 <%
 	} else {
 %>
-	<input onclick="window.history.back()" type="button" class="btn btn-warning" value="<spring:message code="acme.cancel" />">
+	<input onclick="window.history.back()" type="button" class="btn btn-danger" value="<spring:message code="acme.cancel" />">
 <%
 	}
 %>

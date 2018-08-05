@@ -8,7 +8,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<display:table keepStatus="true" name="actors"
+<display:table style="border-collapse:inherit;" keepStatus="true" name="actors"
 	requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 	
 	<display:column sortable="false">
@@ -22,7 +22,7 @@
 	</spring:url>
 	<spring:message code="actor.userSpace" var="userSpaceMsg" />
 	<display:column sortable="false">
-		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-warning" type="button" value="${userSpaceMsg}" />
+		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-danger" type="button" value="${userSpaceMsg}" />
 	</display:column>
 	
 	<jstl:if test="${requestURI == 'actor/list.do'}">
@@ -43,7 +43,7 @@
 		</jstl:choose>
 
 		<display:column sortable="false">
-			<input onclick="window.location='${followUrl}'"	class="btn btn-warning" type="button" value="${followMsg}" />
+			<input onclick="window.location='${followUrl}'"	class="btn btn-danger" type="button" value="${followMsg}" />
 		</display:column>
 	</jstl:if>
 	

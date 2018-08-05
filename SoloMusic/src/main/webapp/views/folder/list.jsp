@@ -22,7 +22,7 @@
 		<spring:message code="folder.message.new" />
 	</button>
 </div>
-<table class="table table-over">
+<table style="border-collapse:inherit;" class="table table-over">
 	<thead>
 		<tr>
 			<th><spring:message code="folder.folderName" /></th>

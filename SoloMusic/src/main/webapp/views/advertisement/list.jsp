@@ -26,12 +26,12 @@
 	<spring:message code="actor.dobepremium" var="dopremium" />
 	<jstl:if test="${actor.isPremium==true }">
 	<input onclick="window.location='advertisement/create.do'"
-		class="btn btn-warning" type="button" value="${create}" />
+		class="btn btn-danger" type="button" value="${create}" />
    </jstl:if>
   
    <jstl:if test="${actor.isPremium==false }">
    <input onclick="window.location='actor/premium.do'"
-		class="btn btn-warning" type="button" value="${dopremium}" />
+		class="btn btn-danger" type="button" value="${dopremium}" />
 	
    </jstl:if>
 	<br/>
@@ -53,9 +53,10 @@
 	<spring:message code="advertisement.price" var="price" />
 	<spring:message code="advertisement.view" var="view" />
 	<spring:message code="advertisement.edit" var="edit" />
+	<spring:message code="advertisement.registered" var="registered" />
 	<spring:message code="userspace.profileimg" var="editImage" />
 	
-	<display:table  keepStatus="true" name="advertisements"
+	<display:table style="border-collapse:inherit;" keepStatus="true" name="advertisements"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		
 		<display:column sortable="false">
@@ -67,24 +68,32 @@
 		<display:column property="price" title="${price}" sortable="false" />
 		
 	  	<display:column sortable="false">
-			<a href="advertisement/view.do?q=${row.id}"><jstl:out value="${view}" /></a>
+		  	<spring:url var="viewUrl" value="/advertisement/view.do" >
+				<spring:param name="q" value="${row.id}" />
+			</spring:url>
+	  		<input onclick="window.location='${viewUrl}'"	class="btn btn-danger" type="button" value="${view}" />
 		</display:column>
 		
-		<spring:url var="registeredUrl" value="/actor/advertisement/list.do" >
-			<spring:param name="q" value="${row.id}" />
-		</spring:url>
-		<spring:message code="advertisement.registered" var="registered" />
 		<display:column sortable="false">
-			<input onclick="window.location='${registeredUrl}'"	class="btn btn-warning" type="button" value="${registered}" />
+			<spring:url var="registeredUrl" value="/actor/advertisement/list.do" >
+				<spring:param name="q" value="${row.id}" />
+			</spring:url>
+			<input onclick="window.location='${registeredUrl}'"	class="btn btn-danger" type="button" value="${registered}" />
 		</display:column>
 		
 		<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">
 		<jstl:if test="${actor.isPremium==true}">
 			<display:column sortable="false">
-				<a href="advertisement/edit.do?q=${row.id}"><jstl:out value="${edit}" /></a>
+				<spring:url var="editUrl" value="/advertisement/edit.do" >
+					<spring:param name="q" value="${row.id}" />
+				</spring:url>
+		  		<input onclick="window.location='${editUrl}'"	class="btn btn-danger" type="button" value="${edit}" />
 			</display:column>
 			<display:column sortable="false">
-				<a href="advertisement/image/upload.do?q=${row.id}"><jstl:out value="${editImage}" /></a>
+				<spring:url var="editImageUrl" value="/advertisement/edit.do" >
+					<spring:param name="q" value="${row.id}" />
+				</spring:url>
+		  		<input onclick="window.location='${editImageUrl}'"	class="btn btn-danger" type="button" value="${editImage}" />
 			</display:column>
 			</jstl:if>
 			<jstl:if test="${actor.isPremium==false}">

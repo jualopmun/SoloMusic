@@ -15,14 +15,14 @@
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${actor.userSpace==userSpace}">
 		<spring:message code="performance.new" var="actorNew"/>
-		<input onclick="window.location='perfomance/user/create.do'" class="btn btn-warning" type="button"  value="${actorNew}"/>
+		<input onclick="window.location='perfomance/user/create.do'" class="btn btn-danger" type="button"  value="${actorNew}"/>
 		<br />
 	</jstl:if>
 </security:authorize>
 <br/>
 
 <jstl:forEach var="p" items="${perfomance}">
-	<table>
+	<table style="border-collapse:inherit;">
 			<tr>
 				<td><spring:message code="perfomance.title" /></td>
 				<td><jstl:out value="${p.title}" /></td>
@@ -46,15 +46,15 @@
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${actor.userSpace==userSpace}">
 			<spring:message code="event.delete" var="actorDelete"/>
-			<input onclick="window.location='perfomance/user/delete.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorDelete}"/>
+			<input onclick="window.location='perfomance/user/delete.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorDelete}"/>
 			<spring:message code="event.edit" var="actorEdit"/>
-			<input onclick="window.location='perfomance/user/edit.do?p=${p.id}'" class="btn btn-warning" type="button"  value="${actorEdit}"/>
+			<input onclick="window.location='perfomance/user/edit.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorEdit}"/>
 		</jstl:if>
 	</security:authorize>
 </jstl:forEach>
 
 <spring:message code="performance.back" var="back"/>
-<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-warning" type="button" name="cancel" value="${back}"/>
+<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${back}"/>
 	
 <script> 
 

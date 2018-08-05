@@ -27,7 +27,7 @@
 
 <%-- Definition --%>
 
-<button type="button" class="btn btn-warning" onclick="javascript: relativeRedir('${url}')" >
+<button type="button" class="btn btn-danger" onclick="javascript: relativeRedir('${url}')" >
 	<spring:message code="${code}" />
 </button>
 

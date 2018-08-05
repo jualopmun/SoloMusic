@@ -14,13 +14,13 @@
 	<jstl:if test="${p==null and actor.userSpace==p}">
 		<spring:message code="actor.new" var="actorNew" />
 		<input onclick="window.location='userspace/user/create.do'"
-			class="btn btn-warning" type="button" value="${actorNew}" />
+			class="btn btn-danger" type="button" value="${actorNew}" />
 	</jstl:if>
 
 	<jstl:if test="${p!=null and actor.userSpace==p}">
 		<spring:message code="actor.edit" var="actorEdit" />
 		<input onclick="window.location='userspace/user/edit.do'"
-			class="btn btn-warning" type="button" value="${actorEdit}" />
+			class="btn btn-danger" type="button" value="${actorEdit}" />
 	</jstl:if>
 	<br />
 	<br />
@@ -47,7 +47,7 @@
 						<spring:message code="userspace.unfollow" var="followMsg" />
 					</jstl:otherwise>
 				</jstl:choose> <input onclick="window.location='${followUrl}'"
-				class="btn btn-warning" type="button" value="${followMsg}" /></td>
+				class="btn btn-danger" type="button" value="${followMsg}" /></td>
 		</tr>
 		<br />
 		<br />
@@ -59,30 +59,28 @@
 	<spring:message code="actor.video" var="actorVideo" />
 
 	<input onclick="window.location='event/user/view.do?p=${p.id}'"
-		class="btn btn-warning" type="button" value="${actorVideo}" />
+		class="btn btn-danger" type="button" value="${actorVideo}" />
 </jstl:if>
+
 <%-- Ver las actuaciones --%>
 <jstl:if test="${!p.perfomances.isEmpty() or p!=null}">
 	<spring:message code="actor.perfomance" var="actorPerfomance" />
 
 	<input onclick="window.location='perfomance/user/view.do?p=${p.id}'"
-		class="btn btn-warning" type="button" value="${actorPerfomance}" />
+		class="btn btn-danger" type="button" value="${actorPerfomance}" />
 </jstl:if>
 <br />
 <br />
 
 <%-- PLAYLIST Y TRACK --%>
 
-
-
-
-<table style="width: 75%;">
+<table style="width: 75%; border-collapse:inherit;">
 	<tr>
 		<td>
 			<h2>
 				<spring:message code="userspace.info" />
 			</h2> <br /> <br />
-			<table style="width: 100%;">
+			<table style="width: 100%; border-collapse:inherit;">
 				<tr>
 					<td><spring:message code="userspace.title" /></td>
 					<td><jstl:out value="${p.title}" /></td>
@@ -100,7 +98,7 @@
 						src="userspace/view/image.do?q=${p.id}"></td>
 							<jstl:if test="${actor.userSpace==p}">	
 				    <td><input onclick="window.location='userspace/dowload/upload.do'"
-				class="btn btn-warning" type="button" value="${actoUpload}" /></td>
+				class="btn btn-danger" type="button" value="${actoUpload}" /></td>
 				</jstl:if>
 				</tr>
 				<tr>
@@ -118,12 +116,12 @@
 				<jstl:if test="${p!=null and actor.userSpace==p}">
 					<spring:message code="actor.new" var="actorNew" />
 					<input onclick="window.location='donation/user/create.do'"
-						class="btn btn-warning" type="button" value="${actorNew}" />
+						class="btn btn-danger" type="button" value="${actorNew}" />
 				</jstl:if>
 				<br />
 				<br />
 			</security:authorize> <jstl:forEach var="dona" items="${p.donations}">
-				<table style="width: 100%;">
+				<table style="width: 100%; border-collapse:inherit;">
 					<tr>
 						<td><spring:message code="dona.title" /></td>
 						<td><jstl:out value="${dona.title}" /></td>
@@ -142,12 +140,12 @@
 									<spring:message code="actor.edit" var="actorEdit" />
 									<input
 										onclick="window.location='donation/user/edit.do?q=${dona.id}'"
-										class="btn btn-warning" type="button" value="${actorEdit}" />
+										class="btn btn-danger" type="button" value="${actorEdit}" />
 								</jstl:if> <jstl:if test="${actor.userSpace==p}">
 									<spring:message code="actor.delete" var="actorDelete" />
 									<input
 										onclick="window.location='donation/user/delete.do?q=${dona.id}'"
-										class="btn btn-warning" type="button" value="${actorDelete}" />
+										class="btn btn-danger" type="button" value="${actorDelete}" />
 									<br />
 									<br />
 								</jstl:if></td>
@@ -166,11 +164,11 @@
 <jstl:if test="${actor.userSpace==p}">
 	<spring:message code="actor.new" var="actorNew" />
 	<input onclick="window.location='playlist/user/create.do'"
-		class="btn btn-warning" type="button" value="${actorNew}" />
+		class="btn btn-danger" type="button" value="${actorNew}" />
 
 </jstl:if>
 
-<table>
+<table style="border-collapse:inherit;">
 	<jstl:forEach var="play" items="${p.playLists}">
 		<tr>
 			<td><spring:message code="play.title" /></td>
@@ -187,7 +185,7 @@
 
 				<td><spring:message code="actor.delete" var="actorDelete" /> <input
 					onclick="window.location='playlist/user/delete.do?q=${play.id}'"
-					class="btn btn-warning" type="button" value="${actorDelete}" /></td>
+					class="btn btn-danger" type="button" value="${actorDelete}" /></td>
 
 			</tr>
 		</jstl:if>
@@ -219,7 +217,7 @@
 			<td><spring:message code="actor.delete.track"
 					var="actorDeleteTrack" /> <input
 				onclick="window.location='track/user/delete.do?q=${track.id}'"
-				class="btn btn-warning" type="button" value="${actorDeleteTrack}" />
+				class="btn btn-danger" type="button" value="${actorDeleteTrack}" />
 			</td>
 			
 		</jstl:if>
@@ -229,7 +227,7 @@
 			<tr>
 			<td><spring:message code="actor.new.track" var="actorNewTrack" />
 				<input onclick="window.location='track/user/create.do?q=${play.id}'"
-				class="btn btn-warning" type="button" value="${actorNewTrack}" /></td>
+				class="btn btn-danger" type="button" value="${actorNewTrack}" /></td>
 				</tr>
 				
 		</jstl:if>

@@ -24,7 +24,7 @@
   </form:form>
 </div>
 
-<display:table  keepStatus="true" name="userspace"
+<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"
 	requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 	<spring:message code="userspace.profileimg" var="profileImg"/>
 	<display:column title="${profileImg}" sortable="false">
@@ -50,7 +50,7 @@
 	</spring:url>
 	<spring:message code="userspace.view" var="view" />
 	<display:column sortable="false">
-		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-warning" type="button" value="${view}" />
+		<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-danger" type="button" value="${view}" />
 	</display:column>
 
 </display:table>

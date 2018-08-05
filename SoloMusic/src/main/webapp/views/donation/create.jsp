@@ -52,7 +52,7 @@
 	  <spring:message code="actor.save" var="actorSaveHeader"/>
 		<spring:message code="actor.cancel" var="actorCancelHeader"/>
 		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
-		<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-warning" type="button" name="cancel" value="${actorCancelHeader}"/>
+		<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
 
 	</form:form>
 </security:authorize>

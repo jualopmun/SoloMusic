@@ -24,44 +24,49 @@
 	<spring:message code="actor.save" var="save" />
 	<spring:message code="actor.cancel" var="cancel" />
 	
-	<form:form id="form" action="${requestURI}" modelAttribute="actor" >
+	<div style="width: 30%; margin: auto;">
+		<div style="width: 175%; margin: auto; display: inline-block;">
+			<form:form id="form" action="${requestURI}" modelAttribute="actor" >
+				
+				<form:hidden path="id" />
+				<form:hidden path="version" />
+				<form:hidden path="userAccount.authorities" />
+				<form:hidden path="followers" />
+				<form:hidden path="followeds" />
+				<form:hidden path="ownerAdvertisement" />
+				<form:hidden path="registersAdvertisement" />
+				<form:hidden path="folders" />
+				<form:hidden path="userAccount.banned" />
+				
 		
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		<form:hidden path="userAccount.authorities" />
-		<form:hidden path="followers" />
-		<form:hidden path="followeds" />
-		<form:hidden path="ownerAdvertisement" />
-		<form:hidden path="registersAdvertisement" />
-		<form:hidden path="folders" />
-		<form:hidden path="userAccount.banned" />
-		
-
-		<acme:textbox2 code="actor.userAccount.username" path="userAccount.username" />
-		<br/>
-		<acme:password2 code="actor.userAccount.password" path="userAccount.password" />
-		<br/>
-		<acme:textbox2 code="actor.name" path="name" />
-		<br/>
-		<acme:textbox2 code="actor.surname" path="surname" />
-		<br/>
-		<acme:textbox2 code="actor.email" path="email" />
-		
-		<br/>
-		<div class="form-group" style="width: 55%;">
-		<label> <spring:message code="actor.birthDate" />
-			</label><br /> <input class="form-control"
-				type="text" name="birthDate" placeholder="dd/MM/yyyy" />
-			<form:errors cssClass="error" path="birthDate" />
+				<acme:textbox2 code="actor.userAccount.username" path="userAccount.username" />
+				<br/>
+				<acme:password2 code="actor.userAccount.password" path="userAccount.password" />
+				<br/>
+				<acme:textbox2 code="actor.name" path="name" />
+				<br/>
+				<acme:textbox2 code="actor.surname" path="surname" />
+				<br/>
+				<acme:textbox2 code="actor.email" path="email" />
+				
+				<br/>
+				<div class="form-group" style="width: 55%;">
+				<label> <spring:message code="actor.birthDate" />
+					</label><br /> <input class="form-control"
+						type="text" name="birthDate" placeholder="dd/MM/yyyy" />
+					<form:errors cssClass="error" path="birthDate" />
+			</div>
+				<spring:message code="actor.terms.text" />
+				<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
+				<input type="checkbox" required="required"/>
+				<br/>
+				
+				<input class="btn btn-danger" type="submit" name="save" value="${save}"/>&nbsp;
+				<input onclick="window.location='welcome/index.do'"
+					class="btn btn-danger" type="button" value="${cancel}" />
+			
+			</form:form>
+		</div>
 	</div>
-		<spring:message code="actor.terms.text" />
-		<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
-		<input type="checkbox" required="required"/>
-		<br/>
-		
-		<input class="btn btn-warning" type="submit" name="save" value="${save}"/>&nbsp;
-		<input onclick="window.location='welcome/index.do'"
-			class="btn btn-warning" type="button" value="${cancel}" />
 	
-	</form:form>
 </security:authorize>

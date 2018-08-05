@@ -31,16 +31,16 @@
 <jstl:if test="${actor.isPremium==false }">
 <input
 	onclick="window.location='actor/user/premium.do'"
-	class="btn btn-warning" type="button" name="premium" value="${premiumGo}" />
+	class="btn btn-danger" type="button" name="premium" value="${premiumGo}" />
 </jstl:if>
 
 <jstl:if test="${actor.isPremium==true }">
 <input
 	onclick="window.location='actor/user/nopremium.do'"
-	class="btn btn-warning" type="button" name="premium" value="${premiumnoGo}" />
+	class="btn btn-danger" type="button" name="premium" value="${premiumnoGo}" />
 </jstl:if>
 <input
 	onclick="window.location='welcome/index.do'"
-	class="btn btn-warning" type="button" name="cancel" value="${back}" />
+	class="btn btn-danger" type="button" name="cancel" value="${back}" />
 	</security:authorize>
 	

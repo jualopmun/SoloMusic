@@ -16,14 +16,14 @@
 	<jstl:if test="${actor.userSpace==userSpace}">
 		<spring:message code="event.new" var="actorNew" />
 		<input onclick="window.location='event/user/create.do'"
-			class="btn btn-warning" type="button" value="${actorNew}" />
+			class="btn btn-danger" type="button" value="${actorNew}" />
 		<br />
 		<br />
 	</jstl:if>
 </security:authorize>
 <spring:message code="event.location" var="location"/>
 
-<table>
+<table style="border-collapse:inherit;">
 	<jstl:forEach var="p" items="${event}">
 		<tr>
 			<td><spring:message code="event.title" /></td>
@@ -54,10 +54,10 @@
 
 					<spring:message code="event.delete" var="actorDelete" />
 					<input onclick="window.location='event/user/delete.do?p=${p.id}'"
-						class="btn btn-warning" type="button" value="${actorDelete}" />
+						class="btn btn-danger" type="button" value="${actorDelete}" />
 					<spring:message code="event.edit" var="actorEdit" />
 					<input onclick="window.location='event/user/edit.do?p=${p.id}'"
-						class="btn btn-warning" type="button" value="${actorEdit}" />
+						class="btn btn-danger" type="button" value="${actorEdit}" />
 					
 				</td>
 
@@ -74,5 +74,5 @@
 <spring:message code="event.back" var="back" />
 <input
 	onclick="window.location='userspace/user/view.do'"
-	class="btn btn-warning" type="button" name="cancel" value="${back}" />
+	class="btn btn-danger" type="button" name="cancel" value="${back}" />
 	

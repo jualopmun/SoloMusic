@@ -45,4 +45,4 @@ function myMap() {
 <spring:message code="event.back" var="back" />
 <input
 	 onClick="history.go(-1);"
-	class="btn btn-warning" type="button" name="cancel" value="${back}" />
+	class="btn btn-danger" type="button" name="cancel" value="${back}" />

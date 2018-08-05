@@ -53,7 +53,7 @@
 					</jstl:otherwise>
 				</jstl:choose>
 				<input onclick="window.location='${registerUrl}'"
-					class="btn btn-warning" type="button" value="${registerMsg}" />
+					class="btn btn-danger" type="button" value="${registerMsg}" />
 			</td>
 			<td>
 				<br />
