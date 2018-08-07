@@ -74,9 +74,9 @@
 
 <%-- PLAYLIST Y TRACK --%>
 
-<table style="width: 75%; border-collapse:inherit;">
+<table style="width: 100%; border-collapse:inherit;">
 	<tr>
-		<td>
+		<td style="width: 70%">
 			<h2>
 				<spring:message code="userspace.info" />
 			</h2> <br /> <br />
@@ -165,7 +165,6 @@
 	<spring:message code="actor.new" var="actorNew" />
 	<input onclick="window.location='playlist/user/create.do'"
 		class="btn btn-danger" type="button" value="${actorNew}" />
-
 </jstl:if>
 
 <table style="border-collapse:inherit;">
@@ -234,7 +233,5 @@
 			<br />
 		<br />
 	</jstl:forEach>
-	
-
 </table>
 </jstl:if>

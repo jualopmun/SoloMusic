@@ -14,16 +14,20 @@
 
 <security:authorize access="hasRole('USER')">
 
-<spring:message code="actor.premium" var="premium"></spring:message>
+<spring:message code="actor.premium.one" var="premium1"></spring:message>
+<spring:message code="actor.premium.two" var="premium2"></spring:message>
+<spring:message code="actor.premium.three" var="premium3"></spring:message>
 <spring:message code="actor.ispremium" var="isPremium"></spring:message>
+
 <jstl:if test="${actor.isPremium==true }">
 <p> <jstl:out value="${isPremium}"></jstl:out></p>
 </jstl:if>
 <br/>
 
-<p> <jstl:out value="${premium}"></jstl:out></p>
-
-
+<h2> <jstl:out value="${premium1}"></jstl:out></h2>
+<p> <jstl:out value="${premium2}"></jstl:out></p>
+<p> <jstl:out value="${premium3}"></jstl:out></p>
+<br/>
 
 <spring:message code="event.back" var="back" />
 <spring:message code="actor.premiumGo" var="premiumGo" />
