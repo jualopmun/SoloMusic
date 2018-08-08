@@ -24,5 +24,10 @@
 		<put-attribute name="title" value="Subir imagen" />
 		<put-attribute name="body" value="/views/advertisement/upload.jsp" />
 	</definition>
+	
+	<definition name="advertisement/location" extends="master.page">
+		<put-attribute name="title" value="Localización" />
+		<put-attribute name="body" value="/views/advertisement/location.jsp" />
+	</definition>
 
 </tiles-definitions>

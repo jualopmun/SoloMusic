@@ -11,7 +11,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <div class="container-fluid">
+
 <security:authorize access="hasRole('USER')">
+
 	<jstl:if test="${p==null and actor.userSpace==p}">
 		<spring:message code="actor.new" var="actorNew" />
 		<input onclick="window.location='userspace/user/create.do'"
@@ -54,7 +56,6 @@
 		<br />
 	</jstl:if>
 </security:authorize>
-</jstl:if>
 
 <%-- Ver los eventos --%>
 <jstl:if test="${!p.events.isEmpty() or p!=null}">
@@ -228,7 +229,11 @@
 					<td><jstl:out value="${dona.price}" /> Euros</td>
 				</tr>
 			</jstl:forEach>
+			
 		</table>
+		
 		</div>
 	</div>
+	</jstl:if>
+	
 </div>

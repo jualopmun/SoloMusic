@@ -54,7 +54,7 @@
 </jstl:forEach>
 
 <spring:message code="performance.back" var="back"/>
-<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${back}"/>
+<input onclick="window.location='userspace/user/view.do?p=${userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${back}"/>
 	
 <script> 
 

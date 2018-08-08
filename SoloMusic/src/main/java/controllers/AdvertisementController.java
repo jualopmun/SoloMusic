@@ -28,6 +28,7 @@ import services.ActorService;
 import services.AdvertisementService;
 import domain.Actor;
 import domain.Advertisement;
+import domain.Event;
 import domain.UserSpace;
 import security.LoginService;
 
@@ -317,6 +318,25 @@ public class AdvertisementController extends AbstractController {
 		result.addObject("advertisement", advertisement);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "advertisement/edit.do");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/user/location", method = RequestMethod.GET)
+	public ModelAndView location(@RequestParam final int p) {
+		ModelAndView result;
+
+		try {
+			
+			result = new ModelAndView("advertisement/location");
+
+			Advertisement advertisement= advertisementService.findOne(p);
+
+			result.addObject("advertisement", advertisement);
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}

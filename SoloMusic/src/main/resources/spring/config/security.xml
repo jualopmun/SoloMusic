@@ -94,6 +94,7 @@
 		<security:intercept-url pattern="/advertisement/register.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/advertisement/unregister.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/advertisement/view/image.do" access="permitAll" />
+		<security:intercept-url pattern="/advertisement/user/location.do" access="permitAll" />
 		<security:intercept-url pattern="/advertisement/image/upload.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/advertisement/user/up.do" access="hasRole('USER')" />
 		

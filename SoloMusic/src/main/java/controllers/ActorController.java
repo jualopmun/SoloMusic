@@ -91,6 +91,7 @@ public class ActorController extends AbstractController {
 			result = this.createEditModelAndView(actor);
 		} else
 			try {
+				actor.setIsPremium(false);
 
 				this.actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");

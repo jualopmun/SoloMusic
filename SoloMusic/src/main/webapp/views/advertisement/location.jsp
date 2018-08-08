@@ -18,7 +18,7 @@
 		
 		<script>
 function myMap() {
-  var local="${event.locationUrl}"
+  var local="${advertisement.locationUrl}"
 
    var  parsear= local.split("@");
    var parsear2=parsear[1].split(",");

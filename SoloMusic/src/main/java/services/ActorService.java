@@ -54,7 +54,7 @@ public class ActorService {
 		actor.setFolders(new ArrayList<Folder>());
 		actor.setFolloweds(new ArrayList<Actor>());
 		actor.setFollowers(new ArrayList<Actor>());
-
+		
 		Authority a = new Authority();
 		a.setAuthority(Authority.USER);
 		UserAccount account = new UserAccount();

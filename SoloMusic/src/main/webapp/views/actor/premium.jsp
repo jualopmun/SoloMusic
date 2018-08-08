@@ -19,12 +19,14 @@
 <spring:message code="actor.premium.three" var="premium3"></spring:message>
 <spring:message code="actor.ispremium" var="isPremium"></spring:message>
 
+
 <jstl:if test="${actor.isPremium==true }">
 <p> <jstl:out value="${isPremium}"></jstl:out></p>
 </jstl:if>
 <br/>
 
 <h2> <jstl:out value="${premium1}"></jstl:out></h2>
+<br/>
 <p> <jstl:out value="${premium2}"></jstl:out></p>
 <p> <jstl:out value="${premium3}"></jstl:out></p>
 <br/>

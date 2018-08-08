@@ -49,9 +49,13 @@ public class PerfomanceController extends AbstractController {
 				result.addObject("actor", actor);
 				final UserSpace userSpace = this.userSpaceService.findOne(p);
 				result.addObject("userSpace", userSpace);
+			}else {
+			UserSpace userSpace = this.userSpaceService.findOne(p);
+			result.addObject("userSpace", userSpace);
 			}
 
 			result.addObject("perfomance", perfomance);
+			
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");

@@ -11,7 +11,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authorize access="permitAll">
-
+<spring:message code="event.location" var="location"/>
 <table>
 	<tr>
 		<td><img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${advertisement.id}"/></td>
@@ -23,8 +23,10 @@
 		<td><jstl:out value="${advertisement.description}" /></td>
 	</tr>
 	<tr>
-		<td><spring:message code="advertisement.locationUrl" /></td>
-		<td><jstl:out value="${advertisement.locationUrl}" /></td>
+		<tr >
+			<td><spring:message code="event.locationUrl" /></td>
+			<td><a href='advertisement/user/location.do?p=${advertisement.id}'><jstl:out value="${location}" /></a></td>
+		</tr>
 	</tr>
 	<tr>
 		<td><spring:message code="advertisement.price" /></td>
