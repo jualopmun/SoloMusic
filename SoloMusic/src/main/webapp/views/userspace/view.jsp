@@ -30,6 +30,7 @@
 
 </security:authorize>
 
+<!-- NO BORRAR AUNQUE ESTE EN AMARILLO -->
 <jstl:if test="${p!=null}">
 <security:authorize access="hasRole('USER')">
 
@@ -234,6 +235,71 @@
 		
 		</div>
 	</div>
+	<!-- COMMENTS -->
+	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+	
+	<table style="width: 50%; border-collapse:inherit;">
+			<tr>
+				<td>
+					<h2>
+						<spring:message code="userspace.comment" />
+					</h2>
+					<br/>
+					
+				
+					
+			
+			<jstl:forEach var="com" items="${p.comments}">
+			
+				<tr>
+					<td><spring:message code="comment.date" /></td>
+					<td><jstl:out value="${com.date}" /></td>
+				<tr>
+			
+				<tr>
+					<td><spring:message code="comment.autor" /></td>
+					<td><jstl:out value="${com.actor.userAccount.username}" /></td>
+				<tr>
+				<tr>
+					<td><spring:message code="comment.text" /></td>
+					<td><jstl:out value="${com.text}" /></td>
+				<tr>
+				<tr>
+					<td><spring:message code="comment.puntuation" /></td>
+					<td><jstl:out value="${com.puntuacion}" /></td>
+				</tr>
+				<jstl:if test="${com.actor.id==actor.id}">
+				<tr>
+					<td>
+				<spring:message code="actor.edit.comment" var="actorEditComment" />
+						<input onclick="window.location='userspace/user/commentEdit.do?q=${com.id}'"
+						class="btn btn-danger" type="button" value="${actorEditComment}" />
+					<spring:message code="actor.delete.comment" var="actordeleteComment" />
+						<input onclick="window.location='userspace/user/commentDel.do?q=${com.id}'"
+						class="btn btn-danger" type="button" value="${actordeleteComment}" />
+					</td>
+					
+				</tr></jstl:if>
+				<br/>
+				
+				
+			</jstl:forEach>
+		
+
+			
+		</table>
+		
+		</div>
+	<security:authorize access="hasRole('USER')">
+	<spring:message code="actor.new.comment" var="actorNewComment" />
+						<input onclick="window.location='userspace/user/comment.do?q=${p.id}'"
+						class="btn btn-danger" type="button" value="${actorNewComment}" />
+	
+	</security:authorize>
+	
+	
+	
+	
+	</div>
 	</jstl:if>
 	
-</div>

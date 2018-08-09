@@ -27,6 +27,7 @@ public class UserSpace extends DomainEntity {
 	private Collection<Perfomance> perfomances;
 	private Collection<Donation> donations;
 	private Collection<PlayList> playLists;
+	private Collection<Comment> comments;
 	
 	
 	//Getters
@@ -75,7 +76,14 @@ public class UserSpace extends DomainEntity {
 		return playLists;
 	}
 	
-	
+	@NotNull
+	@OneToMany
+	public Collection<Comment> getComments() {
+		return comments;
+	}
+
+
+
 	//Setters
 	public void setTitle(String title) {
 		this.title = title;
@@ -102,7 +110,11 @@ public class UserSpace extends DomainEntity {
 		this.playLists = playLists;
 	}
 	
-	
+
+	public void setComments(Collection<Comment> comments) {
+		this.comments = comments;
+	}
+
 	
 	
 	

@@ -503,6 +503,10 @@
 				<ref bean="playlist1" />
 			</list>
 		</property>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
 			
 	</bean>
 	
@@ -529,6 +533,10 @@
 		<property name="playLists">
 			<list>
 				<ref bean="playlist2" />
+			</list>
+		</property>
+		<property name="comments">
+			<list>
 			</list>
 		</property>
 			

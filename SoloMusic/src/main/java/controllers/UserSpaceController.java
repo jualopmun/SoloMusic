@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
+import services.CommnentService;
 import services.TrackService;
 import services.UserSpaceService;
 import domain.Actor;
+import domain.Comment;
 import domain.Track;
 import domain.UserSpace;
 
@@ -36,29 +38,36 @@ import domain.UserSpace;
 public class UserSpaceController extends AbstractController {
 
 	@Autowired
-	private UserSpaceService	userSpaceService;
+	private UserSpaceService userSpaceService;
 
 	@Autowired
-	private LoginService		loginService;
+	private LoginService loginService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private TrackService		trackService;
+	private TrackService trackService;
 
+	@Autowired
+	private CommnentService commentService;
+
+	public Integer userSpaceID;
 
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
 
 		try {
+			Comment comment = commentService.create();
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
+			result.addObject("comment", comment);
 			if (LoginService.isAnyAuthenticated()) {
 				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 				result.addObject("p", man.getUserSpace());
 				result.addObject("actor", man);
+				userSpaceID = man.getUserSpace().getId();
 			}
 
 		} catch (final Throwable e) {
@@ -105,16 +114,21 @@ public class UserSpaceController extends AbstractController {
 
 			if (LoginService.isAnyAuthenticated()) {
 				a = this.actorService.findByUserSpaceId(q);
+				final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 				final boolean followed = a.getFollowers().contains(this.actorService.findByPrincipal());
 				final boolean isPrincipal = a.getId() == this.actorService.findByPrincipal().getId();
 				result.addObject("followed", followed);
 				result.addObject("isPrincipal", isPrincipal);
 				result.addObject("a", a);
+				result.addObject("actor", actor);
 			}
 
 			result.addObject("requestURI", "/user/view.do");
+			Comment comment = commentService.create();
 
+			result.addObject("comment", comment);
 			result.addObject("p", this.userSpaceService.findOne(q));
+			userSpaceID = userSpaceService.findOne(q).getId();
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -142,8 +156,7 @@ public class UserSpaceController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/user/play", method = RequestMethod.GET, produces = {
-		MediaType.APPLICATION_OCTET_STREAM_VALUE
-	})
+			MediaType.APPLICATION_OCTET_STREAM_VALUE })
 	public HttpEntity<byte[]> downloadRecipientFile(@RequestParam final int q) throws IOException, ServletException {
 
 		final Track track = this.trackService.findOne(q);
@@ -151,7 +164,7 @@ public class UserSpaceController extends AbstractController {
 			throw new ServletException("No clip found/clip has not data, id=" + q);
 		final HttpHeaders header = new HttpHeaders();
 
-		//header.setContentType(new MediaType("audio", "mp3"));
+		// header.setContentType(new MediaType("audio", "mp3"));
 		header.setContentType(new MediaType("audio", "vnd.mp3"));
 		header.setContentLength(track.getFile().length);
 		return new HttpEntity<byte[]>(track.getFile(), header);
@@ -189,23 +202,20 @@ public class UserSpaceController extends AbstractController {
 			result.addObject("userspace", userSpacesearch);
 
 		} catch (final Throwable th) {
-			result = new ModelAndView("redirect:/welcome/index.do"); //posible vista 404?
+			result = new ModelAndView("redirect:/welcome/index.do"); // posible vista 404?
 		}
 		return result;
 	}
-	
-	
-	//Subir imagen
-	
-	
-	
+
+	// Subir imagen
+
 	@RequestMapping(value = "dowload/upload", method = RequestMethod.GET)
 	public ModelAndView uploadImage() {
 		ModelAndView result;
 		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
-			 UserSpace userSpace = man.getUserSpace();
-			
+			UserSpace userSpace = man.getUserSpace();
+
 			result = this.createNewModelAndViewUpload(userSpace, null);
 
 		} catch (final Throwable e) {
@@ -215,32 +225,28 @@ public class UserSpaceController extends AbstractController {
 		return result;
 
 	}
-	
-	
-	
-	
-	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_OCTET_STREAM_VALUE
-		})
-		public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam  int q) throws IOException, ServletException {
 
-			UserSpace userSpace = userSpaceService.findOne(q);
-			if (userSpace == null || userSpace.getProfileImg() == null || userSpace.getProfileImg().length <= 0)
-				throw new ServletException("No clip found/clip has not data, id=" + q);
-			final HttpHeaders header = new HttpHeaders();
-			
-			//header.setContentType(new MediaType("audio", "mp3"));
-			header.setContentType(new MediaType("image", "jpg"));
-			header.setContentLength(userSpace.getProfileImg().length);
-			
-			return new HttpEntity<byte[]>(userSpace.getProfileImg(), header);
-		}
+	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam int q) throws IOException, ServletException {
+
+		UserSpace userSpace = userSpaceService.findOne(q);
+		if (userSpace == null || userSpace.getProfileImg() == null || userSpace.getProfileImg().length <= 0)
+			throw new ServletException("No clip found/clip has not data, id=" + q);
+		final HttpHeaders header = new HttpHeaders();
+
+		// header.setContentType(new MediaType("audio", "mp3"));
+		header.setContentType(new MediaType("image", "jpg"));
+		header.setContentLength(userSpace.getProfileImg().length);
+
+		return new HttpEntity<byte[]>(userSpace.getProfileImg(), header);
+	}
 
 	@RequestMapping(value = "/user/up", method = RequestMethod.POST)
 	public ModelAndView saveJpg(@RequestParam("profileImg") final MultipartFile file) {
 		ModelAndView result;
 
-	 if (file.isEmpty()) {
+		if (file.isEmpty()) {
 			result = new ModelAndView("userspace/upload");
 			result.addObject("userspace", null);
 			result.addObject("message", "file.null.error");
@@ -266,7 +272,7 @@ public class UserSpaceController extends AbstractController {
 		else
 			try {
 
-			   userSpaceService.saveJpg(file);
+				userSpaceService.saveJpg(file);
 
 				result = new ModelAndView("redirect:/userspace/user/view.do");
 
@@ -279,10 +285,103 @@ public class UserSpaceController extends AbstractController {
 			}
 		return result;
 	}
+
+	// LOGICA DE COMENTAR
+	@RequestMapping(value = "/user/comment", method = RequestMethod.GET)
+	public ModelAndView createComment(@RequestParam int q) {
+		ModelAndView result;
+		Actor actor = loginService.findActorByUsername(LoginService.getPrincipal().getId());
+
+		try {
+			result = new ModelAndView("userspace/comment");
+
+			Comment comment = commentService.create();
+
+			result.addObject("comment", comment);
+			result.addObject("actor", actor);
+			result.addObject("userspace", userSpaceService.findOne(q));
+			userSpaceID = userSpaceService.findOne(q).getId();
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/user/commentEdit", method = RequestMethod.GET)
+	public ModelAndView createEdit(@RequestParam int q) {
+		ModelAndView result;
+
+		try {
+		
+			Comment comment = commentService.findOne(q);
+			result = new ModelAndView("userspace/comment");
+
+			result.addObject("comment", comment);
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
 	
 	
-	
-	
+	@RequestMapping(value = "/user/commentDel", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int q) {
+		ModelAndView result = null;
+
+		try {
+			Comment comment = commentService.findOne(q);
+			commentService.delete(comment, userSpaceID);
+			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q="+userSpaceID);
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/comment/save", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveComment(@Valid Comment comment, final BindingResult binding) {
+		ModelAndView result;
+		if (comment.getText().isEmpty()) {
+			result = new ModelAndView("userspace/comment");
+
+			result.addObject("comment", comment);
+			result.addObject("message", "comment.length.error");
+
+		} else if (comment.getText().length() >= 200) {
+
+			result = new ModelAndView("userspace/comment");
+			result.addObject("comment", comment);
+			
+			result.addObject("message", "comment.length.max.error");
+
+		}
+
+		else if (comment.getPuntuacion() < 0 || comment.getPuntuacion() > 5) {
+
+			result = new ModelAndView("userspace/comment");
+			result.addObject("comment", comment);
+		
+			result.addObject("message", "puntuation.error");
+
+		}
+
+		else
+			try {
+				commentService.save(comment, userSpaceID);
+
+				result = new ModelAndView("redirect:/userspace/user/spaceview.do?q="+userSpaceID);
+			} catch (final Throwable th) {
+				result = createNewModelAndViewComment(comment, null);
+			}
+
+		return result;
+	}
 
 	protected ModelAndView createNewModelAndView(final UserSpace userSpace, final String message) {
 		ModelAndView result;
@@ -293,12 +392,22 @@ public class UserSpaceController extends AbstractController {
 		result.addObject("message", message);
 		return result;
 	}
-	
+
 	protected ModelAndView createNewModelAndViewUpload(final UserSpace userSpace, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("userspace/upload");
 		result.addObject("userSpace", userSpace);
+
+		result.addObject("message", message);
+		return result;
+	}
+
+	protected ModelAndView createNewModelAndViewComment(final Comment comment, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("userspace/comment");
+		result.addObject("comment", comment);
 
 		result.addObject("message", message);
 		return result;

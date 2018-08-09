@@ -58,6 +58,9 @@
 		<bean class="converters.UserSpaceToStringConverter"/>
 		<bean class="converters.StringToUserSpaceConverter"/>
 		
+		<bean class="converters.CommentToStringConverter"/>
+		<bean class="converters.StringToCommentConverter"/>
+		
 	</util:list>
 	
 </beans>
