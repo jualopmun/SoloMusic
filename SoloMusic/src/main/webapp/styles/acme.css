@@ -14,13 +14,17 @@ td {
 	margin: 20px;
 }
 
-.pagebanner, .pagelinks {
-	background: none;
-	border: none;
+.btn {
+	border-radius: 0;
 }
 
 .displaytag {
 	background: red;
+}
+
+.front-page {
+	display: block;
+	text-align: center;
 }
 
 .navbar {
@@ -29,7 +33,7 @@ td {
     padding: 0.5em 0 0.2em;
 }
 
-.front-page {
-	display: block;
-	text-align: center;
+.pagebanner, .pagelinks {
+	background: none;
+	border: none;
 }

@@ -14,39 +14,36 @@
 
 <security:authorize access="hasRole('USER')">
 
-<spring:message code="actor.premium.one" var="premium1"></spring:message>
-<spring:message code="actor.premium.two" var="premium2"></spring:message>
-<spring:message code="actor.premium.three" var="premium3"></spring:message>
-<spring:message code="actor.ispremium" var="isPremium"></spring:message>
-
-
-<jstl:if test="${actor.isPremium==true }">
-<p> <jstl:out value="${isPremium}"></jstl:out></p>
-</jstl:if>
-<br/>
-
-<h2> <jstl:out value="${premium1}"></jstl:out></h2>
-<br/>
-<p> <jstl:out value="${premium2}"></jstl:out></p>
-<p> <jstl:out value="${premium3}"></jstl:out></p>
-<br/>
-
-<spring:message code="event.back" var="back" />
-<spring:message code="actor.premiumGo" var="premiumGo" />
-<spring:message code="actor.premiumnoGo" var="premiumnoGo" />
-<jstl:if test="${actor.isPremium==false }">
-<input
-	onclick="window.location='actor/user/premium.do'"
-	class="btn btn-danger" type="button" name="premium" value="${premiumGo}" />
-</jstl:if>
-
-<jstl:if test="${actor.isPremium==true }">
-<input
-	onclick="window.location='actor/user/nopremium.do'"
-	class="btn btn-danger" type="button" name="premium" value="${premiumnoGo}" />
-</jstl:if>
-<input
-	onclick="window.location='welcome/index.do'"
-	class="btn btn-danger" type="button" name="cancel" value="${back}" />
-	</security:authorize>
+	<spring:message code="actor.premium.one" var="premium1"></spring:message>
+	<spring:message code="actor.premium.two" var="premium2"></spring:message>
+	<spring:message code="actor.premium.three" var="premium3"></spring:message>
+	<spring:message code="actor.ispremium" var="isPremium"></spring:message>
+	
+	<div style="width:60%; margin: auto;">
+		<h2> <jstl:out value="${premium1}"></jstl:out></h2>
+		<br/>
+		<p> <jstl:out value="${premium2}"></jstl:out></p>
+		<p> <jstl:out value="${premium3}"></jstl:out></p>
+		<br/>
+		
+		<spring:message code="event.back" var="back" />
+		<spring:message code="actor.premiumGo" var="premiumGo" />
+		<spring:message code="actor.premiumnoGo" var="premiumnoGo" />
+		<jstl:if test="${actor.isPremium==false }">
+		<input
+			onclick="window.location='actor/user/premium.do'"
+			class="btn btn-danger" type="button" name="premium" value="${premiumGo}" />
+		</jstl:if>
+		
+		<jstl:if test="${actor.isPremium==true }">
+		<input
+			onclick="window.location='actor/user/nopremium.do'"
+			class="btn btn-danger" type="button" name="premium" value="${premiumnoGo}" />
+		</jstl:if>
+		<input
+			onclick="window.location='welcome/index.do'"
+			class="btn btn-danger" type="button" name="cancel" value="${back}" />
+	</div>
+	
+</security:authorize>
 	

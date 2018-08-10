@@ -29,16 +29,24 @@ td {
 	padding: 10px;
 }
 
-.pagebanner, .pagelinks {
-	display: none;
+.btn {
+	border-radius: 0;
 }
- 
+
 .error {
 	color: red;
 	font-weight: bolder;
 }
 
+.hr {
+	border-top: 1px solid crimson;
+}
+
 .message {
 	color: red;
 	font-weight: bolder;
+}
+
+.pagebanner, .pagelinks {
+	display: none;
 }

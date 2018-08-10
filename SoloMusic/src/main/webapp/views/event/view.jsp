@@ -11,16 +11,16 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
-<security:authorize access="hasRole('USER')">
-	<jstl:if test="${actor.userSpace==userSpace}">
-		<spring:message code="event.new" var="actorNew" />
-		<input onclick="window.location='event/user/create.do'"
-			class="btn btn-danger" type="button" value="${actorNew}" />
-		<br />
-		<br />
-	</jstl:if>
-</security:authorize>
+<div style="width:30%; margin: auto;">
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${actor.userSpace==userSpace}">
+			<spring:message code="event.new" var="actorNew" />
+			<input onclick="window.location='event/user/create.do'"
+				class="btn btn-danger" type="button" value="${actorNew}" />
+			<br />
+			<br />
+		</jstl:if>
+	</security:authorize>
 <spring:message code="event.location" var="location"/>
 
 <table style="border-collapse:inherit;">
@@ -29,10 +29,6 @@
 			<td><spring:message code="event.title" /></td>
 			<td><jstl:out value="${p.title}" /></td>
 		</tr>
-		
-		
-		
-		
 		<tr>
 			<td><spring:message code="event.description" /></td>
 			<td><jstl:out value="${p.description}" /></td>
@@ -49,19 +45,14 @@
 			<jstl:if test="${actor.userSpace==userSpace}">
 			<tr>
 				<td>
-				
-
-
 					<spring:message code="event.delete" var="actorDelete" />
 					<input onclick="window.location='event/user/delete.do?p=${p.id}'"
 						class="btn btn-danger" type="button" value="${actorDelete}" />
 					<spring:message code="event.edit" var="actorEdit" />
 					<input onclick="window.location='event/user/edit.do?p=${p.id}'"
 						class="btn btn-danger" type="button" value="${actorEdit}" />
-					
 				</td>
-
-					</tr>
+			</tr>
 			</jstl:if>
 		</security:authorize>
 	</jstl:forEach>
@@ -69,10 +60,8 @@
 <br />
 <br />
 
-
-
 <spring:message code="event.back" var="back" />
 <input
 	onclick="window.location='userspace/user/view.do'"
 	class="btn btn-danger" type="button" name="cancel" value="${back}" />
-	
+</div>	

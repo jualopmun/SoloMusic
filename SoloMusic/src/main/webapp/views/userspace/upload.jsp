@@ -15,22 +15,26 @@
 
 <security:authorize access="hasRole('USER')">
 
-	<form:form action="userspace/user/up.do" enctype="multipart/form-data">
+	<div style="width:30%; margin: auto;">
+		<div style="width: 500%; margin: auto; display: inline-block;">
+			<form:form action="userspace/user/up.do" enctype="multipart/form-data">
+				
+				<div class="form-group" style="width: 20%;">
+				<form:errors path="*" class="has-error" />
 		
-		<div class="form-group" style="width: 20%;">
-		<form:errors path="*" class="has-error" />
-
-			
-			
-			<label> <spring:message code="userspace.profileimg" />
-			</label><br /> <input class="form-control"
-				type="file" name="profileImg" accept=".jpg" />
-			</div>
-			
-	  <spring:message code="actor.save" var="actorSaveHeader"/>
-		<spring:message code="actor.cancel" var="actorCancelHeader"/>
-		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
-		<input onclick="window.location='userspace/user/view.do'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
-
-	</form:form>
+					
+					
+					<label> <spring:message code="userspace.profileimg" />
+					</label><br /> <input class="form-control"
+						type="file" name="profileImg" accept=".jpg" />
+					</div>
+					
+			  <spring:message code="actor.save" var="actorSaveHeader"/>
+				<spring:message code="actor.cancel" var="actorCancelHeader"/>
+				<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
+				<input onclick="window.location='userspace/user/view.do'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
+		
+			</form:form>
+		</div>
+	</div>
 </security:authorize>

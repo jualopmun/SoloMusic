@@ -11,51 +11,49 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-<security:authorize access="hasRole('USER')">
-	<jstl:if test="${actor.userSpace==userSpace}">
-		<spring:message code="performance.new" var="actorNew"/>
-		<input onclick="window.location='perfomance/user/create.do'" class="btn btn-danger" type="button"  value="${actorNew}"/>
-		<br />
-	</jstl:if>
-</security:authorize>
-<br/>
-
-<jstl:forEach var="p" items="${perfomance}">
-	<table style="border-collapse:inherit;">
-			<tr>
-				<td><spring:message code="perfomance.title" /></td>
-				<td><jstl:out value="${p.title}" /></td>
-			</tr>
-			<tr>
-				<td><spring:message code="perfomance.description" /></td>
-				<td><jstl:out value="${p.description}" /></td>
-			</tr>
-	</table>
-
-	<spring:message code="perfomance.videoUrl" />
-	<input type="text" id="video" value="${p.videoUrl}"	style="display: none">
-	<%-- Script para los videos de yotube --%>
-	<div class="youtube" id='<jstl:out value="${p.videoUrl}" />' style="width:560px; height: 315px;">
-	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
+<div style="width:30%; margin: auto;">
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${actor.userSpace==userSpace}">
-			<spring:message code="event.delete" var="actorDelete"/>
-			<input onclick="window.location='perfomance/user/delete.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorDelete}"/>
-			<spring:message code="event.edit" var="actorEdit"/>
-			<input onclick="window.location='perfomance/user/edit.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorEdit}"/>
+			<spring:message code="performance.new" var="actorNew"/>
+			<input onclick="window.location='perfomance/user/create.do'" class="btn btn-danger" type="button"  value="${actorNew}"/>
+			<br />
 		</jstl:if>
 	</security:authorize>
-</jstl:forEach>
+	<br/>
 
-<spring:message code="performance.back" var="back"/>
-<input onclick="window.location='userspace/user/view.do?p=${userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${back}"/>
+	<jstl:forEach var="p" items="${perfomance}">
+		<table style="border-collapse:inherit;">
+				<tr>
+					<td><spring:message code="perfomance.title" /></td>
+					<td><jstl:out value="${p.title}" /></td>
+				</tr>
+				<tr>
+					<td><spring:message code="perfomance.description" /></td>
+					<td><jstl:out value="${p.description}" /></td>
+				</tr>
+		</table>
 	
+		<spring:message code="perfomance.videoUrl" />
+		<input type="text" id="video" value="${p.videoUrl}"	style="display: none">
+		<%-- Script para los videos de yotube --%>
+		<div class="youtube" id='<jstl:out value="${p.videoUrl}" />' style="width:560px; height: 315px; padding-bottom: 400px;">
+		</div>
+		
+		<security:authorize access="hasRole('USER')">
+			<jstl:if test="${actor.userSpace==userSpace}">
+				<spring:message code="event.delete" var="actorDelete"/>
+				<input onclick="window.location='perfomance/user/delete.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorDelete}"/>
+				<spring:message code="event.edit" var="actorEdit"/>
+				<input onclick="window.location='perfomance/user/edit.do?p=${p.id}'" class="btn btn-danger" type="button"  value="${actorEdit}"/>
+			</jstl:if>
+		</security:authorize>
+	</jstl:forEach>
+	
+	<spring:message code="performance.back" var="back"/>
+	<input onclick="window.location='userspace/user/view.do?p=${userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${back}"/>
+</div>
+
+
 <script> 
 
 // Find all the YouTube video embedded on a page

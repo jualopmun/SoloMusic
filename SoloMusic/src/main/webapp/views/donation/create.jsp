@@ -15,44 +15,45 @@
 
 <security:authorize access="hasRole('USER')">
 
-	<form:form action="donation/user/save.do" modelAttribute="donation">
-
-		<form:hidden path="id" />
-		<form:hidden path="version" />
+	<div style="width:30%; margin: auto;">
+		<div style="width: 500%; margin: auto; display: inline-block;">
+			<form:form action="donation/user/save.do" modelAttribute="donation">
 		
+				<form:hidden path="id" />
+				<form:hidden path="version" />
+				
+				<div class="form-group" style="width: 20%;">
+				<form:errors path="*" class="has-error" />
 		
+					<label> <spring:message code="event.title" />
+					</label><br /> <input class="form-control" value="${donation.title}"
+						type="text" name="title" />
+					<form:errors cssClass="error" path="title" />
+					
+					<br />
+				    
+					<form:label path="description">
+						<spring:message code="event.description" />:
+				</form:label>
+					<br />
+					<form:textarea cols="30" rows="10" path="description"
+						class="form-control" />
+					<form:errors cssClass="error" path="description" />
+					
+					<br /> <label> <spring:message code="donation.price" />
+					</label><br /> <input class="form-control" value="${donation.price}"
+						type="text" name="price" />
+					<form:errors cssClass="error" path="price" />
+					<br /> <br />
+					
+					</div>
+					
+			  <spring:message code="actor.save" var="actorSaveHeader"/>
+				<spring:message code="actor.cancel" var="actorCancelHeader"/>
+				<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
+				<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
 		
-		<div class="form-group" style="width: 20%;">
-		<form:errors path="*" class="has-error" />
-
-			<label> <spring:message code="event.title" />
-			</label><br /> <input class="form-control" value="${donation.title}"
-				type="text" name="title" />
-			<form:errors cssClass="error" path="title" />
-			
-			<br />
-		    
-			<form:label path="description">
-				<spring:message code="event.description" />:
-		</form:label>
-			<br />
-			<form:textarea cols="30" rows="10" path="description"
-				class="form-control" />
-			<form:errors cssClass="error" path="description" />
-			
-			<br /> <label> <spring:message code="donation.price" />
-			</label><br /> <input class="form-control" value="${donation.price}"
-				type="text" name="price" />
-			<form:errors cssClass="error" path="price" />
-			<br /> <br />
-			
-			</div>
-			
-			
-	  <spring:message code="actor.save" var="actorSaveHeader"/>
-		<spring:message code="actor.cancel" var="actorCancelHeader"/>
-		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
-		<input onclick="window.location='userspace/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
-
-	</form:form>
+			</form:form>
+		</div>
+	</div>
 </security:authorize>
