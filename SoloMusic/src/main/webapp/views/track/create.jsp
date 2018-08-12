@@ -26,7 +26,7 @@
 					
 					<label> <spring:message code="track.file" />
 					</label><br /> <input class="form-control"
-						type="file" name="file" accept=".jpg" />
+						type="file" name="file" accept=".mp3" />
 					</div>
 					
 			  <spring:message code="actor.save" var="actorSaveHeader"/>

@@ -1,6 +1,10 @@
 
 package services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +64,7 @@ public class EventService {
 		return this.eventRepository.exists(arg0);
 	}
 
-	public Event save(final Event event) {
+	public Event save(final Event event) throws ParseException {
 		Assert.notNull(event);
 		Event m = null;
 
@@ -81,6 +85,8 @@ public class EventService {
 			m = this.eventRepository.save(m);
 		} else {
 			
+		
+		
 			m = this.eventRepository.save(event);
 			man.getUserSpace().getEvents().add(m);
 			this.actorService.save(man);

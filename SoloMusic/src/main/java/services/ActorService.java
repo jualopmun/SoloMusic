@@ -78,8 +78,7 @@ public class ActorService {
 	}
 
 	public Actor save(Actor actor) {
-		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		actor.getUserAccount().setPassword(encoder.encodePassword(actor.getUserAccount().getPassword(), null));
+		
 
 		return this.actorRepository.save(actor);
 

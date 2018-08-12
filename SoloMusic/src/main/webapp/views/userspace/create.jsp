@@ -23,6 +23,7 @@
 		<form:hidden path="events" />
 		<form:hidden path="playLists" />
 		<form:hidden path="donations" />
+		<form:hidden path="comments" />
 		
 		
 		<div class="form-group" style="width: 20%;">

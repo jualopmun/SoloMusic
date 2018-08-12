@@ -1,7 +1,10 @@
 
 package controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -143,6 +146,7 @@ public class EventController extends AbstractController {
 					binding.rejectValue("locationUrl", "event.location.error", "error");
 					throw new IllegalArgumentException();
 				}
+				
 
 				this.eventService.save(event);
 

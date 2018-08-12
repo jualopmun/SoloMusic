@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -92,7 +93,8 @@ public class ActorController extends AbstractController {
 		} else
 			try {
 				actor.setIsPremium(false);
-
+				Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+				actor.getUserAccount().setPassword(encoder.encodePassword(actor.getUserAccount().getPassword(), null));
 				this.actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {

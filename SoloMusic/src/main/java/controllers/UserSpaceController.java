@@ -59,14 +59,15 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			Comment comment = commentService.create();
+		
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
-			result.addObject("comment", comment);
+			
 			if (LoginService.isAnyAuthenticated()) {
 				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 				result.addObject("p", man.getUserSpace());
 				result.addObject("actor", man);
+				if (man.getUserSpace()!=null)
 				userSpaceID = man.getUserSpace().getId();
 			}
 
