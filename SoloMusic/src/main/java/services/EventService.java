@@ -75,10 +75,8 @@ public class EventService {
 
 			m.setTitle(event.getTitle());
 			m.setDescription(event.getDescription());
-			String local=event.getLocationUrl();
-			String[] parsear= local.split("@");
-			String[] parsear2=parsear[1].split(",");
-			m.setLocationUrl(parsear2[0]+","+parsear2[1]);
+		
+			m.setLocationUrl(event.getLocationUrl());
 			
 		
 			m.setStartDate(event.getStartDate());
