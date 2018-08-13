@@ -2,7 +2,6 @@
 package domain;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,14 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
 
@@ -33,7 +29,7 @@ public class Actor extends DomainEntity {
 	private String						name;
 	private String						surname;
 	private String						email;
-	private Date						birthDate;
+	private String						birthDate;
 	private Boolean						isPremium;
 	//Relations
 	private Collection<Advertisement>	ownerAdvertisement;
@@ -76,14 +72,12 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	public Date getBirthDate() {
+	@NotBlank
+	public String getBirthDate() {
 		return this.birthDate;
 	}
 
-	public void setBirthDate(final Date birthDate) {
+	public void setBirthDate(final String birthDate) {
 		this.birthDate = birthDate;
 	}
 

@@ -35,6 +35,7 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/up.do"/>
 		<security:intercept-url access="permitAll" pattern="/userspace/user/list.do"/>
 		<security:intercept-url access="permitAll" pattern="/userspace/user/search.do"/>
+		<security:intercept-url access="permitAll" pattern="/userspace/user/play/**"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/comment/save.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/comment.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/userspace/user/commentEdit.do"/>

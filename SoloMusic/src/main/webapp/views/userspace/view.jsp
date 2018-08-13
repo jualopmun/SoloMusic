@@ -9,6 +9,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+
 
 <div style="width:70%; margin: auto;">
 <div class="container-fluid">
@@ -158,9 +160,9 @@
 					</tr>
 					<tr>
 						<td><spring:message code="track.duration" /></td>
-						<td><audio controls controlsList="nodownload">
+						<td><audio controls preload="none"  >
 								<source src="userspace/user/play.do?q=${track.id}"
-									type="audio/mp3" onmouseout="true">
+									type='audio/mpeg;codec="mp3"' onmouseout="true" media="all" >
 								Your browser does not support the audio element.
 							</audio></td>
 					</tr>
@@ -224,7 +226,12 @@
 				</tr>
 				<tr>
 					<td><spring:message code="dona.price" /></td>
-					<td><jstl:out value="${dona.price}" /> Euros</td>
+					<td id="pricePaypal"><jstl:out value="${dona.price}" /> Euros</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="paypal-button"></div>
+					</td>
 				</tr>
 			</jstl:forEach>
 			
@@ -287,3 +294,49 @@
 	</div>
 	</jstl:if>
 </div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    
+    var price = document.getElementById("pricePaypal").textContent.split(" Euros")[0];
+    paypal.Button.render({
+    	  // Configure environment
+    	  env: 'sandbox',
+    	  client: {
+    	    sandbox: 'AdFnVkjaV4QC1Vw9CcZ9Jb7AZRT34WocoAuDHQIw0ArPXRqk0wl8LksQh5ZTy0GTe9-04-UTQSWbrkht',
+    	    production: 'demo_production_client_id'
+    	  },
+    	  // Customize button (optional)
+    	  locale: 'en_ES',
+    	  style: {
+    	    size: 'small',
+    	    color: 'gold',
+    	    shape: 'pill',
+    	  },
+    	  // Set up a payment
+    	  payment: function (data, actions) {
+    	    return actions.payment.create({
+    	      transactions: [{
+    	        amount: {
+    	          total: price,
+    	          currency: 'EUR'
+    	        }
+    	      }]
+    	    });
+    	  },
+    	  // Execute the payment
+    	  onAuthorize: function (data, actions) {
+    	    return actions.payment.execute()
+    	      .then(function () {
+    	        // Show a confirmation message to the buyer
+    	        window.alert('Gracias por donar');
+    	      });
+    	  }
+    	}, '#paypal-button');
+});
+
+</script>

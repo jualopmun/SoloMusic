@@ -2,15 +2,12 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,52 +20,53 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
+import domain.Comment;
+import domain.Track;
+import domain.UserSpace;
 import security.LoginService;
 import services.ActorService;
 import services.CommnentService;
 import services.TrackService;
 import services.UserSpaceService;
-import domain.Actor;
-import domain.Comment;
-import domain.Track;
-import domain.UserSpace;
 
 @Controller
 @RequestMapping("userspace")
 public class UserSpaceController extends AbstractController {
 
 	@Autowired
-	private UserSpaceService userSpaceService;
+	private UserSpaceService	userSpaceService;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService		loginService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private TrackService trackService;
+	private TrackService		trackService;
 
 	@Autowired
-	private CommnentService commentService;
+	private CommnentService		commentService;
 
-	public Integer userSpaceID;
+	public Integer				userSpaceID;
+
 
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
 
 		try {
-		
+
 			result = new ModelAndView("userspace/view");
 			result.addObject("requestURI", "/user/view.do");
-			
+
 			if (LoginService.isAnyAuthenticated()) {
 				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 				result.addObject("p", man.getUserSpace());
 				result.addObject("actor", man);
-				if (man.getUserSpace()!=null)
-				userSpaceID = man.getUserSpace().getId();
+				if (man.getUserSpace() != null)
+					userSpaceID = man.getUserSpace().getId();
 			}
 
 		} catch (final Throwable e) {
@@ -156,8 +154,9 @@ public class UserSpaceController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/user/play", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_OCTET_STREAM_VALUE })
+	@RequestMapping(value = "/user/play", method = RequestMethod.GET, consumes = {
+		MediaType.ALL_VALUE
+	})
 	public HttpEntity<byte[]> downloadRecipientFile(@RequestParam final int q) throws IOException, ServletException {
 
 		final Track track = this.trackService.findOne(q);
@@ -166,8 +165,10 @@ public class UserSpaceController extends AbstractController {
 		final HttpHeaders header = new HttpHeaders();
 
 		// header.setContentType(new MediaType("audio", "mp3"));
-		header.setContentType(new MediaType("audio", "vnd.mp3"));
+		header.setContentType(new MediaType("audio", "mpeg3"));
 		header.setContentLength(track.getFile().length);
+		header.setContentDispositionFormData(track.getTitle(), track.getTitle());
+		header.setOrigin(track.getTitle());
 		return new HttpEntity<byte[]>(track.getFile(), header);
 	}
 
@@ -228,7 +229,8 @@ public class UserSpaceController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_OCTET_STREAM_VALUE })
+		MediaType.APPLICATION_OCTET_STREAM_VALUE
+	})
 	public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam int q) throws IOException, ServletException {
 
 		UserSpace userSpace = userSpaceService.findOne(q);
@@ -315,7 +317,7 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		try {
-		
+
 			Comment comment = commentService.findOne(q);
 			result = new ModelAndView("userspace/comment");
 
@@ -327,8 +329,7 @@ public class UserSpaceController extends AbstractController {
 
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "/user/commentDel", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam int q) {
 		ModelAndView result = null;
@@ -336,7 +337,7 @@ public class UserSpaceController extends AbstractController {
 		try {
 			Comment comment = commentService.findOne(q);
 			commentService.delete(comment, userSpaceID);
-			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q="+userSpaceID);
+			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + userSpaceID);
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -358,7 +359,7 @@ public class UserSpaceController extends AbstractController {
 
 			result = new ModelAndView("userspace/comment");
 			result.addObject("comment", comment);
-			
+
 			result.addObject("message", "comment.length.max.error");
 
 		}
@@ -367,7 +368,7 @@ public class UserSpaceController extends AbstractController {
 
 			result = new ModelAndView("userspace/comment");
 			result.addObject("comment", comment);
-		
+
 			result.addObject("message", "puntuation.error");
 
 		}
@@ -376,7 +377,7 @@ public class UserSpaceController extends AbstractController {
 			try {
 				commentService.save(comment, userSpaceID);
 
-				result = new ModelAndView("redirect:/userspace/user/spaceview.do?q="+userSpaceID);
+				result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + userSpaceID);
 			} catch (final Throwable th) {
 				result = createNewModelAndViewComment(comment, null);
 			}

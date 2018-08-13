@@ -53,7 +53,7 @@
 				<div class="form-group" style="width: 55%;">
 				<label> <spring:message code="actor.birthDate" />
 					</label><br /> <input class="form-control"
-						type="text" name="birthDate" placeholder="dd/MM/yyyy" />
+						type="date" name="birthDate" id="birthDate"/>
 					<form:errors cssClass="error" path="birthDate" />
 			</div>
 				<spring:message code="actor.terms.text" />

@@ -30,9 +30,7 @@
 		<spring:message code="actor.premiumGo" var="premiumGo" />
 		<spring:message code="actor.premiumnoGo" var="premiumnoGo" />
 		<jstl:if test="${actor.isPremium==false }">
-		<input
-			onclick="window.location='actor/user/premium.do'"
-			class="btn btn-danger" type="button" name="premium" value="${premiumGo}" />
+		<div id="paypal-button"></div>
 		</jstl:if>
 		
 		<jstl:if test="${actor.isPremium==true }">
@@ -46,4 +44,49 @@
 	</div>
 	
 </security:authorize>
+
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    
+    paypal.Button.render({
+    	  // Configure environment
+    	  env: 'sandbox',
+    	  client: {
+    	    sandbox: 'AdFnVkjaV4QC1Vw9CcZ9Jb7AZRT34WocoAuDHQIw0ArPXRqk0wl8LksQh5ZTy0GTe9-04-UTQSWbrkht',
+    	    production: 'demo_production_client_id'
+    	  },
+    	  // Customize button (optional)
+    	  locale: 'en_ES',
+    	  style: {
+    	    size: 'small',
+    	    color: 'gold',
+    	    shape: 'pill',
+    	  },
+    	  // Set up a payment
+    	  payment: function (data, actions) {
+    	    return actions.payment.create({
+    	      transactions: [{
+    	        amount: {
+    	          total: '6',
+    	          currency: 'EUR'
+    	        }
+    	      }]
+    	    });
+    	  },
+    	  // Execute the payment
+    	  onAuthorize: function (data, actions) {
+    	    return actions.payment.execute()
+    	      .then(function () {
+    	    	  window.location='actor/user/premium.do';
+    	      });
+    	  }
+    	}, '#paypal-button');
+});
+
+</script>
 	

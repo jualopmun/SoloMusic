@@ -5,40 +5,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
+import domain.Actor;
+import domain.Advertisement;
+import domain.Folder;
 import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountRepository;
-import domain.Actor;
-import domain.Advertisement;
-import domain.Folder;
-import forms.ActorRegisterForm;
 
 @Service
 @Transactional
 public class ActorService {
 
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorRepository			actorRepository;
 
 	@Autowired
-	private Validator validator;
+	private UserAccountRepository	userAccountRepository;
 
 	@Autowired
-	private UserAccountRepository userAccountRepository;
+	private LoginService			loginService;
 
-	@Autowired
-	private LoginService loginService;
 
 	public ActorService() {
 		super();
@@ -54,7 +48,7 @@ public class ActorService {
 		actor.setFolders(new ArrayList<Folder>());
 		actor.setFolloweds(new ArrayList<Actor>());
 		actor.setFollowers(new ArrayList<Actor>());
-		
+
 		Authority a = new Authority();
 		a.setAuthority(Authority.USER);
 		UserAccount account = new UserAccount();
@@ -78,7 +72,6 @@ public class ActorService {
 	}
 
 	public Actor save(Actor actor) {
-		
 
 		return this.actorRepository.save(actor);
 
@@ -107,28 +100,6 @@ public class ActorService {
 		Assert.notNull(userAccount);
 		final Actor a = this.actorRepository.findByUserAccountId(userAccount.getId());
 		return a;
-	}
-
-	public Actor reconstruct(final ActorRegisterForm arf, final BindingResult binding) {
-		Actor result = null;
-
-		result = this.create();
-		result.getUserAccount().setUsername(arf.getUsername());
-		result.getUserAccount().setPassword(arf.getPassword());
-		result.setName(arf.getName());
-		result.setSurname(arf.getSurname());
-		result.setEmail(arf.getEmail());
-
-		final String[] campos = arf.getBirthDate().split("/");
-		final String day = campos[0].trim();
-		final String month = campos[1].trim();
-		final String year = campos[2].trim();
-		final DateTime dt = new DateTime(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), 0, 0);
-		result.setBirthDate(dt.toDate());
-
-		this.validator.validate(result, binding);
-
-		return result;
 	}
 
 	public void hashPassword(final Actor a) {
