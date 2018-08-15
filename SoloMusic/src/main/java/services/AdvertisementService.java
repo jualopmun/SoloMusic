@@ -91,5 +91,9 @@ public class AdvertisementService {
 		actorService.save(principal);
 
 	}
+	
+	public List<Advertisement> advertisementSearch(String text) {
+		return this.advertisermentRepository.advertisementSearch(text);
+	}
 
 }

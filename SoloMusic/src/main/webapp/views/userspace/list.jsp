@@ -19,18 +19,27 @@
 
 <div style="width:70%; margin: auto;">
 	<div style="padding: 0% 0% 1% 0%;">
+	 <b>Inserte su búsqueda o seleccione un género</b>
+	 
 	 <form:form action="userspace/user/search.do">	
 	  	 <input type="text" id="searchTerm" name="searchTerm"/>
+	  	 <select name="searchGenre">
+	  	 <option value="${null}">Género</option>	
+	  	 	  <jstl:forEach var="g" items="${genres}">
+                    <option value="${g.id}">${g.genre}</option>
+              </jstl:forEach>
+	  	 </select>
 	  	 <acme:submit name="search" code="userspace.search"/>
 	  </form:form>
 	</div>
+	
+	
 	
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		<spring:message code="userspace.profileimg" var="profileImg"/>
 		<display:column title="${profileImg}" sortable="false">
-			<img style="max-width: 80px; max-height: 80px;"
-				src="userspace/view/image.do?q=${row.id}"/>
+			<img style="max-width: 80px; max-height: 80px;" src="userspace/view/image.do?q=${row.id}"/>
 		</display:column>
 		
 		<spring:message code="userspace.title" var="title"/>
@@ -39,6 +48,10 @@
 		
 		<spring:message code="userspace.description" var="description"/>
 		<display:column property="description" title="${description}"
+			sortable="false" />
+			
+		<spring:message code="userspace.genre" var="genre"/>
+		<display:column property="genre.genre" title="${genre}"
 			sortable="false" />
 		
 		<spring:message code="userspace.contact" var="contact"/>		

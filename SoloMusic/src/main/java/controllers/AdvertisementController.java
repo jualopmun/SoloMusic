@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.validation.Valid;
@@ -359,6 +360,27 @@ public class AdvertisementController extends AbstractController {
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "advertisement/edit.do");
 
+		return result;
+	}
+	
+	
+	//Buscar 
+	
+
+	@RequestMapping(value = "/user/search", method = RequestMethod.POST, params = "search")
+	public ModelAndView search(@RequestParam("searchTerm") final String searchTerm) {
+		ModelAndView result;
+		List<Advertisement> advertisementSearch = new ArrayList<Advertisement>();
+
+		try {
+			result = new ModelAndView("advertisement/list");
+			result.addObject("requestURI", "advertisement/user/list.do");
+			advertisementSearch = this.advertisementService.advertisementSearch(searchTerm);
+			result.addObject("advertisements", advertisementSearch);
+
+		} catch (final Throwable th) {
+			result = new ModelAndView("redirect:/advertisement/user/list.do"); // posible vista 404?
+		}
 		return result;
 	}
 }

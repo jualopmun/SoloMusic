@@ -7,6 +7,8 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -21,6 +23,7 @@ public class UserSpace extends DomainEntity {
 	private String description;
 	private byte[] profileImg;
 	private String contact;
+	private Genre genre;
 	
 	//Relaciones
 	private Collection<Event> events;
@@ -55,6 +58,9 @@ public class UserSpace extends DomainEntity {
 		return contact;
 	}
 	
+	
+	
+	
 	@NotNull
 	@OneToMany
 	public Collection<Event> getEvents() {
@@ -81,6 +87,7 @@ public class UserSpace extends DomainEntity {
 	public Collection<Comment> getComments() {
 		return comments;
 	}
+	
 
 
 
@@ -116,8 +123,16 @@ public class UserSpace extends DomainEntity {
 	}
 
 	
+	@NotNull
+	@Valid
+	@OneToOne
+	public Genre getGenre() {
+		return genre;
+	}
 	
-	
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
 	
 
 }

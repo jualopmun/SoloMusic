@@ -38,7 +38,7 @@
 		    
 			<form:label path="description">
 				<spring:message code="userspace.description" />:
-		</form:label>
+			</form:label>
 			<br />
 			<form:textarea cols="30" rows="10" path="description"
 				class="form-control" />
@@ -51,7 +51,17 @@
 				type="text" name="contact" />
 			<form:errors cssClass="error" path="contact" />
 			
-	
+
+			
+			<label> <spring:message code="userspace.genre" /></label><br/> 
+			<form:select path="genre">
+				<form:option value="${null}" label="Género"/>
+				 <jstl:forEach items="${genres}" var="genre">
+                    <form:option value="${genre}" label="${genre.genre}"/>
+              	</jstl:forEach>
+			</form:select>
+			<form:errors cssClass="error" path="genre" />
+
 			<br />
 			</div>
 			

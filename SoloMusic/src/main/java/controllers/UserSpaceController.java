@@ -23,11 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
 import domain.Comment;
+import domain.Genre;
 import domain.Track;
 import domain.UserSpace;
 import security.LoginService;
 import services.ActorService;
 import services.CommnentService;
+import services.GenreService;
 import services.TrackService;
 import services.UserSpaceService;
 
@@ -46,6 +48,9 @@ public class UserSpaceController extends AbstractController {
 
 	@Autowired
 	private TrackService		trackService;
+	
+	@Autowired
+	private GenreService		genreService;
 
 	@Autowired
 	private CommnentService		commentService;
@@ -77,6 +82,8 @@ public class UserSpaceController extends AbstractController {
 		try {
 			final UserSpace userSpace = this.userSpaceService.create();
 			result = this.createNewModelAndView(userSpace, null);
+			final List<Genre> genres = this.genreService.findAll();
+			result.addObject("genres", genres);
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 
@@ -91,6 +98,8 @@ public class UserSpaceController extends AbstractController {
 		try {
 			final UserSpace userSpace = man.getUserSpace();
 			result = this.createNewModelAndView(userSpace, null);
+			final List<Genre> genres = this.genreService.findAll();
+			result.addObject("genres", genres);
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 
@@ -140,7 +149,9 @@ public class UserSpaceController extends AbstractController {
 			result = new ModelAndView("userspace/list");
 			result.addObject("requestURI", "userspace/user/list.do");
 			final List<UserSpace> userspace = this.userSpaceService.findAll();
+			final List<Genre> genres = this.genreService.findAll();
 			result.addObject("userspace", userspace);
+			result.addObject("genres", genres);
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -174,9 +185,11 @@ public class UserSpaceController extends AbstractController {
 	public ModelAndView saveCreate(@Valid final UserSpace userSpace, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createNewModelAndView(userSpace, null);
-		else
+			final List<Genre> genres = this.genreService.findAll();
+			result.addObject("genres", genres);
+		}else{
 			try {
 
 				this.userSpaceService.save(userSpace);
@@ -186,23 +199,65 @@ public class UserSpaceController extends AbstractController {
 			} catch (final Throwable th) {
 				th.printStackTrace();
 				result = this.createNewModelAndView(userSpace, "actor.commit.error");
+			
 			}
+		}
 		return result;
 	}
-
+	
+	//Search
+	
 	@RequestMapping(value = "/user/search", method = RequestMethod.POST, params = "search")
-	public ModelAndView search(@RequestParam("searchTerm") final String searchTerm) {
+	public ModelAndView search(@RequestParam("searchTerm") final String searchTerm, @RequestParam("searchGenre") final Genre searchGenre) {
+		ModelAndView result;
+		List<UserSpace> userSpacesearch = new ArrayList<UserSpace>();
+		if(searchGenre==null) {
+		try {
+			result = new ModelAndView("userspace/list");
+			result.addObject("requestURI", "userspace/user/list.do");
+			userSpacesearch = this.userSpaceService.userSpacesearch(searchTerm);
+			result.addObject("userspace", userSpacesearch);
+			final List<Genre> genres = this.genreService.findAll();
+			result.addObject("genres", genres);
+
+		} catch (final Throwable th) {
+			result = new ModelAndView("redirect:/userSpace/user/list.do"); // posible vista 404?
+		}
+		
+		}else {
+			
+			try {
+				result = new ModelAndView("userspace/list");
+				result.addObject("requestURI", "userspace/user/list.do");
+				userSpacesearch = this.userSpaceService.userSpaceGenreSearch(searchGenre);
+				final List<Genre> genres = this.genreService.findAll();
+				result.addObject("userspace", userSpacesearch);
+				result.addObject("genres", genres);
+
+			} catch (final Throwable th) {
+				result = new ModelAndView("redirect:/userSpace/user/list.do"); // posible vista 404?
+			}
+			
+		}
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/user/searchGenre", method = RequestMethod.POST, params = "genreSearch")
+	public ModelAndView genreSearch(@RequestParam("searchTerm") final Genre searchTerm) {
 		ModelAndView result;
 		List<UserSpace> userSpacesearch = new ArrayList<UserSpace>();
 
 		try {
 			result = new ModelAndView("userspace/list");
 			result.addObject("requestURI", "userspace/user/list.do");
-			userSpacesearch = this.userSpaceService.userSpacesearch(searchTerm);
+			userSpacesearch = this.userSpaceService.userSpaceGenreSearch(searchTerm);
+			final List<Genre> genres = this.genreService.findAll();
 			result.addObject("userspace", userSpacesearch);
+			result.addObject("genres", genres);
 
 		} catch (final Throwable th) {
-			result = new ModelAndView("redirect:/welcome/index.do"); // posible vista 404?
+			result = new ModelAndView("redirect:/userSpace/user/list.do"); // posible vista 404?
 		}
 		return result;
 	}

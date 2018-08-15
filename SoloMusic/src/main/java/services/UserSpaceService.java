@@ -16,6 +16,7 @@ import security.LoginService;
 import domain.Actor;
 import domain.Donation;
 import domain.Event;
+import domain.Genre;
 import domain.Perfomance;
 import domain.PlayList;
 import domain.Track;
@@ -77,6 +78,7 @@ public class UserSpaceService {
 			m.setDescription(userSpace.getDescription());
 			m.setProfileImg(userSpace.getProfileImg());
 			m.setContact(userSpace.getContact());
+			m.setGenre(userSpace.getGenre());
 			m = this.userSpaceRepository.save(m);
 		} else {
 			userSpace.setPerfomances(new ArrayList<Perfomance>());
@@ -109,8 +111,11 @@ public class UserSpaceService {
 
 		userSpaceRepository.save(userspace);
 
-		
-
+	}
+	
+	
+	public List<UserSpace> userSpaceGenreSearch(Genre genre){
+		return this.userSpaceRepository.userSpaceGenreSearch(genre);
 	}
 
 	
