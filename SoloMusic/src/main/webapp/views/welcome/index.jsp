@@ -17,6 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
 <div class="front-page">
 	<img src="images/logo.jpg" alt="SoloMusic Co., Inc." style="width:28em;"/>
 	<h1 style="font-weight:bold;"><spring:message code="welcome.greeting"/></h1>

@@ -12,25 +12,188 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 
-<div style="width:70%; margin: auto;">
-<div class="container-fluid">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    .card bg-primary text-white{
+     	height: auto;
+        padding: 200px;
+        float: left;
+    
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      
+      .row.content {height: auto;} 
+    }
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+#team {
+    background: #eee !important;
+}
 
-<security:authorize access="hasRole('USER')">
-	<jstl:if test="${p==null and actor.userSpace==p}">
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #108d6f;
+    border-color: #108d6f;
+    box-shadow: none;
+    outline: none;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007b5e;
+    border-color: #007b5e;
+}
+
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+#team .card {
+    border: none;
+    background: #ffffff;
+}
+
+.image-flip:hover .backside,
+.image-flip.hover .backside {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    border-radius: .25rem;
+}
+
+.image-flip:hover .frontside,
+.image-flip.hover .frontside {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.mainflip {
+    -webkit-transition: 1s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 1s;
+    -moz-transition: 1s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.frontside {
+    position: relative;
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    z-index: 2;
+    margin-bottom: 30px;
+}
+
+.backside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+    -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+}
+
+.frontside,
+.backside {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 1s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 1s;
+    -o-transform-style: preserve-3d;
+    -ms-transition: 1s;
+    -ms-transform-style: preserve-3d;
+    transition: 1s;
+    transform-style: preserve-3d;
+}
+
+.frontside .card,
+.backside .card {
+    min-height: 312px;
+}
+
+.backside .card a {
+    font-size: 18px;
+    color: #007b5e !important;
+}
+
+.frontside .card .card-title,
+.backside .card .card-title {
+    color: #007b5e !important;
+}
+
+.frontside .card .card-body img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+  </style>
+</head>
+
+<jstl:if test="${p==null and actor.userSpace==p}">
 		<spring:message code="actor.new" var="actorNew" />
 		<input onclick="window.location='userspace/user/create.do'"
 			class="btn btn-danger" type="button" value="${actorNew}" />
 	</jstl:if>
-	<jstl:if test="${p!=null and actor.userSpace==p}">
-		<spring:message code="actor.edit" var="actorEdit" />
-		<input onclick="window.location='userspace/user/edit.do'"
-			class="btn btn-danger" type="button" value="${actorEdit}" />
-	</jstl:if>
-</security:authorize>
-
-<!-- NO BORRAR AUNQUE ESTE EN AMARILLO -->
-<jstl:if test="${p!=null}">
-<security:authorize access="hasRole('USER')">
+	
+<jslt:if test="${p!=null}">
+<div class="container-fluid">
+<div class="row content">
+    <div class="col-sm-3" style="margin-bottom: 0px">
+    
+   <security:authorize access="hasRole('USER')">
 
 	<jstl:if test="${isPrincipal eq false}">
 		<tr>
@@ -55,128 +218,120 @@
 		<br />
 	</jstl:if>
 </security:authorize>
-
-<%-- Ver los eventos --%>
-<jstl:if test="${!p.events.isEmpty() or p!=null}">
-	<spring:message code="actor.video" var="actorVideo" />
-
-	<input onclick="window.location='event/user/view.do?p=${p.id}'"
-		class="btn btn-danger" type="button" value="${actorVideo}" />
-</jstl:if>
-
-<%-- Ver las actuaciones --%>
-<jstl:if test="${!p.perfomances.isEmpty() or p!=null}">
-	<spring:message code="actor.perfomance" var="actorPerfomance" />
-
-	<input onclick="window.location='perfomance/user/view.do?p=${p.id}'"
-		class="btn btn-danger" type="button" value="${actorPerfomance}" />
-</jstl:if>
-<br />
-<br />
-</div>
-
-<%-- PLAYLIST Y TRACK --%>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		<table style="width: 100%; border-collapse:inherit;">
-			<tr>
-				<td>
-					<h2>
-						<spring:message code="userspace.info" />
-					</h2> <br /> <br />
-					<table style="width: 100%; border-collapse:inherit;">
-						<tr>
-							<td><spring:message code="userspace.title" /></td>
-							<td><jstl:out value="${p.title}" /></td>
-						</tr>
-						<tr>
-							<td><spring:message code="userspace.description" /></td>
-							<td><jstl:out value="${p.description}" /></td>
-						</tr>
-		
-						<tr>
-						<spring:message code="userspace.upload.archive" var="actoUpload"></spring:message>
-						
-							<td><spring:message code="userspace.profileimg" /></td>
-							<td><img style="max-width: 80px; max-height: 80px;"
-								src="userspace/view/image.do?q=${p.id}"></td>
-									<jstl:if test="${actor.userSpace==p}">	
-						    <td style="width: 20%;"><input onclick="window.location='userspace/dowload/upload.do'"
-						class="btn btn-danger" type="button" value="${actoUpload}" /></td>
+      <ul class="nav nav-pills nav-stacked">
+      <security:authorize access="hasRole('USER')">
+      	<jstl:if test="${p!=null and actor.userSpace==p}">
+      	<spring:message code="actor.edit" var="actorEdit" />
+        <li><a href="userspace/user/edit.do">${actorEdit}</a></li>
+        </jstl:if>
+       </security:authorize>
+        <spring:message code="actor.video" var="actorVideo" />
+        <li><a href="event/user/view.do?p=${p.id}">${actorVideo}</a></li>
+        <spring:message code="actor.perfomance" var="actorPerfomance" />
+        <li><a href="perfomance/user/view.do?p=${p.id}">${actorPerfomance}</a></li>
+      </ul><br>
+      <img src="userspace/view/image.do?q=${p.id}" class="img-rounded" alt="Cinque Terre" width="100">
+      	<jstl:if test="${p!=null and actor.userSpace==p}">
+      	<br/>
+      	<spring:message code="userspace.upload.archive" var="actoUploadImage"/>
+      	<input onclick="window.location='userspace/dowload/upload.do'"
+						class="btn btn-danger" type="button" value="${actoUploadImage}" />
+      	</jstl:if>
+      </div>
+       <div class="col-sm-9">
+       <spring:message code="userspace.info" var="spacetitle" />
+       <h4><small>${spacetitle}</small></h4>
+      	<hr>
+       <h2>${p.title}</h2>
+       <p> ${p.description} </p>
+      <br><br>
+      <spring:message code="userspace.contact" var="spaceContact"/>
+      <p> ${spaceContact} ${p.contact} </p>
+      <hr>
+     <spring:message code="donantions.titulo" var="userDonations" />
+      <h4><small> ${userDonations} </small></h4>
+      <hr>
+      <!-- Donations -->
+      <security:authorize access="hasRole('USER')">
+						<jstl:if test="${p!=null and actor.userSpace==p}">
+							<spring:message code="actor.new" var="actorNew" />
+							<input onclick="window.location='donation/user/create.do'"
+								class="btn btn-danger" type="button" value="${actorNew}" />
 						</jstl:if>
-						</tr>
-						<tr>
-							<td><spring:message code="userspace.contact" /></td>
-							<td><jstl:out value="${p.contact}" /></td>
-						</tr>
-					</table>
-				</td>
-			<tr>
-		</table>
-		<br/>
-				
-		<h2>
-			<spring:message code="playlist"></spring:message>
-		</h2>
-		<br/>
-		
-		<jstl:if test="${actor.userSpace==p}">
+						<br />
+					</security:authorize>
+				<br/>
+ <jstl:forEach var="dona" items="${p.donations}">
+ 
+  <div class="col-sm-6">
+      <div class="card bg-primary text-white">
+		  
+		  <div class="card-body">
+		   <h5 class="card-title">${dona.title}</h5>
+		    <p class="card-text"> ${dona.description} </p>
+		    <br/><spring:message code="dona.price" var="donaprice"/>
+		     <p class="card-text"> ${donaprice} ${dona.price} Euros</p>
+		    <div id="paypal-button"></div>
+  </div>
+  </div>
+  </div>
+  
+  <br/>
+  
+ </jstl:forEach>
+ 	
+ <br/>
+ <br />
+ <br />
+ <!-- PlayList -->
+
+ <spring:message code="playlist" var="userPlaylist"></spring:message>
+  <h4><small> ${userPlaylist} </small></h4>
+ <hr>
+ <security:authorize access="hasRole('USER')">
+ <jstl:if test="${actor.userSpace==p}">
 			<spring:message code="actor.new" var="actorNew" />
 			<input onclick="window.location='playlist/user/create.do'"
 				class="btn btn-danger" type="button" value="${actorNew}" />
 		</jstl:if>
-		
-		<jstl:forEach var="play" items="${p.playLists}">
-			<table style="border-collapse:inherit;">
-				<tr>
-					<td><spring:message code="play.title" /></td>
-					<td><jstl:out value="${play.title}" /></td>
-				<tr>
-				<tr>
-					<td><spring:message code="dona.description" /></td>
-					<td><jstl:out value="${play.description}" /></td>
-				</tr>
-				<br/>
-				<br/>
-				<jstl:if test="${actor.userSpace==p}">
-					<tr>
-						<td>
-							<spring:message code="actor.delete" var="actorDelete" />
-							<input onclick="window.location='playlist/user/delete.do?q=${play.id}'"
-								class="btn btn-danger" type="button" value="${actorDelete}" />
-						</td>
-					</tr>
-				</jstl:if>
-				
-				<tr>
-					<td><h2><spring:message code="play.track" /></h2></td>
-				</tr>
-				
-				<jstl:forEach var="track" items="${play.tracks}">
-					<tr>
-						<td><spring:message code="dona.title" /></td>
-						<td><jstl:out value="${track.title}" /></td>
-					</tr>
-					<tr>
-						<td><spring:message code="track.duration" /></td>
-						<td><audio controls preload="none"  >
+ </security:authorize>
+ <br/>
+ <jstl:forEach var="play" items="${p.playLists}">
+  <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+ 
+                    <div class="mainflip">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class=" img-fluid" src="images/logo.jpg" alt="card image"></p>
+                                    <h4 class="card-title"> ${play.title}</h4>
+                                    <p class="card-text">${play.description}</p>
+                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus">Tracks</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <h4 class="card-title">${play.title}</h4>
+                                    	<jstl:forEach var="track" items="${play.tracks}">
+                                    <p class="card-text">"${track.title}"</p>
+                                     <p class="card-text"><audio controls preload="none"  >
 								<source src="userspace/user/play.do?q=${track.id}"
-									type='audio/mpeg;codec="mp3"' onmouseout="true" media="all" >
+									type='audio/mp3;codec="mp3"' onmouseout="true" media="all" >
 								Your browser does not support the audio element.
-							</audio></td>
-					</tr>
-					<jstl:if test="${actor.userSpace==p}">
-					<tr>
+							</audio></p>
+				
+							<jstl:if test="${actor.userSpace==p}">
 					
-					<td>
 						<input onclick="window.location='track/user/delete.do?q=${track.id}'"
 							class="btn btn-danger" type="button" value="x" />
-					</td>
+					
 					
 				</jstl:if>
 			
 				</jstl:forEach>
+				<br/>
 				<jstl:if test="${actor.userSpace==p}">
 					<tr>
 					<td><spring:message code="actor.new.track" var="actorNewTrack" />
@@ -185,88 +340,40 @@
 						</tr>
 						
 				</jstl:if>
-			</table>
-		</jstl:forEach>
-	</div>
-	
-	<%-- DONACIONES --%>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		<table style="width: 50%; border-collapse:inherit;">
-			<tr>
-				<td>
-					<h2>
-						<spring:message code="donantions.titulo" />
-					</h2>
-					<br/>
-					
-					<%-- Crear donaciones --%>
-					<security:authorize	access="hasRole('USER')">
-						<jstl:if test="${p!=null and actor.userSpace==p}">
-							<spring:message code="actor.new" var="actorNew" />
-							<input onclick="window.location='donation/user/create.do'"
-								class="btn btn-danger" type="button" value="${actorNew}" />
-						</jstl:if>
-						<br />
+				
+                        			 </div>   
+                                 
+                                </div>
+                            </div>
+                        </div>
+                
+                    
+ 
+			</div>
+			
+        </jstl:forEach>
+        <br/>
+        <security:authorize access="hasRole('USER')">
+						<td>
+							<spring:message code="actor.new.comment" var="actorNewComment" />
+							<input onclick="window.location='userspace/user/comment.do?q=${p.id}'"
+								class="btn btn-danger" type="button" value="${actorNewComment}" />
+						</td>
 					</security:authorize>
-				</td>
-			</tr>
-			
-			<jstl:forEach var="dona" items="${p.donations}">
-				<tr>
-					<td style="padding:0"><hr class="hr"/></td>
-					<td style="padding:0"><hr class="hr"/></td>
-				</tr>
-				<tr>
-					<td><spring:message code="dona.title" /></td>
-					<td><jstl:out value="${dona.title}" /></td>
-				<tr>
-				<tr>
-					<td><spring:message code="dona.description" /></td>
-					<td><jstl:out value="${dona.description}" /></td>
-				</tr>
-				<tr>
-					<td><spring:message code="dona.price" /></td>
-					<td id="pricePaypal"><jstl:out value="${dona.price}" /> Euros</td>
-				</tr>
-				<tr>
-					<td>
-						<div id="paypal-button"></div>
-					</td>
-				</tr>
-			</jstl:forEach>
-			
-		</table>
-		
-		</div>
-	</div>
-	
-	<!-- COMMENTS -->
-	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding: 0;">
-		<table style="width: 50%; border-collapse:inherit;">
-				<tr>
-					<td>
-						<h2>
-							<spring:message code="userspace.comment" />
-						</h2>
-						<br/>
-				<jstl:forEach var="com" items="${p.comments}">
-					<tr>
-						<td><spring:message code="comment.date" /></td>
-						<td><jstl:out value="${com.date}" /></td>
-					<tr>
-					<tr>
-						<td><spring:message code="comment.autor" /></td>
-						<td><jstl:out value="${com.actor.userAccount.username}" /></td>
-					<tr>
-					<tr>
-						<td><spring:message code="comment.text" /></td>
-						<td><jstl:out value="${com.text}" /></td>
-					<tr>
-					<tr>
-						<td><spring:message code="comment.puntuation" /></td>
-						<td><jstl:out value="${com.puntuacion}" /></td>
-					</tr>
-					<jstl:if test="${com.actor.id==actor.id}">
+					<br/>
+					<br/>
+        
+         
+         <jstl:forEach var="com" items="${p.comments}">
+       
+        <div class="col-sm-2 text-center">
+          <img src="userspace/view/image.do?q=${com.actor.userSpace.id}" class="img-circle" height="65" width="65" alt="Avatar">
+        </div>
+        <div class="col-sm-10">
+          <h4>${com.actor.name}  ${com.actor.surname}<small> ${com.date} </small></h4>
+          <p>${com.text}</p>
+          <br>
+          <jstl:if test="${com.actor.id==actor.id}">
 						<tr>
 							<td>
 								<spring:message code="actor.edit.comment" var="actorEditComment" />
@@ -278,22 +385,19 @@
 							</td>
 						</tr>
 					</jstl:if>
-					<br/>
-				</jstl:forEach>
-				<tr>
-					<security:authorize access="hasRole('USER')">
-						<td>
-							<spring:message code="actor.new.comment" var="actorNewComment" />
-							<input onclick="window.location='userspace/user/comment.do?q=${p.id}'"
-								class="btn btn-danger" type="button" value="${actorNewComment}" />
-						</td>
-					</security:authorize>
-				</tr>
-			</table>
-		</div>
-	</div>
-	</jstl:if>
-</div>
+        </div>
+        </jstl:forEach>
+       
+    
+      </div>
+    </div>
+  </div>
+</jslt:if>
+
+   
+   
+
+
 
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
