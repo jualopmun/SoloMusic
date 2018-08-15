@@ -11,15 +11,15 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <security:authorize access="hasRole('USER')">
-	<div style="width:30%; margin: auto;">
-		<div style="width: 500%; margin: auto; display: inline-block;">
+	<div class="container">
 			<form:form action="perfomance/user/save.do" modelAttribute="perfomance">
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 			
-			<div class="form-group" style="width: 20%;">
+			<div class="form-group" >
 				<form:errors path="*" class="has-error" />
 
 					<label><spring:message code="perfomance.title" /></label>
@@ -57,5 +57,7 @@
 
 			</form:form>
 		</div>
-	</div>
+
+	
 </security:authorize>
+
