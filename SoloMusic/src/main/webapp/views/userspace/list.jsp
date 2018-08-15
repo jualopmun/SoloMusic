@@ -20,7 +20,7 @@
 <div style="width:70%; margin: auto;">
 	<div style="padding: 0% 0% 1% 0%;">
 	 <b>Inserte su búsqueda o seleccione un género</b>
-	 
+	 <div class="form-group">
 	 <form:form action="userspace/user/search.do">	
 	  	 <input type="text" id="searchTerm" name="searchTerm"/>
 	  	 <select name="searchGenre">
@@ -32,7 +32,7 @@
 	  	 <acme:submit name="search" code="userspace.search"/>
 	  </form:form>
 	</div>
-	
+</div>
 	
 	
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"

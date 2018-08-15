@@ -185,7 +185,7 @@ section .section-title {
     
    <security:authorize access="hasRole('USER')">
 
-	<jstl:if test="${isPrincipal eq false}">
+	<jstl:if test="${actor.userSpace!=p}">
 		<tr>
 			<td><jstl:choose>
 					<jstl:when test="${followed eq false}">

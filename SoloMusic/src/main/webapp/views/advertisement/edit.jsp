@@ -65,7 +65,7 @@
 				</div>
 			
 				<input type="submit" class="btn btn-primary" name="save" value="${save}" />
-				<input type="submit" class="btn btn-primary" name="delete" value="${delete}"/>
+				
 				<input onclick="window.location='advertisement/user/list.do?q=0'" class="btn btn-danger" type="button" name="cancel" value="${cancel}"/>
 	
 			</form:form>
