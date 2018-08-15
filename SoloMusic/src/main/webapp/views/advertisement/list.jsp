@@ -55,7 +55,7 @@
 		<spring:message code="advertisement.view" var="view" />
 		<spring:message code="advertisement.edit" var="edit" />
 		<spring:message code="advertisement.registered" var="registered" />
-		<spring:message code="userspace.profileimg" var="editImage" />
+		<spring:message code="userspace.profileimg.upload" var="editImage" />
 			
 		<div style="padding: 0% 0% 1% 0%;">
 	 	<form:form action="advertisement/user/search.do">	
@@ -98,8 +98,8 @@
 			  		<input onclick="window.location='${editUrl}'"	class="btn btn-danger" type="button" value="${edit}" />
 				</display:column>
 				<display:column sortable="false">
-					<spring:url var="editImageUrl" value="/advertisement/edit.do" >
-						<spring:param name="q" value="${row.id}" />
+					<spring:url var="editImageUrl" value="/advertisement/image/upload.do?q=${row.id}" >
+						
 					</spring:url>
 			  		<input onclick="window.location='${editImageUrl}'"	class="btn btn-danger" type="button" value="${editImage}" />
 				</display:column>

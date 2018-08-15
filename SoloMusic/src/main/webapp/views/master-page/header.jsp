@@ -81,8 +81,6 @@
 					</security:authorize>
 					
 					<security:authorize access="hasRole('USER')">
-					<li><a class="fNiv" href="userspace/user/view.do"><spring:message
-							code="master.page.user.userspace" /></a></li>
 						<li><a class="fNiv" href="advertisement/list.do"><spring:message
 							code="master.page.advertisement.list" /></a></li>
 							<li><a class="fNiv" href="actor/premium.do"><spring:message

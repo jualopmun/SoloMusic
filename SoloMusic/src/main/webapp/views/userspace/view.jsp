@@ -242,6 +242,7 @@ section .section-title {
        <h4><small>${spacetitle}</small></h4>
       	<hr>
        <h2>${p.title}</h2>
+       <h5><span class="label label-danger">${p.genre.genre}</span></h5>
        <p> ${p.description} </p>
       <br><br>
       <spring:message code="userspace.contact" var="spaceContact"/>
