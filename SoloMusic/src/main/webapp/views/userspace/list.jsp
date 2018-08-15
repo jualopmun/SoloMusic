@@ -49,6 +49,10 @@
 		<spring:message code="userspace.description" var="description"/>
 		<display:column property="description" title="${description}"
 			sortable="false" />
+			
+		<spring:message code="userspace.genre" var="genre"/>
+		<display:column property="genre.genre" title="${genre}"
+			sortable="false" />
 		
 		<spring:message code="userspace.contact" var="contact"/>		
 		<display:column property="contact" title="${contact}"
