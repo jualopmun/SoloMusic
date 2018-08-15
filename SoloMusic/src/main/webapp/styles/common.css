@@ -12,18 +12,12 @@ h1, h2, h3 {
 	margin: 0 auto;
 }
 
-table {
-	border: 1px solid;
-	color: crimson;
-}
+
 
 thead {
 	border: 1px solid;
 }
 
-tr {
-	color: black;
-}
 
 td {
 	padding: 10px;

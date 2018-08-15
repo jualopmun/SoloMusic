@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -279,10 +280,11 @@ section .section-title {
   <br/>
   
  </jstl:forEach>
- 	
+ 	 <hr>
  <br/>
  <br />
  <br />
+ <div class="col-sm-9">
  <!-- PlayList -->
 
  <spring:message code="playlist" var="userPlaylist"></spring:message>
@@ -353,6 +355,12 @@ section .section-title {
 			
         </jstl:forEach>
         <br/>
+        </div>
+        
+					<br/>
+					<br/>
+        
+        <div class="col-sm-9">  
         <security:authorize access="hasRole('USER')">
 						<td>
 							<spring:message code="actor.new.comment" var="actorNewComment" />
@@ -361,9 +369,6 @@ section .section-title {
 						</td>
 					</security:authorize>
 					<br/>
-					<br/>
-        
-         
          <jstl:forEach var="com" items="${p.comments}">
        
         <div class="col-sm-2 text-center">
@@ -388,7 +393,7 @@ section .section-title {
         </div>
         </jstl:forEach>
        
-    
+    	</div>
       </div>
     </div>
   </div>

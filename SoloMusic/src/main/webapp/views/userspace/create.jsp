@@ -51,6 +51,7 @@
 				type="text" name="contact" />
 			<form:errors cssClass="error" path="contact" />
 			
+	
 			<br />
 			</div>
 			
