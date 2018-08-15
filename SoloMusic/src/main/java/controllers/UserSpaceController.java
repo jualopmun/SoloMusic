@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,21 +62,15 @@ public class UserSpaceController extends AbstractController {
 	public ModelAndView view() {
 		ModelAndView result;
 
-		try {
+		result = new ModelAndView("userspace/view");
+		result.addObject("requestURI", "/user/view.do");
 
-			result = new ModelAndView("userspace/view");
-			result.addObject("requestURI", "/user/view.do");
-
-			if (LoginService.isAnyAuthenticated()) {
-				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-				result.addObject("p", man.getUserSpace());
-				result.addObject("actor", man);
-				if (man.getUserSpace() != null)
-					userSpaceID = man.getUserSpace().getId();
-			}
-
-		} catch (final Throwable e) {
-			result = new ModelAndView("redirect:/welcome/index.do");
+		if (LoginService.isAnyAuthenticated()) {
+			final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			result.addObject("p", man.getUserSpace());
+			result.addObject("actor", man);
+			if (man.getUserSpace() != null)
+				userSpaceID = man.getUserSpace().getId();
 		}
 
 		return result;
@@ -174,12 +169,15 @@ public class UserSpaceController extends AbstractController {
 		if (track == null || track.getFile() == null || track.getFile().length <= 0)
 			throw new ServletException("No clip found/clip has not data, id=" + q);
 		final HttpHeaders header = new HttpHeaders();
-
+		HttpServletResponse response = null;
 		// header.setContentType(new MediaType("audio", "mp3"));
-		header.setContentType(new MediaType("audio", "mpeg3"));
+		header.setContentType(new MediaType("audio", "mp3"));
 		header.setContentLength(track.getFile().length);
+
 		header.setContentDispositionFormData(track.getTitle(), track.getTitle());
 		header.setOrigin(track.getTitle());
+		header.add("Content-Range", "bytes " + 0 + "-" + track.getFile().length + "/" + track.getFile().length);
+
 		return new HttpEntity<byte[]>(track.getFile(), header);
 	}
 
