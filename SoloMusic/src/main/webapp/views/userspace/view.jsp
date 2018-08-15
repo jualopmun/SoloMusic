@@ -13,16 +13,9 @@
 
 
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 1500px}
+   
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -45,11 +38,7 @@
     }
     
     /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
+    
       
       .row.content {height: auto;} 
     }
@@ -189,7 +178,7 @@ section .section-title {
 			class="btn btn-danger" type="button" value="${actorNew}" />
 	</jstl:if>
 	
-<jslt:if test="${p!=null}">
+
 <div class="container-fluid">
 <div class="row content">
     <div class="col-sm-3" style="margin-bottom: 0px">
@@ -218,6 +207,7 @@ section .section-title {
 		<br />
 		<br />
 	</jstl:if>
+
 </security:authorize>
       <ul class="nav nav-pills nav-stacked">
       <security:authorize access="hasRole('USER')">
@@ -226,19 +216,27 @@ section .section-title {
         <li><a href="userspace/user/edit.do">${actorEdit}</a></li>
         </jstl:if>
        </security:authorize>
+       <jstl:if test="${p!=null}">
         <spring:message code="actor.video" var="actorVideo" />
         <li><a href="event/user/view.do?p=${p.id}">${actorVideo}</a></li>
+        </jstl:if>
+          <jstl:if test="${p!=null}">
         <spring:message code="actor.perfomance" var="actorPerfomance" />
         <li><a href="perfomance/user/view.do?p=${p.id}">${actorPerfomance}</a></li>
+        </jstl:if>
       </ul><br>
+       <jstl:if test="${p!=null}">
       <img src="userspace/view/image.do?q=${p.id}" class="img-rounded" alt="Cinque Terre" width="100">
       	<jstl:if test="${p!=null and actor.userSpace==p}">
       	<br/>
+      	
       	<spring:message code="userspace.upload.archive" var="actoUploadImage"/>
       	<input onclick="window.location='userspace/dowload/upload.do'"
 						class="btn btn-danger" type="button" value="${actoUploadImage}" />
       	</jstl:if>
+      	</jstl:if>
       </div>
+      
        <div class="col-sm-9">
        <spring:message code="userspace.info" var="spacetitle" />
        <h4><small>${spacetitle}</small></h4>
@@ -291,11 +289,13 @@ section .section-title {
   <h4><small> ${userPlaylist} </small></h4>
  <hr>
  <security:authorize access="hasRole('USER')">
+  <jstl:if test="${p!=null}">
  <jstl:if test="${actor.userSpace==p}">
 			<spring:message code="actor.new" var="actorNew" />
 			<input onclick="window.location='playlist/user/create.do'"
 				class="btn btn-danger" type="button" value="${actorNew}" />
 		</jstl:if>
+	</jstl:if>
  </security:authorize>
  <br/>
  <jstl:forEach var="play" items="${p.playLists}">
@@ -362,11 +362,13 @@ section .section-title {
         
         <div class="col-sm-9">  
         <security:authorize access="hasRole('USER')">
+        	<jstl:if test="${p!=null}">
 						<td>
 							<spring:message code="actor.new.comment" var="actorNewComment" />
 							<input onclick="window.location='userspace/user/comment.do?q=${p.id}'"
 								class="btn btn-danger" type="button" value="${actorNewComment}" />
 						</td>
+						</jstl:if>
 					</security:authorize>
 					<br/>
          <jstl:forEach var="com" items="${p.comments}">
@@ -397,7 +399,6 @@ section .section-title {
       </div>
     </div>
   </div>
-</jslt:if>
 
    
    
