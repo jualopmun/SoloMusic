@@ -48,7 +48,7 @@
 		
 						<label> <spring:message code="advertisement.startDate" />
 						</label><br /> <input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.startDate}"/>'
-							type="text" name="startDate" placeholder="dd/MM/yyyy"  />
+							type="date" name="startDate" placeholder="dd/MM/yyyy"  />
 						<form:errors cssClass="error" path="startDate" />
 						<br />
 						

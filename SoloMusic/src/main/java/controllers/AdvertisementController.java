@@ -25,13 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
-import services.AdvertisementService;
 import domain.Actor;
 import domain.Advertisement;
-import domain.Event;
-import domain.UserSpace;
-import security.LoginService;
+import services.ActorService;
+import services.AdvertisementService;
 
 @Controller
 @RequestMapping("advertisement")
@@ -44,8 +41,8 @@ public class AdvertisementController extends AbstractController {
 
 	@Autowired
 	private AdvertisementService	advertisementService;
-	
-	public Integer advertisementId;
+
+	public Integer					advertisementId;
 
 
 	//Listing
@@ -112,13 +109,13 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		 ModelAndView result;
+		ModelAndView result;
 		try {
-		  Actor principal = this.actorService.findByPrincipal();	
-		  Assert.isTrue(principal.getIsPremium());
-		 Advertisement advertisement = this.advertisementService.create();
-		result = this.createEditModelAndView(advertisement);
-		}catch(final Throwable oops) {
+			Actor principal = this.actorService.findByPrincipal();
+			Assert.isTrue(principal.getIsPremium());
+			Advertisement advertisement = this.advertisementService.create();
+			result = this.createEditModelAndView(advertisement);
+		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
@@ -129,15 +126,15 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int q) throws ParseException {
-		 ModelAndView result;
+		ModelAndView result;
 		try {
-		 Actor principal = this.actorService.findByPrincipal();	
-		 Assert.isTrue(principal.getIsPremium());
-		final Advertisement advertisement = this.advertisementService.findOne(q);
+			Actor principal = this.actorService.findByPrincipal();
+			Assert.isTrue(principal.getIsPremium());
+			final Advertisement advertisement = this.advertisementService.findOne(q);
 
-		Assert.notNull(advertisement);
-		result = this.createEditModelAndView(advertisement);
-		}catch(final Throwable oops) {
+			Assert.notNull(advertisement);
+			result = this.createEditModelAndView(advertisement);
+		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
@@ -152,12 +149,15 @@ public class AdvertisementController extends AbstractController {
 			result = this.createEditModelAndView(advertisement);
 		else
 			try {
-				  Actor principal = this.actorService.findByPrincipal();	
-				  Assert.isTrue(principal.getIsPremium());
-				if (advertisement.getStartDate().after(advertisement.getEndDate())) {
-					binding.rejectValue("endDate", "acme.date.later", "error");
-					throw new IllegalArgumentException();
-				}
+				Actor principal = this.actorService.findByPrincipal();
+				Assert.isTrue(principal.getIsPremium());
+				//				DateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+				//				Date start = (Date) format.parse(advertisement.getStartDate());
+				//				Date end = (Date) format.parse(advertisement.getEndDate());
+				//				if (start.after(end)) {
+				//					binding.rejectValue("endDate", "acme.date.later", "error");
+				//					throw new IllegalArgumentException();
+				//				}
 
 				this.advertisementService.save(advertisement);
 				result = this.listUser(0);
@@ -217,40 +217,34 @@ public class AdvertisementController extends AbstractController {
 
 		return result;
 	}
-	
-	
-	
-	
-	
-	
-	//subir imagen
-	
-	
-	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_OCTET_STREAM_VALUE
-		})
-		public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam  int q) throws IOException, ServletException {
 
-			Advertisement advertisement = advertisementService.findOne(q);
-			if (advertisement == null || advertisement.getMainImg() == null || advertisement.getMainImg().length <= 0)
-				throw new ServletException("No clip found/clip has not data, id=" + q);
-			final HttpHeaders header = new HttpHeaders();
-			
-			//header.setContentType(new MediaType("audio", "mp3"));
-			header.setContentType(new MediaType("image", "jpg"));
-			header.setContentLength(advertisement.getMainImg().length);
-			
-			return new HttpEntity<byte[]>(advertisement.getMainImg(), header);
-		}
+	//subir imagen
+
+	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
+		MediaType.APPLICATION_OCTET_STREAM_VALUE
+	})
+	public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam int q) throws IOException, ServletException {
+
+		Advertisement advertisement = advertisementService.findOne(q);
+		if (advertisement == null || advertisement.getMainImg() == null || advertisement.getMainImg().length <= 0)
+			throw new ServletException("No clip found/clip has not data, id=" + q);
+		final HttpHeaders header = new HttpHeaders();
+
+		//header.setContentType(new MediaType("audio", "mp3"));
+		header.setContentType(new MediaType("image", "jpg"));
+		header.setContentLength(advertisement.getMainImg().length);
+
+		return new HttpEntity<byte[]>(advertisement.getMainImg(), header);
+	}
 	@RequestMapping(value = "image/upload", method = RequestMethod.GET)
 	public ModelAndView uploadImage(@RequestParam int q) {
 		ModelAndView result;
-		
+
 		try {
-			 Advertisement  advertisement = advertisementService.findOne(q);
-			
+			Advertisement advertisement = advertisementService.findOne(q);
+
 			result = this.createEditModelAndViewUpload(advertisement, null);
-			advertisementId=advertisement.getId();
+			advertisementId = advertisement.getId();
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -263,8 +257,8 @@ public class AdvertisementController extends AbstractController {
 	public ModelAndView saveCreate(@RequestParam("mainImg") final MultipartFile file) {
 		ModelAndView result;
 
-	 if (file.isEmpty()) {
-		 result = new ModelAndView("advertisement/upload");
+		if (file.isEmpty()) {
+			result = new ModelAndView("advertisement/upload");
 			result.addObject("advertisement", null);
 			result.addObject("message", "file.null.error");
 			result.addObject("requestURI", "user/create.do");
@@ -322,16 +316,16 @@ public class AdvertisementController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/user/location", method = RequestMethod.GET)
 	public ModelAndView location(@RequestParam final int p) {
 		ModelAndView result;
 
 		try {
-			
+
 			result = new ModelAndView("advertisement/location");
 
-			Advertisement advertisement= advertisementService.findOne(p);
+			Advertisement advertisement = advertisementService.findOne(p);
 
 			result.addObject("advertisement", advertisement);
 
@@ -341,9 +335,7 @@ public class AdvertisementController extends AbstractController {
 
 		return result;
 	}
-	
-	
-	
+
 	protected ModelAndView createEditModelAndViewUpload(final Advertisement advertisement) {
 		ModelAndView result;
 
@@ -362,10 +354,8 @@ public class AdvertisementController extends AbstractController {
 
 		return result;
 	}
-	
-	
+
 	//Buscar 
-	
 
 	@RequestMapping(value = "/user/search", method = RequestMethod.POST, params = "search")
 	public ModelAndView search(@RequestParam("searchTerm") final String searchTerm) {

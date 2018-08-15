@@ -117,64 +117,39 @@ a.btn-card {
 
 
 </style>
-
+<security:authorize access="permitAll">
 <div class="col-md-4">
            
             </div>
             <div class="col-md-4">
                 <div class="card-content">
                     <div class="card-img">
-                        <img src="https://placeimg.com/380/230/animals" alt="">
-                        <span><h4>heading2</h4></span>
+                        <img src="advertisement/view/image.do?q=${advertisement.id}" alt="">
+                       
+                    </div>
+                    <div class="card-desc">
+                        <h3><jstl:out value="${advertisement.title}" /></h3>
+                        <p><jstl:out value="${advertisement.description}" /></p>
+                            <br/>
+                            
+                            <spring:message code="event.locationUrl" var="location" />
+                          <p><a href='advertisement/user/location.do?p=${advertisement.id}'><jstl:out value="${location}" /></a></p>
+                            <security:authorize access="hasRole('USER')">
+			
+		</security:authorize>  
+                       
                     </div>
                   
                 </div>
             </div>
 
-  <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                <div class="card card-inverse card-info">
-                    <img class="card-img-top" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
-                    <div class="card-block">
-                        <figure class="profile profile-inline">
-                            <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
-                        </figure>
-                        <h4 class="card-title">Tawshif Ahsan Khan</h4>
-                        <div class="card-text">
-                            Tawshif is a web designer living in Bangladesh.
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small>Last updated 3 mins ago</small>
-                        <button class="btn btn-info float-right btn-sm">Follow</button>
-                    </div>
-                </div>
-            </div>
 
-<security:authorize access="permitAll">
+
+
 
 	<div style="width:20%; margin: auto;">
 		<spring:message code="event.location" var="location"/>
-		<table>
-			<tr>
-				<td><img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${advertisement.id}"/></td>
-				
-				<td><jstl:out value="${advertisement.title}" /></td>
-			</tr>
-			<tr>
-				<td><spring:message code="advertisement.description" /></td>
-				<td><jstl:out value="${advertisement.description}" /></td>
-			</tr>
-			<tr>
-				<tr >
-					<td><spring:message code="event.locationUrl" /></td>
-					<td><a href='advertisement/user/location.do?p=${advertisement.id}'><jstl:out value="${location}" /></a></td>
-				</tr>
-			</tr>
-			<tr>
-				<td><spring:message code="advertisement.price" /></td>
-				<td><jstl:out value="${advertisement.price}" /></td>
-			</tr>
-		</table>
+		
 		
 		<%-- Registro --%>
 		<security:authorize access="hasRole('USER')">
