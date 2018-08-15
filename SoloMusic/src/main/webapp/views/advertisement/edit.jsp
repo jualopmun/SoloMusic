@@ -10,11 +10,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 <security:authorize access="hasRole('USER')">
 
-	<div style="width:30%; margin: auto;">
-		<div style="width: 500%; margin: auto; display: inline-block;">
+	<div class="container">
+		
 			<spring:message code="advertisement.save" var="save"/>
 			<spring:message code="advertisement.delete" var="delete"/>
 			<spring:message code="advertisement.cancel" var="cancel"/>
@@ -26,7 +34,7 @@
 				<form:hidden path="actorOwener" />
 				<form:hidden path="actorRegisters" />
 			
-				<div class="form-group" style="width: 20%;">
+				<div class="form-group">
 			
 						<label><spring:message code="advertisement.title" /></label>
 						<input class="form-control" value="${advertisement.title}" type="text" name="title" />
@@ -70,5 +78,5 @@
 	
 			</form:form>
 		</div>
-	</div>
+	
 </security:authorize>
