@@ -39,7 +39,52 @@
 			</list>
 		</property>
 	</bean>
-
+		
+	<!-- Genres -->
+	
+	<bean id="genre1" class="domain.Genre">
+		<property name="genre" value="Rock" />
+	</bean>
+	
+	<bean id="genre2" class="domain.Genre">
+		<property name="genre" value="Pop" />
+	</bean>
+	
+	<bean id="genre3" class="domain.Genre">
+		<property name="genre" value="Metal"/>
+	</bean>
+	
+	<bean id="genre4" class="domain.Genre">
+		<property name="genre" value="Indie" />
+	</bean>
+	
+	<bean id="genre5" class="domain.Genre">
+		<property name="genre" value="Electrónica" />
+	</bean>
+	
+	<bean id="genre6" class="domain.Genre">
+		<property name="genre" value="Hip-Hop/Rap" />
+	</bean>
+	
+	<bean id="genre7" class="domain.Genre">
+		<property name="genre" value="Urbano" />
+	</bean>
+	
+	<bean id="genre8" class="domain.Genre">
+		<property name="genre" value="Flamenco" />
+	</bean>
+	
+	<bean id="genre9" class="domain.Genre">
+		<property name="genre" value="Folklore" />
+	</bean>
+	
+	<bean id="genre10" class="domain.Genre">
+		<property name="genre" value="Jazz" />
+	</bean>
+	
+	<bean id="genre11" class="domain.Genre">
+		<property name="genre" value="Blues" />
+	</bean>
 
 	<!-- Folders -->
 
@@ -477,12 +522,16 @@
 
 	</bean>	
 	
+	
+	
+	
 	<!-- UserSpaces -->
 
 	<bean id="userSpace1" class="domain.UserSpace">
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
 		<property name="contact" value="contact1" />
+		<property name="genre" ref="genre1"/>
 		<property name="events">
 			<list>
 				<ref bean="event1" />
@@ -515,6 +564,7 @@
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
 		<property name="contact" value="contact2" />
+		<property name="genre" ref="genre2"/>
 		<property name="events">
 			<list>
 				<ref bean="event2" />

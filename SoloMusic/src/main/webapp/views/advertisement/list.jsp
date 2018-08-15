@@ -56,6 +56,13 @@
 		<spring:message code="advertisement.edit" var="edit" />
 		<spring:message code="advertisement.registered" var="registered" />
 		<spring:message code="userspace.profileimg" var="editImage" />
+			
+		<div style="padding: 0% 0% 1% 0%;">
+	 	<form:form action="advertisement/user/search.do">	
+	  		 <input type="text" id="searchTerm" name="searchTerm"/>
+	  		 <acme:submit name="search" code="advertisement.search"/>
+		  </form:form>
+		</div>
 		
 		<display:table style="border-collapse:inherit;" keepStatus="true" name="advertisements"
 			requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
