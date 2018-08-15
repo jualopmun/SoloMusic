@@ -10,19 +10,26 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 <security:authorize access="hasRole('USER')">
 	
-	<div style="width:30%; margin: auto;">
-		<div style="width: 200%; margin: auto; display: inline-block;">
+	<div class="container">
+		
 			<form:form action="userspace/comment/save.do" modelAttribute="comment">
 				<form:hidden path="id"/>
 				<form:hidden path="version"/>
 				<form:hidden path="actor"/>
 				<form:hidden path="date"/>
 			
-				<div class="form-group" style="width: 50%;">
+				<div class="form-group">
 				<form:errors path="*" class="has-error" />
 					
 					<label><spring:message code="comment.text" /></label>
@@ -51,5 +58,5 @@
 			</div>
 			</form:form>
 		</div>
-	</div>
+	
 </security:authorize>

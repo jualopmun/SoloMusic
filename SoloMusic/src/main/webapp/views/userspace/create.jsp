@@ -12,11 +12,20 @@
 
 
 
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
+<div class="container">
 <security:authorize access="hasRole('USER')">
 
 	<form:form action="userspace/user/save.do" modelAttribute="userSpace">
-
+	<div class="form-group">
 		<form:hidden path="id" />
 		<form:hidden path="version" />
 		<form:hidden path="perfomances" />
@@ -26,7 +35,7 @@
 		<form:hidden path="comments" />
 		
 		
-		<div class="form-group" style="width: 20%;">
+		<div class="form-group">
 		<form:errors path="*" class="has-error" />
 
 			<label> <spring:message code="userspace.title" />
@@ -71,5 +80,8 @@
 		<input type="submit" class="btn btn-primary" name="save" value="${actorSaveHeader}" />
 		<input onclick="window.location='userspace/user/view.do'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
 
+</div>
 	</form:form>
 </security:authorize>
+
+</div>

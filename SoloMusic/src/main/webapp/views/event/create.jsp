@@ -11,19 +11,27 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 
 <security:authorize access="hasRole('USER')">
 
-	<div style="width:30%; margin: auto;">
-		<div style="width: 200%; margin: auto; display: inline-block;">
+	<div class="container">
+		
 			<form:form action="event/user/save.do" modelAttribute="event">
 		
 				<form:hidden path="id" />
 				<form:hidden path="version" />
 				
 				<form:errors path="*" class="has-error" />
-				<div class="form-group" style="width: 55%;">
+				<div class="form-group" >
 					<label> <spring:message code="event.title" />
 					</label><br /> <input class="form-control" value="${event.title}"
 						type="text" name="title" />
@@ -60,5 +68,5 @@
 				<input onclick="window.location='event/user/view.do?p=${actor.userSpace.id}'" class="btn btn-danger" type="button" name="cancel" value="${actorCancelHeader}"/>
 			</form:form>
 		</div>
-	</div>
+	
 </security:authorize>
