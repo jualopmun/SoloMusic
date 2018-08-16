@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
-import services.AdvertisementService;
 import domain.Actor;
 import domain.Advertisement;
+import security.LoginService;
+import services.ActorService;
+import services.AdvertisementService;
 
 @Controller
 @RequestMapping("actor")
@@ -33,21 +34,27 @@ public class ActorController extends AbstractController {
 	@Autowired
 	private AdvertisementService	advertisementService;
 
+	@Autowired
+	private LoginService			loginService;
+
 
 	// Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final String q) {
 		final ModelAndView result;
-		final Actor principal = this.actorService.findByPrincipal();
+
+		final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		Collection<Actor> actors = new ArrayList<Actor>();
-		if (q == "followers")
+		if (q.equals("followers")) {
 			actors = principal.getFollowers();
-		else
+		} else if (q.equals("followeds")) {
 			actors = principal.getFolloweds();
+		}
 
 		result = new ModelAndView("actor/list");
 		result.addObject("actors", actors);
+		result.addObject("principal", principal);
 		result.addObject("varid", q);
 		result.addObject("requestURI", "actor/list.do");
 
@@ -92,6 +99,12 @@ public class ActorController extends AbstractController {
 			result = this.createEditModelAndView(actor);
 		} else
 			try {
+				if (actorService.encontrarActor(actor.getUserAccount().getUsername()).getId() > 0) {
+
+					binding.rejectValue("userAccount.username", "actor.surname.error", "error");
+					throw new IllegalArgumentException();
+				}
+
 				actor.setIsPremium(false);
 				Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 				actor.getUserAccount().setPassword(encoder.encodePassword(actor.getUserAccount().getPassword(), null));
@@ -142,6 +155,7 @@ public class ActorController extends AbstractController {
 		final Actor actor = this.actorService.findByPrincipal();
 		result = new ModelAndView("actor/premium");
 		result.addObject("actor", actor);
+		//result.addObject("hacerPremium", actorService.hacerPremium());
 		return result;
 	}
 

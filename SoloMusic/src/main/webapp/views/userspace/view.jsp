@@ -239,18 +239,24 @@ section .section-title {
       
        <div class="col-sm-9">
        <spring:message code="userspace.info" var="spacetitle" />
+       <jstl:if test="${p!=null}">
        <h4><small>${spacetitle}</small></h4>
+     
       	<hr>
+      	  </jstl:if>
        <h2>${p.title}</h2>
        <h5><span class="label label-danger">${p.genre.genre}</span></h5>
        <p> ${p.description} </p>
       <br><br>
       <spring:message code="userspace.contact" var="spaceContact"/>
+      <jstl:if test="${p!=null}">
       <p> ${spaceContact} ${p.contact} </p>
       <hr>
      <spring:message code="donantions.titulo" var="userDonations" />
+       
       <h4><small> ${userDonations} </small></h4>
       <hr>
+      </jstl:if>
       <!-- Donations -->
       <security:authorize access="hasRole('USER')">
 						<jstl:if test="${p!=null and actor.userSpace==p}">
@@ -271,6 +277,7 @@ section .section-title {
 		    <p class="card-text"> ${dona.description} </p>
 		    <br/><spring:message code="dona.price" var="donaprice"/>
 		     <p class="card-text"> ${donaprice} ${dona.price} Euros</p>
+		     <input type="text" id="paypal-button" value="${dona.price}" style="display: none">
 		    <div id="paypal-button"></div>
   </div>
   </div>
@@ -279,7 +286,9 @@ section .section-title {
   <br/>
   
  </jstl:forEach>
+  <jstl:if test="${p!=null}">
  	 <hr>
+ 	  </jstl:if>
  <br/>
  <br />
  <br />
@@ -287,8 +296,10 @@ section .section-title {
  <!-- PlayList -->
 
  <spring:message code="playlist" var="userPlaylist"></spring:message>
+ <jstl:if test="${p!=null}">
   <h4><small> ${userPlaylist} </small></h4>
  <hr>
+</jstl:if>
  <security:authorize access="hasRole('USER')">
   <jstl:if test="${p!=null}">
  <jstl:if test="${actor.userSpace==p}">
@@ -378,7 +389,9 @@ section .section-title {
           <img src="userspace/view/image.do?q=${com.actor.userSpace.id}" class="img-circle" height="65" width="65" alt="Avatar">
         </div>
         <div class="col-sm-10">
-          <h4>${com.actor.name}  ${com.actor.surname}<small> ${com.date} </small></h4>
+          <h4>${com.actor.name} ${" "}  ${com.actor.surname}<small> ${com.date} </small></h4>
+          <spring:message code="comment.puntuation" />: <p>${com.puntuacion}</p>
+          <br/>
           <p>${com.text}</p>
           <br>
           <jstl:if test="${com.actor.id==actor.id}">

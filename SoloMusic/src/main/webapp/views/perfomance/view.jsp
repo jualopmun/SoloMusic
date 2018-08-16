@@ -135,7 +135,7 @@ a.btn-card {
                     <div class="card-img">
                        <input type="text" id="video" value="${p.videoUrl}"	style="display: none">
 		<%-- Script para los videos de yotube --%>
-		<div class="youtube" id='<jstl:out value="${p.videoUrl}" />' style="width:560px; height: 315px; padding-bottom: 400px;"></div>
+		<div class="youtube" id='<jstl:out value="${p.videoUrl}" />' style="width:560px; height: 300px; padding-bottom: 400px;"></div>
                        
                     </div>
                     <div class="card-desc">

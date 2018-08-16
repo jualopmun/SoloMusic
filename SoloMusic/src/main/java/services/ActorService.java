@@ -78,7 +78,7 @@ public class ActorService {
 	}
 
 	public void follow(final Actor a) {
-		final Actor principal = this.findByPrincipal();
+		final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		principal.getFolloweds().add(a);
 		this.save(principal);
 		a.getFollowers().add(principal);
@@ -86,7 +86,7 @@ public class ActorService {
 	}
 
 	public void unfollow(final Actor a) {
-		final Actor principal = this.findByPrincipal();
+		final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		a.getFollowers().remove(principal);
 		this.save(a);
 		principal.getFolloweds().remove(a);
@@ -136,4 +136,9 @@ public class ActorService {
 		return actorRepository.save(a);
 
 	}
+
+	public Actor encontrarActor(String username) {
+		return actorRepository.encontrarActor(username);
+	}
+
 }

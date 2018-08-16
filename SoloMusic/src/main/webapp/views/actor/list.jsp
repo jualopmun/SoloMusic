@@ -12,7 +12,7 @@
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		
 		<display:column sortable="false">
-			<img style="max-width: 80px; max-height: 80px;"	src="<jstl:out value="${row.userSpace.profileImg}"/>">
+			<img style="max-width: 80px; max-height: 80px;"	src="userspace/view/image.do?q=${row.userSpace.id}">
 		</display:column>
 		
 		<display:column property="name" title="${name} ${surname}" sortable="false" />
@@ -26,21 +26,23 @@
 		</display:column>
 		
 		<jstl:if test="${requestURI == 'actor/list.do'}">
-			<jstl:choose>
-				<jstl:when test="${varid == 'followers'}">
+		
+				<jstl:if test="${!principal.followeds.contains(row)}">
 					<spring:url var="followUrl" value="/actor/follow.do">
 						<spring:param name="q" value="${row.id}" />
 					</spring:url>
 					<spring:message code="userspace.follow" var="followMsg" />
-				</jstl:when>
+				</jstl:if>
 		
-				<jstl:otherwise>
+			
+				<jstl:if test="${principal.followeds.contains(row)}">
 					<spring:url var="followUrl" value="/actor/unfollow.do">
 						<spring:param name="q" value="${row.id}" />
 					</spring:url>
 					<spring:message code="userspace.unfollow" var="followMsg" />
-				</jstl:otherwise>
-			</jstl:choose>
+					</jstl:if>
+				
+			
 	
 			<display:column sortable="false">
 				<input onclick="window.location='${followUrl}'"	class="btn btn-danger" type="button" value="${followMsg}" />

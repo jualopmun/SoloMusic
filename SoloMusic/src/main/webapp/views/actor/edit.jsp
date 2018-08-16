@@ -58,9 +58,7 @@
 						type="date" name="birthDate" id="birthDate"/>
 					<form:errors cssClass="error" path="birthDate" />
 			</div>
-				<spring:message code="actor.terms.text" />
-				<a href="welcome/terms.do" target="_blank"><spring:message code="actor.terms.link" /></a>
-				<input type="checkbox" required="required"/>
+				
 				<br/>
 				
 				<input class="btn btn-danger" type="submit" name="save" value="${save}"/>&nbsp;

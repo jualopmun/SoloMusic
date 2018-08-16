@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -27,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
 import domain.Advertisement;
+import security.LoginService;
 import services.ActorService;
 import services.AdvertisementService;
 
@@ -41,6 +40,9 @@ public class AdvertisementController extends AbstractController {
 
 	@Autowired
 	private AdvertisementService	advertisementService;
+
+	@Autowired
+	private LoginService			loginService;
 
 	public Integer					advertisementId;
 
@@ -88,18 +90,21 @@ public class AdvertisementController extends AbstractController {
 		final Advertisement advertisement = this.advertisementService.findOne(q);
 		boolean isOwner = false;
 		boolean isRegistered = false;
+		Actor actor = new Actor();
 
-		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication.getAuthorities().toArray()[0].equals("USER")) {
-			final Actor principal = this.actorService.findByPrincipal();
-			isOwner = advertisement.getActorOwener().getId() == principal.getId();
-			isRegistered = advertisement.getActorRegisters().contains(principal);
+		if (LoginService.isAnyAuthenticated()) {
+			actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			isOwner = advertisement.getActorOwener().getId() == actor.getId();
+			isRegistered = advertisement.getActorRegisters().contains(actor);
+
 		}
 
 		result = new ModelAndView("advertisement/view");
 		result.addObject("advertisement", advertisement);
 		result.addObject("isOwner", isOwner);
 		result.addObject("isRegistered", isRegistered);
+		result.addObject("actor", actor);
+
 		result.addObject("requestURI", "advertisement/view.do");
 
 		return result;
@@ -230,7 +235,7 @@ public class AdvertisementController extends AbstractController {
 			throw new ServletException("No clip found/clip has not data, id=" + q);
 		final HttpHeaders header = new HttpHeaders();
 
-		//header.setContentType(new MediaType("audio", "mp3"));
+		// header.setContentType(new MediaType("audio", "mp3"));
 		header.setContentType(new MediaType("image", "jpg"));
 		header.setContentLength(advertisement.getMainImg().length);
 

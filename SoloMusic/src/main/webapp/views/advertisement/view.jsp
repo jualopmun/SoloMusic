@@ -156,21 +156,24 @@ a.btn-card {
 			<jstl:if test="${isOwner eq false}">
 				<tr>
 					<td>
-						<jstl:choose>
-							<jstl:when test="${isRegistered eq false}">
+					
+					
+							<jstl:if test="${advertisement.actorOwener!=actor and !advertisement.actorRegisters.contains(actor)}">
 								<spring:url var="registerUrl" value="/advertisement/register.do">
 									<spring:param name="q" value="${advertisement.id}" />
 								</spring:url>
 								<spring:message code="advertisement.register" var="registerMsg" />
-							</jstl:when>
+							</jstl:if>
 		
-							<jstl:otherwise>
+							
+							<jstl:if test="${advertisement.actorOwener!=actor and advertisement.actorRegisters.contains(actor)}">
 								<spring:url var="registerUrl" value="/advertisement/unregister.do">
 									<spring:param name="q" value="${advertisement.id}" />
 								</spring:url>
 								<spring:message code="advertisement.unregister" var="registerMsg" />
-							</jstl:otherwise>
-						</jstl:choose>
+								</jstl:if>
+							
+						
 						<input style="margin-top: 2%;" onclick="window.location='${registerUrl}'"
 							class="btn btn-danger" type="button" value="${registerMsg}" />
 					</td>

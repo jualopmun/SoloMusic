@@ -50,6 +50,7 @@
 <security:authorize access="permitAll">
 	
 	<div style="width:70%; margin: auto;">
+	
 		<spring:message code="advertisement.title" var="title" />
 		<spring:message code="advertisement.price" var="price" />
 		<spring:message code="advertisement.view" var="view" />

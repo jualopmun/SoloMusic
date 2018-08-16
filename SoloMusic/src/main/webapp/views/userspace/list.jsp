@@ -19,7 +19,8 @@
 
 <div style="width:70%; margin: auto;">
 	<div style="padding: 0% 0% 1% 0%;">
-	 <b>Inserte su búsqueda o seleccione un género</b>
+	
+	 <b><spring:message code="userspace.search"></spring:message></b>
 	 <div class="form-group">
 	 <form:form action="userspace/user/search.do">	
 	  	 <input type="text" id="searchTerm" name="searchTerm"/>
