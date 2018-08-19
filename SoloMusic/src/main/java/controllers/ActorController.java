@@ -99,11 +99,11 @@ public class ActorController extends AbstractController {
 			result = this.createEditModelAndView(actor);
 		} else
 			try {
-				if (actorService.encontrarActor(actor.getUserAccount().getUsername()).getId() > 0) {
-
-					binding.rejectValue("userAccount.username", "actor.surname.error", "error");
-					throw new IllegalArgumentException();
-				}
+				//				if (actorService.encontrarActor(actor.getUserAccount().getUsername()).getId() > 0) {
+				//
+				//					binding.rejectValue("userAccount.username", "actor.surname.error", "error");
+				//					throw new IllegalArgumentException();
+				//				}
 
 				actor.setIsPremium(false);
 				Md5PasswordEncoder encoder = new Md5PasswordEncoder();

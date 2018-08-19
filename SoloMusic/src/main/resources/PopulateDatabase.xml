@@ -213,7 +213,7 @@
 		<property name="name" value="Mark" />
 		<property name="surname" value="Kilo" />
 		<property name="email" value="markkilo@go.es" />
-		<property name="birthDate" value="21/07/1991 21:49" />
+		<property name="birthdate" value="21/07/1991 21:49" />
 		<property name="isPremium" value="true" />
 		<property name="folders">
 			<list>
@@ -256,7 +256,7 @@
 		<property name="name" value="Paco" />
 		<property name="surname" value="Kila" />
 		<property name="email" value="markkila@go.es" />
-		<property name="birthDate" value="21/07/1990 21:49" />
+		<property name="birthdate" value="21/07/1990 21:49" />
 		<property name="isPremium" value="false" />
 		<property name="folders">
 			<list>

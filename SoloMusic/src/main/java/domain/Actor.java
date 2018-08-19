@@ -29,7 +29,7 @@ public class Actor extends DomainEntity {
 	private String						name;
 	private String						surname;
 	private String						email;
-	private String						birthDate;
+	private String						birthdate;
 	private Boolean						isPremium;
 	//Relations
 	private Collection<Advertisement>	ownerAdvertisement;
@@ -73,12 +73,12 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	public String getBirthDate() {
-		return this.birthDate;
+	public String getBirthdate() {
+		return this.birthdate;
 	}
 
-	public void setBirthDate(final String birthDate) {
-		this.birthDate = birthDate;
+	public void setBirthdate(final String birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public Boolean getIsPremium() {
