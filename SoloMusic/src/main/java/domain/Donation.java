@@ -35,7 +35,7 @@ public class Donation extends DomainEntity {
 		return this.description;
 	}
 
-	@Range(min = 0)
+	@Range(min = 1, max = 500)
 	public Double getPrice() {
 		return this.price;
 	}

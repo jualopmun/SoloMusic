@@ -154,6 +154,11 @@ public class AdvertisementController extends AbstractController {
 			result = this.createEditModelAndView(advertisement);
 		else
 			try {
+				if (!advertisement.getLocationUrl().contains("/maps/place/") || !advertisement.getLocationUrl().contains("google") || !advertisement.getLocationUrl().contains("@")) {
+
+					binding.rejectValue("locationUrl", "event.location.error", "error");
+					throw new IllegalArgumentException();
+				}
 				Actor principal = this.actorService.findByPrincipal();
 				Assert.isTrue(principal.getIsPremium());
 				//				DateFormat format = new SimpleDateFormat("dd/MM/YYYY");

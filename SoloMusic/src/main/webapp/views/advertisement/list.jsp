@@ -69,7 +69,9 @@
 			requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 			
 			<display:column sortable="false">
+			<jstl:if test="${row.mainImg!=null}">
 				<img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${row.id}" />
+				</jstl:if>
 			</display:column>
 			
 			<display:column property="title" title="${title}" sortable="false" />
@@ -77,17 +79,21 @@
 			<display:column property="price" title="${price}" sortable="false" />
 			
 		  	<display:column sortable="false">
+		  	
 			  	<spring:url var="viewUrl" value="/advertisement/view.do" >
 					<spring:param name="q" value="${row.id}" />
 				</spring:url>
 		  		<input onclick="window.location='${viewUrl}'"	class="btn btn-danger" type="button" value="${view}" />
+		  		
 			</display:column>
 			
 			<display:column sortable="false">
+				<jstl:if test="${actor.ownerAdvertisement.contains(row)}">
 				<spring:url var="registeredUrl" value="/actor/advertisement/list.do" >
 					<spring:param name="q" value="${row.id}" />
 				</spring:url>
 				<input onclick="window.location='${registeredUrl}'"	class="btn btn-danger" type="button" value="${registered}" />
+				</jstl:if>
 			</display:column>
 			
 			<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">

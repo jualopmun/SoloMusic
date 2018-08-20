@@ -26,6 +26,7 @@
 				<form:hidden path="version" />
 				<form:hidden path="actorOwener" />
 				<form:hidden path="actorRegisters" />
+				<form:hidden path="mainImg" />
 			
 				<div class="form-group">
 			

@@ -1,10 +1,7 @@
 
 package controllers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -16,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import services.EventService;
-import services.UserSpaceService;
 import domain.Actor;
 import domain.Event;
 import domain.UserSpace;
+import security.LoginService;
+import services.EventService;
+import services.UserSpaceService;
 
 @Controller
 @RequestMapping("event")
@@ -77,16 +74,16 @@ public class EventController extends AbstractController {
 		return result;
 
 	}
-	
+
 	@RequestMapping(value = "/user/location", method = RequestMethod.GET)
 	public ModelAndView location(@RequestParam final int p) {
 		ModelAndView result;
 
 		try {
-			
+
 			result = new ModelAndView("event/location");
 
-			Event event= eventService.findOne(p);
+			Event event = eventService.findOne(p);
 
 			result.addObject("event", event);
 
@@ -100,9 +97,9 @@ public class EventController extends AbstractController {
 	@RequestMapping(value = "user/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int p) {
 		ModelAndView result;
-		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
-			
+
 			final Event event = this.eventService.findOne(p);
 
 			result = this.createEditModelAndView(event, null);
@@ -140,13 +137,12 @@ public class EventController extends AbstractController {
 			result = this.createEditModelAndView(event, null);
 		else
 			try {
-				
-				if (!event.getLocationUrl().contains("https://www.google.es/maps/place/")) {
+
+				if (!event.getLocationUrl().contains("/maps/place/") || !event.getLocationUrl().contains("google") || !event.getLocationUrl().contains("@")) {
 
 					binding.rejectValue("locationUrl", "event.location.error", "error");
 					throw new IllegalArgumentException();
 				}
-				
 
 				this.eventService.save(event);
 
@@ -174,6 +170,8 @@ public class EventController extends AbstractController {
 		result.addObject("event", event);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "user/create.do");
+		Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		result.addObject("actor", actor);
 
 		return result;
 	}

@@ -181,7 +181,9 @@ section .section-title {
         </jstl:if>
       </ul><br>
        <jstl:if test="${p!=null}">
+       <jstl:if test="${p.profileImg!=null}">
       <img src="userspace/view/image.do?q=${p.id}" class="img-rounded" alt="Avatar" width="100">
+      </jstl:if>
       	<jstl:if test="${p!=null and actor.userSpace==p}">
       	<br/>
       	

@@ -12,7 +12,9 @@
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		
 		<display:column sortable="false">
+		<jstl:if test="${row.userSpace.profileImg!=null}">
 			<img style="max-width: 80px; max-height: 80px;"	src="userspace/view/image.do?q=${row.userSpace.id}">
+			</jstl:if>
 		</display:column>
 		
 		<display:column property="name" title="${name} ${surname}" sortable="false" />

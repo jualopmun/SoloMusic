@@ -17,6 +17,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<style>
+
+select{
+    width:197px;
+    border:1px solid #ccc;
+}
+input{
+    width:195px;
+    border:1px solid #ccc;
+}
+
+</style>
+
 <div style="width:70%; margin: auto;">
 	<div style="padding: 0% 0% 1% 0%;">
 	
@@ -24,13 +37,13 @@
 	 <div class="form-group">
 	 <form:form action="userspace/user/search.do">	
 	  	 <input type="text" id="searchTerm" name="searchTerm"/>
-	  	 <select name="searchGenre">
+	  	 <select  name="searchGenre">
 	  	 <option value="${null}">Género</option>	
 	  	 	  <jstl:forEach var="g" items="${genres}">
                     <option value="${g.id}">${g.genre}</option>
               </jstl:forEach>
 	  	 </select>
-	  	 <acme:submit name="search" code="userspace.search"/>
+	  	 <acme:submit name="search" code="userspace.search.button"/>
 	  </form:form>
 	</div>
 </div>
@@ -39,8 +52,11 @@
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		<spring:message code="userspace.profileimg" var="profileImg"/>
+		
 		<display:column title="${profileImg}" sortable="false">
+		<jstl:if test="${row.profileImg!=null}">
 			<img style="max-width: 80px; max-height: 80px;" src="userspace/view/image.do?q=${row.id}"/>
+			</jstl:if>
 		</display:column>
 		
 		<spring:message code="userspace.title" var="title"/>

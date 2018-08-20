@@ -1,0 +1,39 @@
+body {
+	margin: 3px;
+}
+
+h1, h2, h3 {
+	margin: 0 auto;
+}
+
+td {
+	padding: 10px;
+}
+
+.acme-body {
+	margin: 20px;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+.displaytag {
+	background: red;
+}
+
+.front-page {
+	display: block;
+	text-align: center;
+}
+
+.navbar {
+	font-size: 2em;
+    font-weight: bold;
+    padding: 0.5em 0 0.2em;
+}
+
+.pagebanner, .pagelinks {
+	background: none;
+	border: none;
+}

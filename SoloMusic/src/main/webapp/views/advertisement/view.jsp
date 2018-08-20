@@ -129,6 +129,7 @@ a.btn-card {
                     </div>
                     <div class="card-desc">
                         <h3><jstl:out value="${advertisement.title}" /></h3>
+                        <br/>
                         <p><jstl:out value="${advertisement.description}" /></p>
                             <br/>
                             

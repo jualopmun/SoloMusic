@@ -39,7 +39,7 @@ function myMap() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEn_SBoYKslgxJyBs4vPXx6dRexLIkUco&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2N9vI0ME-rzwaAAVULoeJqSANvValRLM&callback=myMap"></script>
 
 
 <spring:message code="event.back" var="back" />

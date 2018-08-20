@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import services.PerformanceService;
-import services.UserSpaceService;
 import domain.Actor;
 import domain.Perfomance;
 import domain.UserSpace;
+import security.LoginService;
+import services.PerformanceService;
+import services.UserSpaceService;
 
 @Controller
 @RequestMapping("perfomance")
@@ -49,13 +49,12 @@ public class PerfomanceController extends AbstractController {
 				result.addObject("actor", actor);
 				final UserSpace userSpace = this.userSpaceService.findOne(p);
 				result.addObject("userSpace", userSpace);
-			}else {
-			UserSpace userSpace = this.userSpaceService.findOne(p);
-			result.addObject("userSpace", userSpace);
+			} else {
+				UserSpace userSpace = this.userSpaceService.findOne(p);
+				result.addObject("userSpace", userSpace);
 			}
 
 			result.addObject("perfomance", perfomance);
-			
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -165,7 +164,8 @@ public class PerfomanceController extends AbstractController {
 		result.addObject("perfomance", perfomance);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "user/create.do");
-
+		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		result.addObject("actor", actor);
 		return result;
 	}
 
