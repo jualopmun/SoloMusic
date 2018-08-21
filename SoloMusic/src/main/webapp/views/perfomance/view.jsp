@@ -183,11 +183,11 @@ var videos = document.getElementsByClassName("youtube");
 for (var i=0; i<videos.length; i++) {
   
   var youtube = videos[i];
-  
+  var split= youtube.id.split("watch?v=");
   // Based on the YouTube ID, we can easily find the thumbnail image
   var img = document.createElement("img");
   img.setAttribute("src", "http://i.ytimg.com/vi/" 
-                          + youtube.id + "/hqdefault.jpg");
+                          + split[1] + "/hqdefault.jpg");
   img.setAttribute("class", "thumb");
   
 
@@ -204,7 +204,7 @@ for (var i=0; i<videos.length; i++) {
     // Create an iFrame with autoplay set to true
     var iframe = document.createElement("iframe");
     iframe.setAttribute("src",
-          "https://www.youtube.com/embed/" + this.id
+          "https://www.youtube.com/embed/" + split[1] 
         + "?&fs=1&autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1"); 
     
     // The height and width of the iFrame should be the same as parent

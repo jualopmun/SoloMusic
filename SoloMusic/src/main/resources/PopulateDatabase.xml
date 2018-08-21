@@ -449,7 +449,7 @@
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
 		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
-		<property name="startDate" value="21/07/2018 21:49" />
+		<property name="startDate" value="21/07/2018" />
 
 
 	</bean>
@@ -458,7 +458,7 @@
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
 		<property name="locationUrl" value="https://finofilipino.org/post/175963943843/cuando-cuidas-de-tu-amigo-borracho#disqus_thread" />
-		<property name="startDate" value="21/08/2018 21:49" />
+		<property name="startDate" value="21/08/2018" />
 
 
 	</bean>

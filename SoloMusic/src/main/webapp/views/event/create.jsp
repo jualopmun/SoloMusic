@@ -48,7 +48,7 @@
 					<label> <spring:message code="event.startDate" />
 					
 					</label><br /> <input class="form-control"
-						type="text" name="startDate" placeholder="dd/MM/yyyy" />
+						type="date" name="startDate" placeholder="dd/MM/yyyy" value="${event.startDate}"/>
 					<form:errors cssClass="error" path="startDate" />
 					
 					<br />

@@ -51,33 +51,41 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		final ModelAndView result;
-		final Collection<Advertisement> advertisements = this.advertisementService.findAll();
+		ModelAndView result;
+		try {
+			final Collection<Advertisement> advertisements = this.advertisementService.findAll();
 
-		result = new ModelAndView("advertisement/list");
-		Actor actor = actorService.findByPrincipal();
-		result.addObject("actor", actor);
-		result.addObject("advertisements", advertisements);
-		result.addObject("requestURI", "advertisement/list.do");
+			result = new ModelAndView("advertisement/list");
+			Actor actor = actorService.findByPrincipal();
+			result.addObject("actor", actor);
+			result.addObject("advertisements", advertisements);
+			result.addObject("requestURI", "advertisement/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
 	public ModelAndView listUser(@RequestParam final int q) {
-		final ModelAndView result;
-		final Actor user = this.actorService.findByPrincipal();
-		Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
-		if (q == 0)
-			advertisements = user.getOwnerAdvertisement();
-		else
-			advertisements = user.getRegistersAdvertisement();
+		ModelAndView result;
+		try {
+			final Actor user = this.actorService.findByPrincipal();
+			Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
+			if (q == 0)
+				advertisements = user.getOwnerAdvertisement();
+			else
+				advertisements = user.getRegistersAdvertisement();
 
-		result = new ModelAndView("advertisement/list");
-		Actor actor = actorService.findByPrincipal();
-		result.addObject("advertisements", advertisements);
-		result.addObject("actor", actor);
-		result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
+			result = new ModelAndView("advertisement/list");
+			Actor actor = actorService.findByPrincipal();
+			result.addObject("advertisements", advertisements);
+			result.addObject("actor", actor);
+			result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -86,26 +94,30 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public ModelAndView view(@RequestParam final int q) {
-		final ModelAndView result;
-		final Advertisement advertisement = this.advertisementService.findOne(q);
-		boolean isOwner = false;
-		boolean isRegistered = false;
-		Actor actor = new Actor();
+		ModelAndView result;
+		try {
+			final Advertisement advertisement = this.advertisementService.findOne(q);
+			boolean isOwner = false;
+			boolean isRegistered = false;
+			Actor actor = new Actor();
 
-		if (LoginService.isAnyAuthenticated()) {
-			actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-			isOwner = advertisement.getActorOwener().getId() == actor.getId();
-			isRegistered = advertisement.getActorRegisters().contains(actor);
+			if (LoginService.isAnyAuthenticated()) {
+				actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+				isOwner = advertisement.getActorOwener().getId() == actor.getId();
+				isRegistered = advertisement.getActorRegisters().contains(actor);
 
+			}
+
+			result = new ModelAndView("advertisement/view");
+			result.addObject("advertisement", advertisement);
+			result.addObject("isOwner", isOwner);
+			result.addObject("isRegistered", isRegistered);
+			result.addObject("actor", actor);
+
+			result.addObject("requestURI", "advertisement/view.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
-		result = new ModelAndView("advertisement/view");
-		result.addObject("advertisement", advertisement);
-		result.addObject("isOwner", isOwner);
-		result.addObject("isRegistered", isRegistered);
-		result.addObject("actor", actor);
-
-		result.addObject("requestURI", "advertisement/view.do");
 
 		return result;
 	}

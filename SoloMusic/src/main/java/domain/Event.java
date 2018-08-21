@@ -1,19 +1,12 @@
 
 package domain;
 
-import java.util.Date;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -23,7 +16,7 @@ public class Event extends DomainEntity {
 	private String	title;
 	private String	description;
 	private String	locationUrl;
-	private Date	startDate;
+	private String	startDate;
 
 
 	//Geters and setters
@@ -43,11 +36,8 @@ public class Event extends DomainEntity {
 		return this.locationUrl;
 	}
 
-	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	@Future
-	public Date getStartDate() {
+	@NotBlank
+	public String getStartDate() {
 		return this.startDate;
 	}
 	public void setTitle(final String title) {
@@ -59,7 +49,7 @@ public class Event extends DomainEntity {
 	public void setLocationUrl(final String locationUrl) {
 		this.locationUrl = locationUrl;
 	}
-	public void setStartDate(final Date startDate) {
+	public void setStartDate(final String startDate) {
 		this.startDate = startDate;
 	}
 

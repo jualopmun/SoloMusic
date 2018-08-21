@@ -136,7 +136,7 @@ public class PerfomanceController extends AbstractController {
 
 				}
 
-				perfomance.setVideoUrl(perfomance.getVideoUrl().replace("https://www.youtube.com/watch?v=", ""));
+				//perfomance.setVideoUrl(perfomance.getVideoUrl().replace("https://www.youtube.com/watch?v=", ""));
 
 				this.performanceService.save(perfomance);
 
