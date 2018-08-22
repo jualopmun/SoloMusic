@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -40,12 +41,14 @@ public class Advertisement extends DomainEntity {
 	//Getters and setters
 
 	@NotBlank
+	@SafeHtml
 	public String getTitle() {
 		return this.title;
 	}
 
 	@NotBlank
 	@Length(max = 300)
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
@@ -64,6 +67,7 @@ public class Advertisement extends DomainEntity {
 	}
 
 	@URL
+	@SafeHtml
 	public String getLocationUrl() {
 		return this.locationUrl;
 	}

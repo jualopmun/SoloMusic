@@ -25,7 +25,6 @@
 		        <form:hidden path="tracks" />
 				
 				<div class="form-group">
-				<form:errors path="*" class="has-error" />
 		
 					<label> <spring:message code="event.title" />
 					</label><br /> <input class="form-control" value="${playList.title}"

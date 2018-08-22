@@ -21,7 +21,6 @@
 			<form:form action="track/user/save.do" enctype="multipart/form-data">
 				
 				<div class="form-group" >
-				<form:errors path="*" class="has-error" />
 		
 					
 					

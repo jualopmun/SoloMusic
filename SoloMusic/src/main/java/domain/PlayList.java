@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -10,31 +11,34 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class PlayList extends DomainEntity {
-	
+
 	//Atributos
-	private String title;
-	private String description;
-	
+	private String				title;
+	private String				description;
+
 	//Relations
-	private Collection<Track> tracks;
-	
-	
+	private Collection<Track>	tracks;
+
+
 	@NotBlank
-	@Length(max=50)
+	@Length(max = 50)
+	@SafeHtml
 	public String getTitle() {
 		return title;
 	}
-	
+
 	@NotBlank
-	@Length(max=300)
+	@Length(max = 300)
+	@SafeHtml
 	public String getDescription() {
 		return description;
 	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<Track> getTracks() {
@@ -52,7 +56,5 @@ public class PlayList extends DomainEntity {
 	public void setTracks(Collection<Track> tracks) {
 		this.tracks = tracks;
 	}
-	
-	
 
 }

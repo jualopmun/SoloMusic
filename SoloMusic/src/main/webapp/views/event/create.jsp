@@ -22,7 +22,6 @@
 				<form:hidden path="id" />
 				<form:hidden path="version" />
 				
-				<form:errors path="*" class="has-error" />
 				<div class="form-group" >
 					<label> <spring:message code="event.title" />
 					</label><br /> <input class="form-control" value="${event.title}"

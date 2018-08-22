@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,6 +20,7 @@ public class Track extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getTitle() {
 		return title;
 	}

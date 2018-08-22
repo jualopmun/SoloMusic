@@ -30,7 +30,6 @@
 		
 		
 		<div class="form-group">
-		<form:errors path="*" class="has-error" />
 
 			<label> <spring:message code="userspace.title" />
 			</label><br /> <input class="form-control" value="${userSpace.title}"
@@ -46,14 +45,14 @@
 			<form:textarea cols="30" rows="10" path="description"
 				class="form-control" />
 			<form:errors cssClass="error" path="description" />
-			
+				<br />
 			
 			
 			<label> <spring:message code="userspace.contact" />
 			</label><br /> <input class="form-control" value="${userSpace.contact}"
 				type="text" name="contact" />
 			<form:errors cssClass="error" path="contact" />
-			
+				<br />
 
 			
 			<label> <spring:message code="userspace.genre" /></label><br/> 

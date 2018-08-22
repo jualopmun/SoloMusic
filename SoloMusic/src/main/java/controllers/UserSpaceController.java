@@ -61,16 +61,20 @@ public class UserSpaceController extends AbstractController {
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
+		try {
+			result = new ModelAndView("userspace/view");
+			result.addObject("requestURI", "/user/view.do");
 
-		result = new ModelAndView("userspace/view");
-		result.addObject("requestURI", "/user/view.do");
+			if (LoginService.isAnyAuthenticated()) {
+				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+				result.addObject("p", man.getUserSpace());
+				result.addObject("actor", man);
+				if (man.getUserSpace() != null)
+					userSpaceID = man.getUserSpace().getId();
+			}
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 
-		if (LoginService.isAnyAuthenticated()) {
-			final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-			result.addObject("p", man.getUserSpace());
-			result.addObject("actor", man);
-			if (man.getUserSpace() != null)
-				userSpaceID = man.getUserSpace().getId();
 		}
 
 		return result;
