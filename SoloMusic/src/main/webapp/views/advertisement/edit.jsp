@@ -49,14 +49,14 @@
 		
 		
 						<label> <spring:message code="advertisement.startDate" />
-						</label><br /> <input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.startDate}"/>'
-							type="text" name="startDate" placeholder="dd/MM/yyyy"  />
+						</label><br /> <input class="form-control" value="${advertisement.startDate}"
+							type="date" name="startDate" placeholder="dd/MM/yyyy"  />
 						<form:errors cssClass="error" path="startDate" />
 						<br />
 						
 						<label><spring:message code="advertisement.endDate" /></label>
-						<input class="form-control" value='<fmt:formatDate pattern="dd/MM/yyyy" value="${advertisement.endDate}"/>'
-						type="text" name="endDate" placeholder="dd/MM/yyyy" />
+						<input class="form-control"  value="${advertisement.endDate}"
+						type="date" name="endDate" placeholder="dd/MM/yyyy" />
 						<form:errors cssClass="error" path="endDate" />
 						<br />
 						

@@ -3,8 +3,10 @@ package controllers;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -171,6 +173,10 @@ public class AdvertisementController extends AbstractController {
 					binding.rejectValue("locationUrl", "event.location.error", "error");
 					throw new IllegalArgumentException();
 				}
+				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/YYYY");
+				Date start = formatoDelTexto.parse(advertisement.getStartDate());
+				Date end = formatoDelTexto.parse(advertisement.getEndDate());
+
 				Actor principal = this.actorService.findByPrincipal();
 				Assert.isTrue(principal.getIsPremium());
 				//				DateFormat format = new SimpleDateFormat("dd/MM/YYYY");

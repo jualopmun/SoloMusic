@@ -132,7 +132,11 @@ a.btn-card {
                         <br/>
                         <p><jstl:out value="${advertisement.description}" /></p>
                             <br/>
-                            
+                            <spring:message code="advertisement.startDate.now" var="start" />
+                            <spring:message code="advertisement.endDate.now" var="end" />
+                          <p><jstl:out value="${start}" />: <jstl:out value="${advertisement.startDate}" /> <jstl:out value="${end}" />:<jstl:out value="${advertisement.endDate}" />  </p>
+                          <br/> 
+                          <p><jstl:out value="${advertisement.endDate}" /></p>
                             <spring:message code="event.locationUrl" var="location" />
                           <p><a href='advertisement/user/location.do?p=${advertisement.id}'><jstl:out value="${location}" /></a></p>
                             <security:authorize access="hasRole('USER')">

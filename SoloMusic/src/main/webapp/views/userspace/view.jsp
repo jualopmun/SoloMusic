@@ -270,11 +270,12 @@ section .section-title {
 						</jstl:if>
 					</security:authorize>
 					<jstl:forEach var="com" items="${p.comments}">
-
+				<jstl:if test="${com.actor.userSpace.profileImg!=null}">
 						<div class="col-sm-2 text-center">
 							<img src="userspace/view/image.do?q=${com.actor.userSpace.id}"
 								class="img-circle" height="65" width="65" alt="Avatar">
 						</div>
+						</jstl:if>
 						<div class="col-sm-10">
 							<h4>${com.actor.name}
 								${" "} ${com.actor.surname}<small> ${com.date} </small>
