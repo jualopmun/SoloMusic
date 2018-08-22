@@ -195,6 +195,7 @@ public class UserSpaceController extends AbstractController {
 			result.addObject("genres", genres);
 		} else {
 			try {
+				System.out.println(userSpace.getProfileImg().toString().length());
 
 				this.userSpaceService.save(userSpace);
 

@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <security:authorize access="hasRole('USER')">
 
@@ -69,7 +70,7 @@
 			requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 			
 			<display:column sortable="false">
-			<jstl:if test="${row.mainImg!=null}">
+			<jstl:if test="${fn:length(row.mainImg)>0}">
 				<img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${row.id}" />
 				</jstl:if>
 			</display:column>
@@ -96,6 +97,7 @@
 				</jstl:if>
 			</display:column>
 			
+			
 			<jstl:if test="${requestURI == 'advertisement/user/list.do?q=0'}">
 			<jstl:if test="${actor.isPremium==true}">
 				<display:column sortable="false">
@@ -105,9 +107,11 @@
 			  		<input onclick="window.location='${editUrl}'"	class="btn btn-danger" type="button" value="${edit}" />
 				</display:column>
 				<display:column sortable="false">
+				
 					<spring:url var="editImageUrl" value="/advertisement/image/upload.do?q=${row.id}" >
 						
 					</spring:url>
+					
 			  		<input onclick="window.location='${editImageUrl}'"	class="btn btn-danger" type="button" value="${editImage}" />
 				</display:column>
 				</jstl:if>

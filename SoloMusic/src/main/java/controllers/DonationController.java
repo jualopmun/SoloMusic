@@ -1,3 +1,4 @@
+
 package controllers;
 
 import javax.validation.Valid;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import domain.Donation;
-
 import services.DonationService;
 
 @Controller
@@ -21,6 +20,7 @@ public class DonationController extends AbstractController {
 
 	@Autowired
 	private DonationService donationService;
+
 
 	@RequestMapping(value = "user/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -76,7 +76,7 @@ public class DonationController extends AbstractController {
 	public ModelAndView saveCreate(@Valid Donation donation, BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			
+
 			result = this.createEditModelAndView(donation, null);
 		} else
 			try {

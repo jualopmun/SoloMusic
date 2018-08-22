@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <style>
 
@@ -38,7 +39,7 @@ input{
 	 <form:form action="userspace/user/search.do">	
 	  	 <input type="text" id="searchTerm" name="searchTerm"/>
 	  	 <select  name="searchGenre">
-	  	 <option value="${null}">Género</option>	
+	  	 <option value="${null}"><spring:message code="userspace.search.genre"/></option>	
 	  	 	  <jstl:forEach var="g" items="${genres}">
                     <option value="${g.id}">${g.genre}</option>
               </jstl:forEach>
@@ -54,7 +55,8 @@ input{
 		<spring:message code="userspace.profileimg" var="profileImg"/>
 		
 		<display:column title="${profileImg}" sortable="false">
-		<jstl:if test="${row.profileImg!=null}">
+		<jstl:if test="${fn:length(row.profileImg)>0}">
+		
 			<img style="max-width: 80px; max-height: 80px;" src="userspace/view/image.do?q=${row.id}"/>
 			</jstl:if>
 		</display:column>

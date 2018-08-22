@@ -181,7 +181,8 @@ section .section-title {
 			</ul>
 			<br>
 			<jstl:if test="${p!=null}">
-				<jstl:if test="${p.profileImg!=null}">
+			<jstl:if test="${fn:length(p.profileImg)>0}">
+				
 					<img src="userspace/view/image.do?q=${p.id}" class="img-rounded"
 						alt="Avatar" width="100">
 				</jstl:if>
@@ -270,7 +271,8 @@ section .section-title {
 						</jstl:if>
 					</security:authorize>
 					<jstl:forEach var="com" items="${p.comments}">
-				<jstl:if test="${com.actor.userSpace.profileImg!=null}">
+					<jstl:if test="${fn:length(com.actor.userSpace.profileImg)>0}">
+				
 						<div class="col-sm-2 text-center">
 							<img src="userspace/view/image.do?q=${com.actor.userSpace.id}"
 								class="img-circle" height="65" width="65" alt="Avatar">

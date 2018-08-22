@@ -297,8 +297,8 @@
 <bean id="advert1" class="domain.Advertisement">
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
-		<property name="startDate" value="16/07/2017" />
-		<property name="endDate" value="21/07/2017" />
+		<property name="startDate" value="2018-08-22" />
+		<property name="endDate" value="2018-08-23" />
 		<property name="locationUrl" value="https://www.google.com/maps/place/Calle+Ntra.+Sra.+de+los+Dolores,+41100+Coria+del+R%C3%ADo,+Sevilla/@37.2899313,-6.0544698,17z/data=!3m1!4b1!4m5!3m4!1s0xd1272c7295733e3:0xcfd5c2621c96991e!8m2!3d37.2899271!4d-6.0522811" />
 		<property name="price" value="4.2" />
 		<property name="actorOwener" ref="actor1" />
@@ -313,8 +313,8 @@
 	<bean id="advert2" class="domain.Advertisement">
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
-		<property name="startDate" value="16/07/2017" />
-		<property name="endDate" value="21/07/2017" />
+		<property name="startDate" value="2018-08-22" />
+		<property name="endDate" value="2018-08-22" />
 		<property name="locationUrl" value="https://www.google.com/maps/place/Calle+Ntra.+Sra.+de+los+Dolores,+41100+Coria+del+R%C3%ADo,+Sevilla/@37.2899313,-6.0544698,17z/data=!3m1!4b1!4m5!3m4!1s0xd1272c7295733e3:0xcfd5c2621c96991e!8m2!3d37.2899271!4d-6.0522811" />
 		<property name="price" value="4.4" />
 		<property name="actorOwener" ref="actor2" />
@@ -449,7 +449,7 @@
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
 		<property name="locationUrl" value="https://www.google.com/maps/place/Calle+Ntra.+Sra.+de+los+Dolores,+41100+Coria+del+R%C3%ADo,+Sevilla/@37.2899313,-6.0544698,17z/data=!3m1!4b1!4m5!3m4!1s0xd1272c7295733e3:0xcfd5c2621c96991e!8m2!3d37.2899271!4d-6.0522811" />
-		<property name="startDate" value="21/07/2018" />
+		<property name="startDate" value="2018-08-22" />
 
 
 	</bean>
@@ -458,7 +458,7 @@
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
 		<property name="locationUrl" value="https://www.google.com/maps/place/Calle+Ntra.+Sra.+de+los+Dolores,+41100+Coria+del+R%C3%ADo,+Sevilla/@37.2899313,-6.0544698,17z/data=!3m1!4b1!4m5!3m4!1s0xd1272c7295733e3:0xcfd5c2621c96991e!8m2!3d37.2899271!4d-6.0522811" />
-		<property name="startDate" value="21/08/2018" />
+		<property name="startDate" value="2018-08-22" />
 
 
 	</bean>
@@ -468,7 +468,7 @@
 	<bean id="perfomance1" class="domain.Perfomance">
 		<property name="title" value="title1" />
 		<property name="description" value="description1" />
-		<property name="videoUrl" value="8m31lxggdHg" />
+		<property name="videoUrl" value="https://www.youtube.com/watch?v=tMnGmoLS6zo" />
 
 
 	</bean>
@@ -476,7 +476,7 @@
 	<bean id="perfomance2" class="domain.Perfomance">
 		<property name="title" value="title2" />
 		<property name="description" value="description2" />
-		<property name="videoUrl" value="8m31lxggdHg" />
+		<property name="videoUrl" value="https://www.youtube.com/watch?v=tMnGmoLS6zo" />
 
 
 	</bean>

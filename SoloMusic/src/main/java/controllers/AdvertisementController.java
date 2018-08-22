@@ -173,9 +173,15 @@ public class AdvertisementController extends AbstractController {
 					binding.rejectValue("locationUrl", "event.location.error", "error");
 					throw new IllegalArgumentException();
 				}
-				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/YYYY");
+				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-mm-dd");
 				Date start = formatoDelTexto.parse(advertisement.getStartDate());
 				Date end = formatoDelTexto.parse(advertisement.getEndDate());
+
+				if (start.after(end)) {
+
+					binding.rejectValue("endDate", "acme.date.later", "error");
+					throw new IllegalArgumentException();
+				}
 
 				Actor principal = this.actorService.findByPrincipal();
 				Assert.isTrue(principal.getIsPremium());
@@ -188,7 +194,7 @@ public class AdvertisementController extends AbstractController {
 				//				}
 
 				this.advertisementService.save(advertisement);
-				result = this.listUser(0);
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 			} catch (final Throwable oops) {
 				System.out.println(oops.toString());
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
@@ -223,9 +229,9 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			this.advertisementService.register(advertisement);
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/advertisement/user/list.do?q=1");
 		} catch (final Throwable oops) {
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -238,9 +244,9 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			this.advertisementService.unregister(advertisement);
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/advertisement/user/list.do?q=1");
 		} catch (final Throwable oops) {
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -312,7 +318,7 @@ public class AdvertisementController extends AbstractController {
 			try {
 
 				advertisementService.saveJpg(file, advertisementId);
-				result = this.listUser(0);
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 
 			} catch (final Throwable th) {
 				th.printStackTrace();

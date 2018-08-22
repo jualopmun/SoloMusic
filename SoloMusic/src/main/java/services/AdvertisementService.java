@@ -2,19 +2,17 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import repositories.AdvertisementRepository;
 import domain.Actor;
 import domain.Advertisement;
-import domain.PlayList;
-import domain.Track;
+import repositories.AdvertisementRepository;
 
 @Service
 @Transactional
@@ -41,6 +39,7 @@ public class AdvertisementService {
 	}
 
 	public void delete(final Advertisement arg0) {
+
 		this.advertisermentRepository.delete(arg0);
 	}
 
@@ -68,21 +67,22 @@ public class AdvertisementService {
 
 	public Advertisement unregister(final Advertisement a) {
 		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(principal.getRegistersAdvertisement().contains(a));
 		a.getActorRegisters().remove(principal);
 		return this.save(a);
 	}
-	
-	public void saveJpg( final MultipartFile file, final Integer advertisementid) {
+
+	public void saveJpg(final MultipartFile file, final Integer advertisementid) {
 		Advertisement advertisement = advertisermentRepository.findOne(advertisementid);
 		Actor principal = this.actorService.findByPrincipal();
 		try {
 
-			advertisement.setMainImg(file.getBytes());;
-			
+			advertisement.setMainImg(file.getBytes());
+			;
+
 		} catch (final Exception e) {
 			advertisement = null;
 		}
-		
 
 		advertisement = this.advertisermentRepository.save(advertisement);
 
@@ -91,7 +91,7 @@ public class AdvertisementService {
 		actorService.save(principal);
 
 	}
-	
+
 	public List<Advertisement> advertisementSearch(String text) {
 		return this.advertisermentRepository.advertisementSearch(text);
 	}
