@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +69,9 @@ public class ActorController extends AbstractController {
 	public ModelAndView listRegistered(@RequestParam final int q) {
 		ModelAndView result;
 		try {
-
+			Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			final Advertisement advertisement = this.advertisementService.findOne(q);
+			Assert.isTrue(principal.getOwnerAdvertisement().contains(advertisement));
 			final Collection<Actor> actors = new ArrayList<Actor>();
 			for (final Actor a : this.actorService.findAll())
 				if (a.getRegistersAdvertisement().contains(advertisement))

@@ -1,12 +1,14 @@
 
 package controllers;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +41,8 @@ public class EventController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			final Collection<Event> event = this.userSpaceService.findOne(p).getEvents();
+			final List<Event> event = (List<Event>) this.userSpaceService.findOne(p).getEvents();
+			Collections.reverse(event);
 			result = new ModelAndView("event/view");
 
 			//Para que salga el boton de crear tiene que estar autenticado y compprobar que es su espacio
@@ -101,6 +104,7 @@ public class EventController extends AbstractController {
 		try {
 
 			final Event event = this.eventService.findOne(p);
+			Assert.isTrue(actor.getUserSpace().getEvents().contains(event));
 
 			result = this.createEditModelAndView(event, null);
 			result.addObject("actor", actor);

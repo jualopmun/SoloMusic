@@ -270,7 +270,7 @@ section .section-title {
 								class="btn btn-danger" type="button" value="${actorNewComment}" />
 						</jstl:if>
 					</security:authorize>
-					<jstl:forEach var="com" items="${p.comments}">
+					<jstl:forEach var="com" items="${p.comments}" varStatus="vs">
 					<jstl:if test="${fn:length(com.actor.userSpace.profileImg)>0}">
 				
 						<div class="col-sm-2 text-center">
@@ -289,17 +289,57 @@ section .section-title {
 							<p>${com.text}</p>
 							<br>
 							<jstl:if test="${com.actor.id==actor.id}">
-								<spring:message code="actor.edit.comment" var="actorEditComment" />
-								<input
+							<div class="container">
+
+									<!-- Button to Open the Modal -->
+									<button type="button" class="btn btn-danger"
+										data-toggle="modal" data-target="#myModal${vs.index}"><spring:message code="event.delete"/></button>
+
+									<!-- The Modal -->
+									<div class="modal fade" id="myModal${vs.index}">
+									
+								
+										<div class="modal-dialog">
+											<div class="modal-content">
+												
+												<!-- Modal Header -->
+												<div class="modal-header alert-danger">
+													<h4 class="modal-title"><spring:message code="delete.comment"/></h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body alert-info"><spring:message code="delete.comment.message"/>
+												
+												
+												</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer alert-success">
+													<button type="button" class="btn btn-danger"
+														onclick="window.location='userspace/user/commentDel.do?q=${com.id}'"
+														data-dismiss="modal"><spring:message code="event.delete"/></button>
+													<button type="button" class="btn btn-danger"
+														onclick="window.location='userspace/user/spaceview.do?q=${p.id}'"
+														data-dismiss="modal"><spring:message code="event.cancel"/></button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<input
+									<spring:message code="actor.edit.comment" var="actorEditComment" />
+								
 									onclick="window.location='userspace/user/commentEdit.do?q=${com.id}'"
 									class="btn btn-danger" type="button"
 									value="${actorEditComment}" />
+
+								</div> 
+							
+								
 								<spring:message code="actor.delete.comment"
 									var="actordeleteComment" />
-								<input
-									onclick="window.location='userspace/user/commentDel.do?q=${com.id}'"
-									class="btn btn-danger" type="button"
-									value="${actordeleteComment}" />
+								
 							</jstl:if>
 						</div>
 					</jstl:forEach>
@@ -349,10 +389,10 @@ section .section-title {
 								<div class="card">
 									<div class="card-body text-center mt-4">
 										<h4 class="card-title">${play.title}</h4>
-										<jstl:forEach var="track" items="${play.tracks}">
+										<jstl:forEach var="track" items="${play.tracks}" varStatus="vs">
 											<p class="card-text">"${track.title}"</p>
 											<p class="card-text">
-												<audio preload="none" controls>
+												<audio preload="none" controlsList="nodownload" controls="controls">
 													<source src="userspace/user/play.do?q=${track.id}"
 														type='audio/mp3;codec="mp3"' onmouseout="true" media="all" >
 													Your browser does not support the audio element.
@@ -360,6 +400,7 @@ section .section-title {
 											</p>
 
 											<jstl:if test="${actor.userSpace==p}">
+												
 
 												<input
 													onclick="window.location='track/user/delete.do?q=${track.id}'"
@@ -390,6 +431,7 @@ section .section-title {
 		</div>
 	</div>
 </div>
+
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <script>

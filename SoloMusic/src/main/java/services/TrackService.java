@@ -7,13 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import repositories.TrackRepository;
-import security.LoginService;
 import domain.Actor;
 import domain.PlayList;
 import domain.Track;
+import repositories.TrackRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -78,7 +79,7 @@ public class TrackService {
 		return this.trackRepository.exists(arg0);
 	}
 
-	public void save( final MultipartFile file, final Integer playlistId) {
+	public void save(final MultipartFile file, final Integer playlistId) {
 		Track track = new Track();
 
 		try {
@@ -89,11 +90,12 @@ public class TrackService {
 		} catch (final Exception e) {
 			track = null;
 		}
-		
 
 		track = this.trackRepository.save(track);
 
 		final PlayList playList = this.playListService.findOne(playlistId);
+		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		Assert.isTrue(man.getUserSpace().getPlayLists().contains(playList));
 
 		final Collection<Track> tracks = playList.getTracks();
 		tracks.add(track);

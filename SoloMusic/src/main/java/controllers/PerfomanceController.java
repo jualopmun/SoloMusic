@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,10 +83,11 @@ public class PerfomanceController extends AbstractController {
 	@RequestMapping(value = "user/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int p) {
 		ModelAndView result;
-		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
 
-			final Perfomance perfomance = this.performanceService.findOne(p);
+			Perfomance perfomance = this.performanceService.findOne(p);
+			Assert.isTrue(actor.getUserSpace().getPerfomances().contains(perfomance));
 
 			result = this.createEditModelAndView(perfomance, null);
 			result.addObject("actor", actor);

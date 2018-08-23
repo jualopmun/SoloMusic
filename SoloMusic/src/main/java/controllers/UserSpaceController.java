@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -195,7 +196,6 @@ public class UserSpaceController extends AbstractController {
 			result.addObject("genres", genres);
 		} else {
 			try {
-				System.out.println(userSpace.getProfileImg().toString().length());
 
 				this.userSpaceService.save(userSpace);
 
@@ -374,8 +374,9 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		try {
-
+			Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			Comment comment = commentService.findOne(q);
+			Assert.isTrue(comment.getActor().equals(man));
 			result = new ModelAndView("userspace/comment");
 
 			result.addObject("comment", comment);

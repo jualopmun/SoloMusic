@@ -37,6 +37,7 @@ public class Advertisement extends DomainEntity {
 	//Getters and setters
 
 	@NotBlank
+	@Length(max = 50)
 	@SafeHtml
 	public String getTitle() {
 		return this.title;

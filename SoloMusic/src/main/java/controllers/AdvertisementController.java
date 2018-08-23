@@ -150,6 +150,7 @@ public class AdvertisementController extends AbstractController {
 			Actor principal = this.actorService.findByPrincipal();
 			Assert.isTrue(principal.getIsPremium());
 			final Advertisement advertisement = this.advertisementService.findOne(q);
+			Assert.isTrue(principal.getOwnerAdvertisement().contains(advertisement));
 
 			Assert.notNull(advertisement);
 			result = this.createEditModelAndView(advertisement);

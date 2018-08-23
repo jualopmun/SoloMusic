@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import domain.Actor;
 import domain.Advertisement;
 import repositories.AdvertisementRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -23,6 +24,9 @@ public class AdvertisementService {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private LoginService			loginService;
 
 
 	public AdvertisementService() {
@@ -55,8 +59,34 @@ public class AdvertisementService {
 		return this.advertisermentRepository.findOne(arg0);
 	}
 
-	public <S extends Advertisement> S save(final S arg0) {
-		return this.advertisermentRepository.save(arg0);
+	public Advertisement save(Advertisement advertisement) {
+		Assert.notNull(advertisement);
+		Advertisement m = null;
+
+		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		if (this.exists(advertisement.getId())) {
+			Assert.isTrue(man.getOwnerAdvertisement().contains(advertisement));
+			m = this.findOne(advertisement.getId());
+
+			m.setTitle(advertisement.getTitle());
+			m.setDescription(advertisement.getDescription());
+			m.setStartDate(advertisement.getStartDate());
+			m.setEndDate(advertisement.getEndDate());
+			m.setLocationUrl(advertisement.getLocationUrl());
+			m.setMainImg(advertisement.getMainImg());
+			m.setPrice(advertisement.getPrice());
+
+			m = advertisermentRepository.save(m);
+		} else {
+			Assert.isTrue(man.getIsPremium());
+			m = advertisermentRepository.save(advertisement);
+
+			man.getOwnerAdvertisement().add(m);
+			actorService.save(man);
+
+		}
+		return m;
+
 	}
 
 	public Advertisement register(final Advertisement a) {
