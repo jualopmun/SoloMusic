@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,37 +43,46 @@ public class ActorController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final String q) {
-		final ModelAndView result;
+		ModelAndView result;
+		try {
+			final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Collection<Actor> actors = new ArrayList<Actor>();
+			if (q.equals("followers")) {
+				actors = principal.getFollowers();
+			} else if (q.equals("followeds")) {
+				actors = principal.getFolloweds();
+			}
 
-		final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-		Collection<Actor> actors = new ArrayList<Actor>();
-		if (q.equals("followers")) {
-			actors = principal.getFollowers();
-		} else if (q.equals("followeds")) {
-			actors = principal.getFolloweds();
+			result = new ModelAndView("actor/list");
+			result.addObject("actors", actors);
+			result.addObject("principal", principal);
+			result.addObject("varid", q);
+			result.addObject("requestURI", "actor/list.do");
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
-		result = new ModelAndView("actor/list");
-		result.addObject("actors", actors);
-		result.addObject("principal", principal);
-		result.addObject("varid", q);
-		result.addObject("requestURI", "actor/list.do");
 
 		return result;
 	}
 
 	@RequestMapping(value = "/advertisement/list", method = RequestMethod.GET)
 	public ModelAndView listRegistered(@RequestParam final int q) {
-		final ModelAndView result;
-		final Advertisement advertisement = this.advertisementService.findOne(q);
-		final Collection<Actor> actors = new ArrayList<Actor>();
-		for (final Actor a : this.actorService.findAll())
-			if (a.getRegistersAdvertisement().contains(advertisement))
-				actors.add(a);
+		ModelAndView result;
+		try {
+			Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			final Advertisement advertisement = this.advertisementService.findOne(q);
+			Assert.isTrue(principal.getOwnerAdvertisement().contains(advertisement));
+			final Collection<Actor> actors = new ArrayList<Actor>();
+			for (final Actor a : this.actorService.findAll())
+				if (a.getRegistersAdvertisement().contains(advertisement))
+					actors.add(a);
 
-		result = new ModelAndView("actor/list");
-		result.addObject("actors", actors);
-		result.addObject("requestURI", "actor/list.do");
+			result = new ModelAndView("actor/list");
+			result.addObject("actors", actors);
+			result.addObject("requestURI", "actor/list.do");
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -81,10 +91,14 @@ public class ActorController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
-		final ModelAndView result;
-		final Actor actor = this.actorService.create();
+		ModelAndView result;
+		try {
+			Actor actor = this.actorService.create();
 
-		result = this.createEditModelAndView(actor);
+			result = this.createEditModelAndView(actor);
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -94,16 +108,18 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			for (final ObjectError e : binding.getAllErrors())
+			for (ObjectError e : binding.getAllErrors()) {
 				System.out.println(e.toString());
+			}
+
 			result = this.createEditModelAndView(actor);
 		} else
 			try {
-				//				if (actorService.encontrarActor(actor.getUserAccount().getUsername()).getId() > 0) {
-				//
-				//					binding.rejectValue("userAccount.username", "actor.surname.error", "error");
-				//					throw new IllegalArgumentException();
-				//				}
+				if (actorService.encontrarActor(actor.getUserAccount().getUsername()) != null) {
+
+					binding.rejectValue("userAccount.username", "actor.surname.error", "error");
+					throw new IllegalArgumentException();
+				}
 
 				actor.setIsPremium(false);
 				Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -142,7 +158,7 @@ public class ActorController extends AbstractController {
 			this.actorService.unfollow(actor);
 			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -151,12 +167,17 @@ public class ActorController extends AbstractController {
 	//Premium
 	@RequestMapping(value = "/premium", method = RequestMethod.GET)
 	public ModelAndView premium() {
-		final ModelAndView result;
-		final Actor actor = this.actorService.findByPrincipal();
-		result = new ModelAndView("actor/premium");
-		result.addObject("actor", actor);
-		//result.addObject("hacerPremium", actorService.hacerPremium());
+		ModelAndView result;
+		try {
+			final Actor actor = this.actorService.findByPrincipal();
+			result = new ModelAndView("actor/premium");
+			result.addObject("actor", actor);
+			//result.addObject("hacerPremium", actorService.hacerPremium());
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
+
 	}
 
 	@RequestMapping(value = "/user/premium", method = RequestMethod.GET)

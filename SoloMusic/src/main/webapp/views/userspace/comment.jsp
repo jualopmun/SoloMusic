@@ -22,7 +22,6 @@
 				<form:hidden path="date"/>
 			
 				<div class="form-group">
-				<form:errors path="*" class="has-error" />
 					
 					<label><spring:message code="comment.text" /></label>
 						<form:textarea cols="30" rows="10" path="text" class="form-control" />

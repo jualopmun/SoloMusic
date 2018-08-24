@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -25,17 +26,19 @@ public class Donation extends DomainEntity {
 
 	@NotBlank
 	@Length(max = 50)
+	@SafeHtml
 	public String getTitle() {
 		return this.title;
 	}
 
 	@NotBlank
 	@Length(max = 300)
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
 
-	@Range(min = 0)
+	@Range(min = 1, max = 500)
 	public Double getPrice() {
 		return this.price;
 	}

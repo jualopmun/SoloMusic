@@ -2,7 +2,6 @@
 package domain;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -10,15 +9,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -28,8 +25,8 @@ public class Advertisement extends DomainEntity {
 
 	private String				title;
 	private String				description;
-	private Date				startDate;
-	private Date				endDate;
+	private String				startDate;
+	private String				endDate;
 	private String				locationUrl;
 	private byte[]				mainImg;
 	private Double				price;
@@ -40,30 +37,33 @@ public class Advertisement extends DomainEntity {
 	//Getters and setters
 
 	@NotBlank
+	@Length(max = 50)
+	@SafeHtml
 	public String getTitle() {
 		return this.title;
 	}
 
 	@NotBlank
 	@Length(max = 300)
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	public Date getStartDate() {
+	@NotBlank
+	@SafeHtml
+	public String getStartDate() {
 		return this.startDate;
 	}
 
-	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	public Date getEndDate() {
+	@NotBlank
+	@SafeHtml
+	public String getEndDate() {
 		return this.endDate;
 	}
 
 	@URL
+	@SafeHtml
 	public String getLocationUrl() {
 		return this.locationUrl;
 	}
@@ -105,10 +105,10 @@ public class Advertisement extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-	public void setStartDate(final Date startDate) {
+	public void setStartDate(final String startDate) {
 		this.startDate = startDate;
 	}
-	public void setEndDate(final Date endDate) {
+	public void setEndDate(final String endDate) {
 		this.endDate = endDate;
 	}
 	public void setLocationUrl(final String locationUrl) {

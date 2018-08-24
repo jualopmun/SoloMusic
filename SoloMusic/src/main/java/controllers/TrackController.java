@@ -5,18 +5,19 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.PlayListService;
-import services.TrackService;
 import domain.Actor;
 import domain.PlayList;
 import domain.Track;
 import security.LoginService;
+import services.PlayListService;
+import services.TrackService;
 
 @Controller
 @RequestMapping("track")
@@ -27,6 +28,9 @@ public class TrackController extends AbstractController {
 
 	@Autowired
 	private PlayListService	playListService;
+
+	@Autowired
+	private LoginService	loginService;
 
 	public PlayList			playList	= null;
 
@@ -52,9 +56,11 @@ public class TrackController extends AbstractController {
 	public ModelAndView delete(@RequestParam final int q) {
 		ModelAndView result;
 		try {
+			Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			final Track track = this.trackService.findOne(q);
 			for (final PlayList playlist : this.playListService.findAll())
 				if (playlist.getTracks().contains(track)) {
+					Assert.isTrue(man.getUserSpace().getPlayLists().contains(playlist));
 					final Collection<Track> tracks = playlist.getTracks();
 					tracks.remove(track);
 					playlist.setTracks(tracks);
@@ -76,7 +82,7 @@ public class TrackController extends AbstractController {
 	public ModelAndView saveCreate(@RequestParam("file") final MultipartFile file) {
 		ModelAndView result;
 
-	 if (file.isEmpty()) {
+		if (file.isEmpty()) {
 			result = new ModelAndView("track/create");
 			result.addObject("track", null);
 			result.addObject("message", "file.null.error");
@@ -115,7 +121,6 @@ public class TrackController extends AbstractController {
 			}
 		return result;
 	}
-	
 
 	protected ModelAndView createEditModelAndView(final Track track) {
 		ModelAndView result;

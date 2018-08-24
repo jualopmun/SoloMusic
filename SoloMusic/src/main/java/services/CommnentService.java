@@ -1,6 +1,6 @@
+
 package services;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +10,7 @@ import org.springframework.util.Assert;
 
 import domain.Actor;
 import domain.Comment;
-import domain.PlayList;
-import domain.Track;
 import domain.UserSpace;
-import repositories.AdvertisementRepository;
 import repositories.CommentRepository;
 import security.LoginService;
 
@@ -22,13 +19,14 @@ import security.LoginService;
 public class CommnentService {
 
 	@Autowired
-	private CommentRepository commentRepository;
+	private CommentRepository	commentRepository;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService		loginService;
 
 	@Autowired
-	private UserSpaceService userSpaceService;
+	private UserSpaceService	userSpaceService;
+
 
 	public CommnentService() {
 		super();
@@ -49,7 +47,7 @@ public class CommnentService {
 		Comment m = null;
 		UserSpace userSpace = userSpaceService.findOne(userSpaceID);
 
-		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		if (this.exists(comment.getId())) {
 			Assert.isTrue(comment.getActor().equals(man));
 			m = this.findOne(comment.getId());
@@ -78,8 +76,8 @@ public class CommnentService {
 		return commentRepository.exists(id);
 	}
 
-	public void delete(Comment comment,Integer userSpaceID) {
-		 Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+	public void delete(Comment comment, Integer userSpaceID) {
+		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		Assert.isTrue(comment.getActor().equals(man));
 		commentRepository.delete(comment);
 		UserSpace userSpace = userSpaceService.findOne(userSpaceID);

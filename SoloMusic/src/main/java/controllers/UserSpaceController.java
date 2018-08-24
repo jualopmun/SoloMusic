@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,16 +62,20 @@ public class UserSpaceController extends AbstractController {
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
 	public ModelAndView view() {
 		ModelAndView result;
+		try {
+			result = new ModelAndView("userspace/view");
+			result.addObject("requestURI", "/user/view.do");
 
-		result = new ModelAndView("userspace/view");
-		result.addObject("requestURI", "/user/view.do");
+			if (LoginService.isAnyAuthenticated()) {
+				final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+				result.addObject("p", man.getUserSpace());
+				result.addObject("actor", man);
+				if (man.getUserSpace() != null)
+					userSpaceID = man.getUserSpace().getId();
+			}
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 
-		if (LoginService.isAnyAuthenticated()) {
-			final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-			result.addObject("p", man.getUserSpace());
-			result.addObject("actor", man);
-			if (man.getUserSpace() != null)
-				userSpaceID = man.getUserSpace().getId();
 		}
 
 		return result;
@@ -369,8 +374,9 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 
 		try {
-
+			Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			Comment comment = commentService.findOne(q);
+			Assert.isTrue(comment.getActor().equals(man));
 			result = new ModelAndView("userspace/comment");
 
 			result.addObject("comment", comment);

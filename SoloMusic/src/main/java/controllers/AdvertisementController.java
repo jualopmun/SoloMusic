@@ -3,8 +3,10 @@ package controllers;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -51,33 +53,41 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		final ModelAndView result;
-		final Collection<Advertisement> advertisements = this.advertisementService.findAll();
+		ModelAndView result;
+		try {
+			final Collection<Advertisement> advertisements = this.advertisementService.findAll();
 
-		result = new ModelAndView("advertisement/list");
-		Actor actor = actorService.findByPrincipal();
-		result.addObject("actor", actor);
-		result.addObject("advertisements", advertisements);
-		result.addObject("requestURI", "advertisement/list.do");
+			result = new ModelAndView("advertisement/list");
+			Actor actor = actorService.findByPrincipal();
+			result.addObject("actor", actor);
+			result.addObject("advertisements", advertisements);
+			result.addObject("requestURI", "advertisement/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
 	public ModelAndView listUser(@RequestParam final int q) {
-		final ModelAndView result;
-		final Actor user = this.actorService.findByPrincipal();
-		Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
-		if (q == 0)
-			advertisements = user.getOwnerAdvertisement();
-		else
-			advertisements = user.getRegistersAdvertisement();
+		ModelAndView result;
+		try {
+			final Actor user = this.actorService.findByPrincipal();
+			Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
+			if (q == 0)
+				advertisements = user.getOwnerAdvertisement();
+			else
+				advertisements = user.getRegistersAdvertisement();
 
-		result = new ModelAndView("advertisement/list");
-		Actor actor = actorService.findByPrincipal();
-		result.addObject("advertisements", advertisements);
-		result.addObject("actor", actor);
-		result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
+			result = new ModelAndView("advertisement/list");
+			Actor actor = actorService.findByPrincipal();
+			result.addObject("advertisements", advertisements);
+			result.addObject("actor", actor);
+			result.addObject("requestURI", "advertisement/user/list.do?q=" + q);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
 
 		return result;
 	}
@@ -86,26 +96,30 @@ public class AdvertisementController extends AbstractController {
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public ModelAndView view(@RequestParam final int q) {
-		final ModelAndView result;
-		final Advertisement advertisement = this.advertisementService.findOne(q);
-		boolean isOwner = false;
-		boolean isRegistered = false;
-		Actor actor = new Actor();
+		ModelAndView result;
+		try {
+			final Advertisement advertisement = this.advertisementService.findOne(q);
+			boolean isOwner = false;
+			boolean isRegistered = false;
+			Actor actor = new Actor();
 
-		if (LoginService.isAnyAuthenticated()) {
-			actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
-			isOwner = advertisement.getActorOwener().getId() == actor.getId();
-			isRegistered = advertisement.getActorRegisters().contains(actor);
+			if (LoginService.isAnyAuthenticated()) {
+				actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+				isOwner = advertisement.getActorOwener().getId() == actor.getId();
+				isRegistered = advertisement.getActorRegisters().contains(actor);
 
+			}
+
+			result = new ModelAndView("advertisement/view");
+			result.addObject("advertisement", advertisement);
+			result.addObject("isOwner", isOwner);
+			result.addObject("isRegistered", isRegistered);
+			result.addObject("actor", actor);
+
+			result.addObject("requestURI", "advertisement/view.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
-
-		result = new ModelAndView("advertisement/view");
-		result.addObject("advertisement", advertisement);
-		result.addObject("isOwner", isOwner);
-		result.addObject("isRegistered", isRegistered);
-		result.addObject("actor", actor);
-
-		result.addObject("requestURI", "advertisement/view.do");
 
 		return result;
 	}
@@ -136,6 +150,7 @@ public class AdvertisementController extends AbstractController {
 			Actor principal = this.actorService.findByPrincipal();
 			Assert.isTrue(principal.getIsPremium());
 			final Advertisement advertisement = this.advertisementService.findOne(q);
+			Assert.isTrue(principal.getOwnerAdvertisement().contains(advertisement));
 
 			Assert.notNull(advertisement);
 			result = this.createEditModelAndView(advertisement);
@@ -154,6 +169,21 @@ public class AdvertisementController extends AbstractController {
 			result = this.createEditModelAndView(advertisement);
 		else
 			try {
+				if (!advertisement.getLocationUrl().contains("/maps/place/") || !advertisement.getLocationUrl().contains("google") || !advertisement.getLocationUrl().contains("@")) {
+
+					binding.rejectValue("locationUrl", "event.location.error", "error");
+					throw new IllegalArgumentException();
+				}
+				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-mm-dd");
+				Date start = formatoDelTexto.parse(advertisement.getStartDate());
+				Date end = formatoDelTexto.parse(advertisement.getEndDate());
+
+				if (start.after(end)) {
+
+					binding.rejectValue("endDate", "acme.date.later", "error");
+					throw new IllegalArgumentException();
+				}
+
 				Actor principal = this.actorService.findByPrincipal();
 				Assert.isTrue(principal.getIsPremium());
 				//				DateFormat format = new SimpleDateFormat("dd/MM/YYYY");
@@ -165,7 +195,7 @@ public class AdvertisementController extends AbstractController {
 				//				}
 
 				this.advertisementService.save(advertisement);
-				result = this.listUser(0);
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 			} catch (final Throwable oops) {
 				System.out.println(oops.toString());
 				result = this.createEditModelAndView(advertisement, "advertisement.commit.error");
@@ -200,9 +230,9 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			this.advertisementService.register(advertisement);
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/advertisement/user/list.do?q=1");
 		} catch (final Throwable oops) {
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -215,9 +245,9 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			this.advertisementService.unregister(advertisement);
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/advertisement/user/list.do?q=1");
 		} catch (final Throwable oops) {
-			result = this.listUser(1);
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 
 		return result;
@@ -289,7 +319,7 @@ public class AdvertisementController extends AbstractController {
 			try {
 
 				advertisementService.saveJpg(file, advertisementId);
-				result = this.listUser(0);
+				result = new ModelAndView("redirect:/advertisement/user/list.do?q=0");
 
 			} catch (final Throwable th) {
 				th.printStackTrace();

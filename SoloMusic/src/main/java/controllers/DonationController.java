@@ -1,18 +1,20 @@
+
 package controllers;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import domain.Actor;
 import domain.Donation;
-
+import security.LoginService;
 import services.DonationService;
 
 @Controller
@@ -20,7 +22,11 @@ import services.DonationService;
 public class DonationController extends AbstractController {
 
 	@Autowired
-	private DonationService donationService;
+	private DonationService	donationService;
+
+	@Autowired
+	private LoginService	loginService;
+
 
 	@RequestMapping(value = "user/create", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -43,8 +49,9 @@ public class DonationController extends AbstractController {
 		ModelAndView result;
 
 		try {
-
+			Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 			Donation donation = donationService.findOne(q);
+			Assert.isTrue(man.getUserSpace().getDonations().contains(donation));
 
 			result = this.createEditModelAndView(donation, null);
 
@@ -76,7 +83,7 @@ public class DonationController extends AbstractController {
 	public ModelAndView saveCreate(@Valid Donation donation, BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors()) {
-			
+
 			result = this.createEditModelAndView(donation, null);
 		} else
 			try {

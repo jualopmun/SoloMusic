@@ -7,18 +7,19 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import services.PerformanceService;
-import services.UserSpaceService;
 import domain.Actor;
 import domain.Perfomance;
 import domain.UserSpace;
+import security.LoginService;
+import services.PerformanceService;
+import services.UserSpaceService;
 
 @Controller
 @RequestMapping("perfomance")
@@ -49,13 +50,12 @@ public class PerfomanceController extends AbstractController {
 				result.addObject("actor", actor);
 				final UserSpace userSpace = this.userSpaceService.findOne(p);
 				result.addObject("userSpace", userSpace);
-			}else {
-			UserSpace userSpace = this.userSpaceService.findOne(p);
-			result.addObject("userSpace", userSpace);
+			} else {
+				UserSpace userSpace = this.userSpaceService.findOne(p);
+				result.addObject("userSpace", userSpace);
 			}
 
 			result.addObject("perfomance", perfomance);
-			
 
 		} catch (final Throwable e) {
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -83,10 +83,11 @@ public class PerfomanceController extends AbstractController {
 	@RequestMapping(value = "user/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int p) {
 		ModelAndView result;
-		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
 
-			final Perfomance perfomance = this.performanceService.findOne(p);
+			Perfomance perfomance = this.performanceService.findOne(p);
+			Assert.isTrue(actor.getUserSpace().getPerfomances().contains(perfomance));
 
 			result = this.createEditModelAndView(perfomance, null);
 			result.addObject("actor", actor);
@@ -137,7 +138,7 @@ public class PerfomanceController extends AbstractController {
 
 				}
 
-				perfomance.setVideoUrl(perfomance.getVideoUrl().replace("https://www.youtube.com/watch?v=", ""));
+				//perfomance.setVideoUrl(perfomance.getVideoUrl().replace("https://www.youtube.com/watch?v=", ""));
 
 				this.performanceService.save(perfomance);
 
@@ -165,7 +166,8 @@ public class PerfomanceController extends AbstractController {
 		result.addObject("perfomance", perfomance);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "user/create.do");
-
+		final Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+		result.addObject("actor", actor);
 		return result;
 	}
 

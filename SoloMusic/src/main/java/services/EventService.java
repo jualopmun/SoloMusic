@@ -1,10 +1,7 @@
 
 package services;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.EventRepository;
-import security.LoginService;
 import domain.Actor;
 import domain.Event;
+import repositories.EventRepository;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -58,6 +55,7 @@ public class EventService {
 
 	public Event findOne(final Integer arg0) {
 		return this.eventRepository.findOne(arg0);
+
 	}
 
 	public boolean exists(final Integer arg0) {
@@ -75,16 +73,13 @@ public class EventService {
 
 			m.setTitle(event.getTitle());
 			m.setDescription(event.getDescription());
-		
+
 			m.setLocationUrl(event.getLocationUrl());
-			
-		
+
 			m.setStartDate(event.getStartDate());
 			m = this.eventRepository.save(m);
 		} else {
-			
-		
-		
+
 			m = this.eventRepository.save(event);
 			man.getUserSpace().getEvents().add(m);
 			this.actorService.save(man);
@@ -92,6 +87,20 @@ public class EventService {
 		}
 		return m;
 
+	}
+
+	private String formatDate(String date, boolean toBBDD) {
+		String realDate = "";
+		if (toBBDD) {
+			// yyyy-mm-dd
+			String[] dateSplit = date.split("-");
+			realDate = realDate.concat(dateSplit[2]).concat("/").concat(dateSplit[1]).concat("/").concat(dateSplit[0]);
+		} else {
+			// dd/mm/yyyy
+			String[] dateSplit = date.split("/");
+			realDate = realDate.concat(dateSplit[2]).concat("-").concat(dateSplit[1]).concat("-").concat(dateSplit[1]);
+		}
+		return realDate;
 	}
 
 }

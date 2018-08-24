@@ -2,7 +2,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,29 +10,29 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import repositories.UserSpaceRepository;
-import security.LoginService;
 import domain.Actor;
 import domain.Donation;
 import domain.Event;
 import domain.Genre;
 import domain.Perfomance;
 import domain.PlayList;
-import domain.Track;
 import domain.UserSpace;
+import repositories.UserSpaceRepository;
+import security.LoginService;
 
 @Service
 @Transactional
 public class UserSpaceService {
 
 	@Autowired
-	private UserSpaceRepository userSpaceRepository;
+	private UserSpaceRepository	userSpaceRepository;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginService		loginService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService		actorService;
+
 
 	public UserSpaceService() {
 		super();
@@ -96,9 +95,9 @@ public class UserSpaceService {
 	public List<UserSpace> userSpacesearch(final String text) {
 		return this.userSpaceRepository.userSpacesearch(text);
 	}
-	
-	public void saveJpg( final MultipartFile file) {
-		UserSpace userspace =loginService.findActorByUsername(LoginService.getPrincipal().getId()).getUserSpace();
+
+	public void saveJpg(final MultipartFile file) {
+		UserSpace userspace = loginService.findActorByUsername(LoginService.getPrincipal().getId()).getUserSpace();
 
 		try {
 
@@ -107,17 +106,13 @@ public class UserSpaceService {
 		} catch (final Exception e) {
 			userspace = null;
 		}
-		
 
 		userSpaceRepository.save(userspace);
 
 	}
-	
-	
-	public List<UserSpace> userSpaceGenreSearch(Genre genre){
+
+	public List<UserSpace> userSpaceGenreSearch(Genre genre) {
 		return this.userSpaceRepository.userSpaceGenreSearch(genre);
 	}
-
-	
 
 }

@@ -22,7 +22,6 @@
 				<form:hidden path="id" />
 				<form:hidden path="version" />
 				
-				<form:errors path="*" class="has-error" />
 				<div class="form-group" >
 					<label> <spring:message code="event.title" />
 					</label><br /> <input class="form-control" value="${event.title}"
@@ -48,7 +47,7 @@
 					<label> <spring:message code="event.startDate" />
 					
 					</label><br /> <input class="form-control"
-						type="text" name="startDate" placeholder="dd/MM/yyyy" />
+						type="date" name="startDate" placeholder="dd/MM/yyyy" value="${event.startDate}"/>
 					<form:errors cssClass="error" path="startDate" />
 					
 					<br />

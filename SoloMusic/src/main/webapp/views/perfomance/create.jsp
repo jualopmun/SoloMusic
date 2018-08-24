@@ -20,7 +20,6 @@
 			<form:hidden path="version" />
 			
 			<div class="form-group" >
-				<form:errors path="*" class="has-error" />
 
 					<label><spring:message code="perfomance.title" /></label>
 					<br />
