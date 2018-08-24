@@ -134,12 +134,27 @@ a.btn-card {
 </style>
 
 <br />
+
+
+
+
 <security:authorize access="hasRole('USER')">
+
 	<jstl:if test="${actor.userSpace==userSpace}">
-		<spring:message code="performance.new" var="actorNew" />
-		<input onclick="window.location='perfomance/user/create.do'"
-			class="btn btn-danger" type="button" value="${actorNew}" />
-		<br />
+	
+	<div class="card bg-primary text-white">
+
+								<div class="card-body">
+								
+									<spring:message code="performance.text" var="spaceNew" />
+								
+									<p class="card-text">${spaceNew}</p>
+									
+									<spring:message code="performance.new" var="actorNew" />
+									<input onclick="window.location='perfomance/user/create.do'"
+									class="btn btn-danger" type="button" value="${actorNew}" />
+								</div>
+								</div>
 	</jstl:if>
 </security:authorize>
 <jstl:forEach var="p" items="${perfomance}" varStatus="vs">

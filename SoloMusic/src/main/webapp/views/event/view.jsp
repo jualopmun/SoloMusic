@@ -136,11 +136,26 @@ a.btn-card {
 </style>
 
 
+
+
 <security:authorize access="hasRole('USER')">
+
+
+
 	<jstl:if test="${actor.userSpace==userSpace}">
-		<spring:message code="event.new" var="actorNew" />
-		<input onclick="window.location='event/user/create.do'"
-			class="btn btn-danger" type="button" value="${actorNew}" />
+		<div class="card bg-primary text-white">
+
+								<div class="card-body">
+								
+									<spring:message code="event.text" var="spaceNew" />
+								
+									<p class="card-text">${spaceNew}</p>
+									
+									<spring:message code="event.new" var="actorNew" />
+									<input onclick="window.location='event/user/create.do'"
+									class="btn btn-danger" type="button" value="${actorNew}" />
+								</div>
+		</div>
 		<br />
 		<br />
 	</jstl:if>

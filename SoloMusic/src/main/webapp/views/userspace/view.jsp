@@ -126,10 +126,24 @@ section .section-title {
 </style>
 </head>
 
+<br/>
+
+		
+
 <jstl:if test="${p==null and actor.userSpace==p}">
-	<spring:message code="actor.new" var="actorNew" />
-	<input onclick="window.location='userspace/user/create.do'"
-		class="btn btn-danger" type="button" value="${actorNew}" />
+	<div class="card bg-primary text-white">
+
+								<div class="card-body">
+								
+									<spring:message code="userspace.newspace" var="spaceNew" />
+								
+									<p class="card-text">${spaceNew}</p>
+									
+									<spring:message code="actor.new" var="actorNew" />
+									<input onclick="window.location='userspace/user/create.do'"
+									class="btn btn-danger" type="button" value="${actorNew}" />
+								</div>
+		</div>
 </jstl:if>
 
 
@@ -227,10 +241,19 @@ section .section-title {
 				<div class="col-sm-12">
 					<security:authorize access="hasRole('USER')">
 						<jstl:if test="${p!=null and actor.userSpace==p}">
+						
+						<br/>
+						
+								<spring:message code="userspace.donation.new" var="spaceNew" />
+								<span class="label label-success">${spaceNew}</span>
+	
+						<br/>
 							<spring:message code="actor.new" var="actorNew" />
 							<input onclick="window.location='donation/user/create.do'"
 								class="btn btn-danger" type="button" value="${actorNew}" />
+								
 						</jstl:if>
+						
 					</security:authorize>
 					<jstl:forEach var="dona" items="${p.donations}"  >
 
@@ -359,9 +382,23 @@ section .section-title {
 				<security:authorize access="hasRole('USER')">
 					<jstl:if test="${p!=null}">
 						<jstl:if test="${actor.userSpace==p}">
+						
+						<br/>
+						
+								<spring:message code="userspace.playlist.new" var="spaceNew" />
+								<span class="label label-success">${spaceNew}</span>
+	
+								<br/>
+	
 							<spring:message code="actor.new" var="actorNew" />
 							<input onclick="window.location='playlist/user/create.do'"
 								class="btn btn-danger" type="button" value="${actorNew}" />
+								
+	
+						
+						
+						
+						
 						</jstl:if>
 					</jstl:if>
 				</security:authorize>
