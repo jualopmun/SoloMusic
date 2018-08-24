@@ -66,7 +66,7 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
-	<br/>
+
 	
 	<div>
 		<tiles:insertAttribute name="body" />
