@@ -51,6 +51,10 @@
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/edit.do"/>
 		<security:intercept-url access="hasRole('USER')" pattern="/event/user/delete.do"/>
 		
+		<security:intercept-url access="permitAll" pattern="/event/view/image.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/event/user/up.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/event/image/upload.do"/>
+		
 		<!-- PERFOMANCE -->
 		
 		<security:intercept-url access="permitAll" pattern="/perfomance/user/view.do"/>

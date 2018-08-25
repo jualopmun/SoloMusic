@@ -3,6 +3,7 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.Length;
@@ -18,6 +19,7 @@ public class Event extends DomainEntity {
 	private String	description;
 	private String	locationUrl;
 	private String	startDate;
+	private byte[]	mainImg;
 
 
 	//Geters and setters
@@ -37,6 +39,15 @@ public class Event extends DomainEntity {
 
 	public String getLocationUrl() {
 		return this.locationUrl;
+	}
+
+	@Column(columnDefinition = "LONGBLOB")
+	public byte[] getMainImg() {
+		return mainImg;
+	}
+
+	public void setMainImg(byte[] mainImg) {
+		this.mainImg = mainImg;
 	}
 
 	@NotBlank

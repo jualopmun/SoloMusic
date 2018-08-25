@@ -1,8 +1,10 @@
 
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -115,6 +117,13 @@ public class ActorController extends AbstractController {
 			result = this.createEditModelAndView(actor);
 		} else
 			try {
+				SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+				Date start = parser.parse(actor.getBirthdate());
+
+				if (!start.before(new Date())) {
+					binding.rejectValue("birthdate", "actor.birthdate.error", "error");
+					throw new IllegalArgumentException();
+				}
 				if (actorService.encontrarActor(actor.getUserAccount().getUsername()) != null) {
 
 					binding.rejectValue("userAccount.username", "actor.surname.error", "error");

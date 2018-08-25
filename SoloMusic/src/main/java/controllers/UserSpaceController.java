@@ -85,7 +85,10 @@ public class UserSpaceController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
+
 			final UserSpace userSpace = this.userSpaceService.create();
+			Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Assert.isTrue(man.getUserSpace() == null);
 			result = this.createNewModelAndView(userSpace, null);
 			final List<Genre> genres = this.genreService.findAll();
 			result.addObject("genres", genres);
@@ -101,6 +104,7 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
+			Assert.isTrue(man.getUserSpace() != null);
 			final UserSpace userSpace = man.getUserSpace();
 			result = this.createNewModelAndView(userSpace, null);
 			final List<Genre> genres = this.genreService.findAll();
@@ -274,7 +278,8 @@ public class UserSpaceController extends AbstractController {
 		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
 			UserSpace userSpace = man.getUserSpace();
-
+			Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Assert.isTrue(actor.getUserSpace().equals(userSpace));
 			result = this.createNewModelAndViewUpload(userSpace, null);
 
 		} catch (final Throwable e) {
