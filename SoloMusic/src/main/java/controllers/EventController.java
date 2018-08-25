@@ -2,7 +2,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -150,6 +152,13 @@ public class EventController extends AbstractController {
 		else
 			try {
 
+				SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+				Date start = parser.parse(event.getStartDate());
+
+				if (start.before(new Date())) {
+					binding.rejectValue("startDate", "event.startDate.error", "error");
+					throw new IllegalArgumentException();
+				}
 				if (!event.getLocationUrl().contains("/maps/place/") || !event.getLocationUrl().contains("google") || !event.getLocationUrl().contains("@")) {
 
 					binding.rejectValue("locationUrl", "event.location.error", "error");
