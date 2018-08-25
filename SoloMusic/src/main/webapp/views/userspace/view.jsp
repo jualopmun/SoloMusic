@@ -49,17 +49,21 @@ footer {
 	background: #eee !important;
 }
 
-.btn-primary:hover, .btn-primary:focus {
-	background-color: #108d6f;
-	border-color: #108d6f;
+.btn-info:hover, .btn-info:focus {
+	background-color: #007b5e;
+	border-color: #007b5e;
 	box-shadow: none;
 	outline: none;
+	
 }
 
-.btn-primary {
+.btn-info {
 	color: #fff;
 	background-color: #007b5e;
 	border-color: #007b5e;
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
 }
 
 section {
@@ -78,64 +82,148 @@ section .section-title {
 	background: #ffffff;
 }
 
-/* entire container, keeps perspective */
-.flip-container {
-	perspective: 1000px;
-}
-/* flip the pane when hovered */
-.flip-container:hover .flipper, .flip-container.hover .flipper {
-	transform: rotateY(180deg);
+#config{
+    border: 2px solid #c9302c;
+    border-radius: 20px;
+    padding-bottom: 10px;
+    padding-top: 5px;
 }
 
-.flip-container, .front, .back {
-	width: 300px;
-	height: 430px;
+#info{
+
+	padding-left:0px;
+	padding-right:0px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding-bottom: 10px;
 }
 
-/* flip speed goes here */
-.flipper {
-	transition: 0.6s;
-	transform-style: preserve-3d;
-	position: relative;
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #e38582;
 }
 
-/* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
+a {
+    color: #337ab7;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-/* front pane, placed above back */
-.front {
-	z-index: 2;
-	/* for firefox 31 */
-	transform: rotateY(0deg);
+#donations{
+	margin-bottom: 20px;
+	padding-left:5px;
 }
 
-/* back, initially hidden pane */
-.back {
-	transform: rotateY(180deg);
+.bg-primary{
+	border: 2px solid #224f77;
+    border-radius: 20px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
-.flip-container:hover .flipper, .flip-container.hover .flipper,
-	.flip-container.flip .flipper {
-	transform: rotateY(180deg);
+#paypaldiv{
+
+	padding-left:0px;
 }
+
+#accordion{
+	padding-top:20px;
+}
+
+#avatar{
+	padding-left:5px;
+	padding-right: 5px;
+	padding-top: 8px;
+}
+
+#caratula{
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+audio{
+width: 75%;
+}
+
+#Cabecera{
+	
+	background-color: #c9302c;
+	margin-top:0px;
+	margin-bottom:0px;
+	padding-top:5px;
+	padding-bottom:5px;
+	border-radius: 19px 19px 0px 0px;
+	padding-left:0px;
+	border-bottom: 2px solid black;
+}
+#cabeceratext{
+	font-size: 18px;
+	color: black;
+	text-align: center;
+}
+
+audio, canvas, progress, video {
+    display: inline-block;
+    vertical-align: baseline;
+}
+#borrartrack {
+	display: inline-block;
+    vertical-align: top;
+    font-size: 18px;
+	font-weight: bold;
+    }
+    
+    
+.panel-default > .panel-heading {
+	color: #333;
+	background-color: #bfbfbf;
+	
+	border-width: 5px;
+}
+
+.panel-group .panel {
+    margin-bottom: 0;
+    border-radius: 5px;
+    border-color: black;
+}
+
+#tituloplaylist{
+	text-align:center;
+}
+
+#comment{
+	border: 2px solid black;
+	border-style: inset;
+	padding: 3px;
+}
+
+#newcomment{
+	margin-top: 5px;
+}
+
+#avatarimg{
+	padding-bottom: 5px;
+}
+
+
 </style>
 </head>
-
+<br> 
 <jstl:if test="${p==null and actor.userSpace==p}">
 	<spring:message code="actor.new" var="actorNew" />
 	<input onclick="window.location='userspace/user/create.do'"
 		class="btn btn-danger" type="button" value="${actorNew}" />
 </jstl:if>
 
-
+<!-- Configuración del perfil -->
 <div class="container-fluid">
 	<div class="row content">
-		<div class="col-sm-2" style="margin-bottom: 0px">
+		<div class="col-sm-2" style="margin-bottom: 10px" id="config">
 
 			<security:authorize access="hasRole('USER')">
 
@@ -184,7 +272,7 @@ section .section-title {
 			<jstl:if test="${fn:length(p.profileImg)>0}">
 				
 					<img src="userspace/view/image.do?q=${p.id}" class="img-rounded"
-						alt="Avatar" width="100">
+						alt="Avatar" width="100" id="avatarimg">
 				</jstl:if>
 				<jstl:if test="${p!=null and actor.userSpace==p}">
 					<br />
@@ -196,18 +284,25 @@ section .section-title {
 				</jstl:if>
 			</jstl:if>
 		</div>
-		<div class="col-sm-10" style="margin-bottom: 0px">
-			<div class="col-sm-7">
-
-				<div class="col-sm-12">
+		
+	<!-- Container general -->
+		
+		<div class="col-sm-10" style="margin-bottom: 0px" >
+		
+		
+			<div class="col-sm-8">
+<!-- Información del perfil -->
+				<div class="col-sm-12" id="info">
+					<div class="col-sm-12" id="Cabecera">
 					<spring:message code="userspace.info" var="spacetitle" />
 					<jstl:if test="${p!=null}">
-						<h4>
-							<small>${spacetitle}</small>
+						<h4 id="cabeceratext">
+							${spacetitle}
 						</h4>
-
-						<hr>
+						
 					</jstl:if>
+					</div>
+					<div class="col-sm-12">
 					<h2>${p.title}</h2>
 					<h5>
 						<span class="label label-danger">${p.genre.genre}</span>
@@ -221,10 +316,16 @@ section .section-title {
 						<hr>
 
 					</jstl:if>
+					</div>
 				</div>
 
-				<!-- Donations -->
-				<div class="col-sm-12">
+		<!-- Donations -->
+				<div class="col-sm-12" id="donations">
+				<spring:message code="donantions.titulo" var="userDonations" />
+				<h4>
+								<small> ${userDonations} </small>
+				
+				</h4>
 					<security:authorize access="hasRole('USER')">
 						<jstl:if test="${p!=null and actor.userSpace==p}">
 							<spring:message code="actor.new" var="actorNew" />
@@ -234,13 +335,10 @@ section .section-title {
 					</security:authorize>
 					<jstl:forEach var="dona" items="${p.donations}"  >
 
-						<div class="col-sm-12">
-							<spring:message code="donantions.titulo" var="userDonations" />
+				<div class="col-sm-12" id="paypaldiv">
+							
 
-							<h4>
-								<small> ${userDonations} </small>
-							</h4>
-							<div class="card bg-primary text-white">
+					<div class="card bg-primary text-white">
 
 								<div class="card-body">
 									<h5 class="card-title">${dona.title}</h5>
@@ -260,31 +358,23 @@ section .section-title {
 				</div>
 
 
-				<!-- Comments -->
-				<div class="col-sm-12" id="comment">
-					<security:authorize access="hasRole('USER')">
-						<jstl:if test="${p!=null}">
-							<spring:message code="actor.new.comment" var="actorNewComment" />
-							<input
-								onclick="window.location='userspace/user/comment.do?q=${p.id}'"
-								class="btn btn-danger" type="button" value="${actorNewComment}" />
-						</jstl:if>
-					</security:authorize>
-					<jstl:forEach var="com" items="${p.comments}" varStatus="vs">
-					<jstl:if test="${fn:length(com.actor.userSpace.profileImg)>0}">
+		<!-- Comments -->
+		<div class="col-sm-12">
 				
-						<div class="col-sm-2 text-center">
+					<jstl:forEach var="com" items="${p.comments}" varStatus="vs">
+					<div class="col-sm-12" id="comment">
+					<jstl:if test="${fn:length(com.actor.userSpace.profileImg)>0}">
+					
+					<div class="col-sm-2 text-center" id="avatar">
 							<img src="userspace/view/image.do?q=${com.actor.userSpace.id}"
-								class="img-circle" height="65" width="65" alt="Avatar">
-						</div>
+								class="img-circle" height="75" width="75" alt="Avatar">
+					</div>
 						</jstl:if>
-						<div class="col-sm-10">
+						<div class="col-sm-10" id="comentario">
 							<h4>${com.actor.name}
 								${" "} ${com.actor.surname}<small> ${com.date} </small>
 							</h4>
-							<spring:message code="comment.puntuation" />
-							:
-							<p>${com.puntuacion}</p>
+							<spring:message code="comment.puntuation" />:${com.puntuacion}
 							<br />
 							<p>${com.text}</p>
 							<br>
@@ -342,13 +432,23 @@ section .section-title {
 								
 							</jstl:if>
 						</div>
+						</div>
 					</jstl:forEach>
-
+					<div class="col-sm-12" id="newcomment">
+					<security:authorize access="hasRole('USER')">
+						<jstl:if test="${p!=null}">
+							<spring:message code="actor.new.comment" var="actorNewComment" />
+							<input
+								onclick="window.location='userspace/user/comment.do?q=${p.id}'"
+								class="btn btn-danger" type="button" value="${actorNewComment}" />
+						</jstl:if>
+					</security:authorize>
+					</div>
 				</div>
 			</div>
 
-			<!-- PlayList -->
-			<div class="col-sm-3">
+	<!-- PlayList -->
+			<div class="col-sm-4" >
 				<spring:message code="playlist" var="userPlaylist"></spring:message>
 				<jstl:if test="${p!=null}">
 					<h4>
@@ -365,67 +465,51 @@ section .section-title {
 						</jstl:if>
 					</jstl:if>
 				</security:authorize>
-
+				
+		<!-- Collapsable -->
+		<div class="panel-group" id="accordion">
 				<jstl:forEach var="play" items="${p.playLists}">
-					<div class="flip-container"
-						ontouchstart="this.classList.toggle('hover');">
+				<div class="panel panel-default">
+   					 <div class="panel-heading">
+  				<h2 id="tituloplaylist">${play.title}</h2>
+  					<p>
+						<img class=" img-fluid" src="images/logo.jpg" alt="Caratula" height="175" width="200" id="caratula">
+					</p>
+				<h4>${play.description} </h4>
+ 					 <button type="button" class="btn btn-info" data-parent="#accordion" data-toggle="collapse" data-target="#${play.title}"><spring:message code="play.track"
+								/></button>
+				</div>
+  					<div id="${play.title}" class="panel-collapse collapse">
+  					<div class="panel-body">
+  						<jstl:forEach var="track" items="${play.tracks}" varStatus="vs">
+								
+								<p class="card-text">"${track.title}"</p>
+									<div class="card">
+										<audio preload="none" controlsList="nodownload" controls="controls">
+												<source src="userspace/user/play.do?q=${track.id}"
+														type='audio/mp3;codec="mp3"' onmouseout="true" media="all" >Your browser does not support the audio element.</audio>
+									
 
-						<div class="flipper">
-							<div class="front">
-								<div class="card">
-									<div class="card-body text-center">
-										<p>
-											<img class=" img-fluid" src="images/logo.jpg"
-												alt="card image" height="250" width="250">
-										</p>
-										<h4 class="card-title">${play.title}</h4>
-										<p class="card-text">${play.description}</p>
-										<a href="#" class="btn btn-primary btn-sm"><i
-											class="fa fa-plus">Tracks</i></a>
+									<jstl:if test="${actor.userSpace==p}">
+										<input onclick="window.location='track/user/delete.do?q=${track.id}'"
+										class="btn btn-danger" type="button" value="x" id="borrartrack"/>
+									</jstl:if>
+					
 									</div>
-								</div>
-							</div>
-							<div class="back">
-								<div class="card">
-									<div class="card-body text-center mt-4">
-										<h4 class="card-title">${play.title}</h4>
-										<jstl:forEach var="track" items="${play.tracks}" varStatus="vs">
-											<p class="card-text">"${track.title}"</p>
-											<p class="card-text">
-												<audio preload="none" controlsList="nodownload" controls="controls">
-													<source src="userspace/user/play.do?q=${track.id}"
-														type='audio/mp3;codec="mp3"' onmouseout="true" media="all" >
-													Your browser does not support the audio element.
-												</audio>
-											</p>
-
-											<jstl:if test="${actor.userSpace==p}">
-												
-
-												<input
-													onclick="window.location='track/user/delete.do?q=${track.id}'"
-													class="btn btn-danger" type="button" value="x" />
-
-
-											</jstl:if>
-
-										</jstl:forEach>
-										<jstl:if test="${actor.userSpace==p}">
+						</jstl:forEach>
+						<jstl:if test="${actor.userSpace==p}">
 											<spring:message code="actor.new.track" var="actorNewTrack" />
 											<input
 												onclick="window.location='track/user/create.do?q=${play.id}'"
 												class="btn btn-danger" type="button"
 												value="${actorNewTrack}" />
-										</jstl:if>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
+						</jstl:if>
+ 					 
 					</div>
-
+					</div>
+					</div>
 				</jstl:forEach>
+				</div>
 			</div>
 
 		</div>
