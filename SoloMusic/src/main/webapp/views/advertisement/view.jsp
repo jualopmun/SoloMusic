@@ -9,6 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <style>
@@ -134,9 +135,12 @@ a.btn-card {
                             <br/>
                             <spring:message code="advertisement.startDate.now" var="start" />
                             <spring:message code="advertisement.endDate.now" var="end" />
-                          <p><jstl:out value="${start}" />: <jstl:out value="${advertisement.startDate}" /> <jstl:out value="${end}" />:<jstl:out value="${advertisement.endDate}" />  </p>
+                            <fmt:parseDate pattern="yyyy-MM-dd" value="${advertisement.startDate}" var="parsedDate" />
+                            <fmt:parseDate pattern="yyyy-MM-dd" value="${advertisement.endDate}" var="parsedDate2" />
+							
+                          <p><jstl:out value="${start}" />:<fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" /> <jstl:out value="${end}" />:<fmt:formatDate value="${parsedDate2}" pattern="dd/MM/yyyy" /> </p>
                           <br/> 
-                          <p><jstl:out value="${advertisement.endDate}" /></p>
+                         
                             <spring:message code="event.locationUrl" var="location" />
                           <p><a href='advertisement/user/location.do?p=${advertisement.id}'><jstl:out value="${location}" /></a></p>
                             <security:authorize access="hasRole('USER')">

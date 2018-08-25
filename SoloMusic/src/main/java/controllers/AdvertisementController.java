@@ -177,6 +177,7 @@ public class AdvertisementController extends AbstractController {
 				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-mm-dd");
 				Date start = formatoDelTexto.parse(advertisement.getStartDate());
 				Date end = formatoDelTexto.parse(advertisement.getEndDate());
+				Date today = new Date();
 
 				if (start.after(end)) {
 
@@ -277,7 +278,8 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			Advertisement advertisement = advertisementService.findOne(q);
-
+			Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Assert.isTrue(actor.getOwnerAdvertisement().contains(advertisement));
 			result = this.createEditModelAndViewUpload(advertisement, null);
 			advertisementId = advertisement.getId();
 

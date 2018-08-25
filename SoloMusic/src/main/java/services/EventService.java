@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import domain.Actor;
 import domain.Event;
@@ -75,7 +76,7 @@ public class EventService {
 			m.setDescription(event.getDescription());
 
 			m.setLocationUrl(event.getLocationUrl());
-
+			m.setMainImg(event.getMainImg());
 			m.setStartDate(event.getStartDate());
 			m = this.eventRepository.save(m);
 		} else {
@@ -86,6 +87,21 @@ public class EventService {
 
 		}
 		return m;
+
+	}
+
+	public void saveJpg(final MultipartFile file, final Integer eventId) {
+		Event event = eventRepository.findOne(eventId);
+		Actor principal = this.actorService.findByPrincipal();
+		try {
+
+			event.setMainImg(file.getBytes());
+
+		} catch (final Exception e) {
+			event = null;
+		}
+
+		eventRepository.save(event);
 
 	}
 

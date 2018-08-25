@@ -1,18 +1,24 @@
 
 package controllers;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
@@ -34,6 +40,8 @@ public class EventController extends AbstractController {
 
 	@Autowired
 	private UserSpaceService	userSpaceService;
+
+	public Integer				eventId;
 
 
 	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
@@ -159,6 +167,88 @@ public class EventController extends AbstractController {
 		return result;
 	}
 
+	//Subida de imagen
+	@RequestMapping(value = "image/upload", method = RequestMethod.GET)
+	public ModelAndView uploadImage(@RequestParam int q) {
+		ModelAndView result;
+
+		try {
+			Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Event event = eventService.findOne(q);
+			Assert.isTrue(actor.getUserSpace().getEvents().contains(event));
+			result = this.createEditModelAndViewUpload(event, null);
+			result.addObject("actor", actor);
+			eventId = event.getId();
+
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+
+		}
+		return result;
+
+	}
+
+	@RequestMapping(value = "/user/up", method = RequestMethod.POST)
+	public ModelAndView saveCreate(@RequestParam("mainImg") final MultipartFile file) {
+		ModelAndView result;
+
+		if (file.isEmpty()) {
+			result = new ModelAndView("event/upload");
+			result.addObject("event", null);
+			result.addObject("message", "file.null.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		}
+
+		else if (!file.getOriginalFilename().contains(".jpg")) {
+			result = new ModelAndView("event/upload");
+			result.addObject("event", null);
+			result.addObject("message", "file.format.error");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+		} else if (file.getSize() >= 268435455) {
+			result = new ModelAndView("event/upload");
+			result.addObject("event", null);
+			result.addObject("message", "file.format.error.image");
+			result.addObject("requestURI", "user/create.do");
+			return result;
+
+		}
+
+		else
+			try {
+				Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+
+				eventService.saveJpg(file, eventId);
+				result = new ModelAndView("redirect:/event/user/view.do?p=" + actor.getUserSpace().getId());
+
+			} catch (final Throwable th) {
+				th.printStackTrace();
+				result = new ModelAndView("track/create");
+				result.addObject("track", null);
+				result.addObject("message", "actor.commit.error");
+				result.addObject("requestURI", "user/create.do");
+			}
+		return result;
+	}
+
+	@RequestMapping(value = "/view/image", method = RequestMethod.GET, produces = {
+		MediaType.APPLICATION_OCTET_STREAM_VALUE
+	})
+	public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam int q) throws IOException, ServletException {
+
+		Event event = eventService.findOne(q);
+		if (event == null || event.getMainImg() == null || event.getMainImg().length <= 0)
+			throw new ServletException("No clip found/clip has not data, id=" + q);
+		final HttpHeaders header = new HttpHeaders();
+
+		// header.setContentType(new MediaType("audio", "mp3"));
+		header.setContentType(new MediaType("image", "jpg"));
+		header.setContentLength(event.getMainImg().length);
+
+		return new HttpEntity<byte[]>(event.getMainImg(), header);
+	}
+
 	protected ModelAndView createEditModelAndView(final Event event) {
 		ModelAndView result;
 
@@ -176,6 +266,16 @@ public class EventController extends AbstractController {
 		result.addObject("requestURI", "user/create.do");
 		Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		result.addObject("actor", actor);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndViewUpload(final Event event, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("event/upload");
+		result.addObject("event", event);
+		result.addObject("message", messageCode);
 
 		return result;
 	}

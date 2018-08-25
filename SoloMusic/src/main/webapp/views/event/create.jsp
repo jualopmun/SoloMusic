@@ -21,6 +21,7 @@
 		
 				<form:hidden path="id" />
 				<form:hidden path="version" />
+				<form:hidden path="mainImg" />
 				
 				<div class="form-group" >
 					<label> <spring:message code="event.title" />

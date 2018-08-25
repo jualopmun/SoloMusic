@@ -13,6 +13,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <style>
 @import
 	url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto+Condensed:400,400i,700,700i')
@@ -165,6 +166,10 @@ a.btn-card {
 			
 			<div class="card-desc">
 			<div class="container">
+			<div class="card-img">
+                        <img src="event/view/image.do?q=${p.id}" alt="">
+                       
+                    </div>
 				<h3>
 					<jstl:out value="${p.title}" />
 				</h3>
@@ -179,7 +184,9 @@ a.btn-card {
 				</p>
 				<br />
 				<p class="card-text">
-					<jstl:out value="${p.startDate}" />
+				<fmt:parseDate pattern="yyyy-MM-dd" value="${p.startDate}" var="parsedDate" />
+				<fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" />
+					
 				</p>
 				</div>
 				<security:authorize access="hasRole('USER')">
@@ -227,6 +234,10 @@ a.btn-card {
 									<spring:message code="event.edit" var="actorEdit" /> <input
 								onclick="window.location='event/user/edit.do?p=${p.id}'"
 								class="btn btn-danger" type="button" value="${actorEdit}" />
+							
+								<spring:message code="event.upload" var="upload" /> <input
+								onclick="window.location='event/image/upload.do?q=${p.id}'"
+								class="btn btn-danger" type="button" value="${upload}" />
 
 								</div> 
 								

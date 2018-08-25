@@ -274,7 +274,8 @@ public class UserSpaceController extends AbstractController {
 		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
 			UserSpace userSpace = man.getUserSpace();
-
+			Actor actor = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			Assert.isTrue(actor.getUserSpace().equals(userSpace));
 			result = this.createNewModelAndViewUpload(userSpace, null);
 
 		} catch (final Throwable e) {
