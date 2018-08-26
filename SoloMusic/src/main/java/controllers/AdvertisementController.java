@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -266,14 +267,18 @@ public class AdvertisementController extends AbstractController {
 	})
 	public HttpEntity<byte[]> downloadRecipientFileImage(@RequestParam int q) throws IOException, ServletException {
 
-		Advertisement advertisement = advertisementService.findOne(q);
+		final Advertisement advertisement = this.advertisementService.findOne(q);
 		if (advertisement == null || advertisement.getMainImg() == null || advertisement.getMainImg().length <= 0)
 			throw new ServletException("No clip found/clip has not data, id=" + q);
 		final HttpHeaders header = new HttpHeaders();
-
+		HttpServletResponse response = null;
 		// header.setContentType(new MediaType("audio", "mp3"));
 		header.setContentType(new MediaType("image", "jpg"));
 		header.setContentLength(advertisement.getMainImg().length);
+
+		header.setContentDispositionFormData(advertisement.getTitle(), advertisement.getTitle());
+		header.setOrigin(advertisement.getTitle());
+		header.add("Content-Range", "bytes " + 0 + "-" + advertisement.getMainImg().length + "/" + advertisement.getMainImg().length);
 
 		return new HttpEntity<byte[]>(advertisement.getMainImg(), header);
 	}

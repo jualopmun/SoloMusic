@@ -71,7 +71,7 @@
 			
 			<display:column sortable="false">
 			<jstl:if test="${fn:length(row.mainImg)>0}">
-				<img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${row.id}" />
+				<img style="max-width: 80px; max-height: 80px;" src="advertisement/view/image.do?q=${row.id}" alt="" />
 				</jstl:if>
 			</display:column>
 			
