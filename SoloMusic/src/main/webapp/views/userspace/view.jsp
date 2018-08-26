@@ -10,6 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <head>
@@ -389,13 +390,15 @@ label label-success {
 					<jstl:if test="${fn:length(com.actor.userSpace.profileImg)>0}">
 					
 					<div class="col-sm-2 text-center" id="avatar">
+					
 							<img src="userspace/view/image.do?q=${com.actor.userSpace.id}"
 								class="img-circle" height="75" width="75" alt="Avatar">
 					</div>
 						</jstl:if>
 						<div class="col-sm-10" id="comentario">
 							<h4>${com.actor.name}
-								${" "} ${com.actor.surname}<small> ${com.date} </small>
+								<fmt:parseDate pattern="yyyy-MM-dd" value="${com.date}" var="parsedDate" />
+								${" "} ${com.actor.surname}<small> <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" /></small>
 							</h4>
 							<spring:message code="comment.puntuation" />:${com.puntuacion}
 							<br />
@@ -522,7 +525,7 @@ label label-success {
 								
 								<p class="card-text">"${track.title}"</p>
 									<div class="card">
-										<audio preload="none" controlsList="nodownload" controls="controls">
+										<audio preload="none" controlsList="nodownload" controls="controls" runat="server">
 												<source src="userspace/user/play.do?q=${track.id}"
 														type='audio/mp3;codec="mp3"' onmouseout="true" media="all" >Your browser does not support the audio element.</audio>
 									
