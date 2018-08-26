@@ -62,13 +62,13 @@
 </head>
 
 <body>
-
-	<div>
+<div id="container">
+	<div id="header">
 		<tiles:insertAttribute name="header" />
 	</div>
 
 	
-	<div>
+	<div  id="body">
 		<tiles:insertAttribute name="body" />
 		<jstl:if test="${message != null}">
 			<br />
@@ -77,10 +77,10 @@
 	</div>
 	<br/>
 	
-	<div>
+	<div id="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
-
+</div>
 <script type="text/javascript">
 		function relativeRedir(loc) {	
 			var b = document.getElementsByTagName('base');

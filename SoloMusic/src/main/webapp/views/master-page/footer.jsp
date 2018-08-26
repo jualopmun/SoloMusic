@@ -13,10 +13,10 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <jsp:useBean id="date" class="java.util.Date" />
-<!-- 
+
 <footer class="container-fluid">
 <hr>
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> SoloMusic Co., Inc.</b>
 </footer>
- -->

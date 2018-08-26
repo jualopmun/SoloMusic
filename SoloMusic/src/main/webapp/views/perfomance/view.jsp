@@ -10,6 +10,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+
+<head>
 
 <style>
 @import
@@ -131,41 +134,47 @@ a.btn-card {
 	text-decoration: none;
 	color: #fff;
 }
+
+#container{
+	padding-top:15px;
+}
+
+#boton{
+	padding-left:31px;
+}
+
 </style>
-
-<br />
-
-
-
+</head>
+<br/>
 
 <security:authorize access="hasRole('USER')">
 
 	<jstl:if test="${actor.userSpace==userSpace}">
-	
-	<div class="card bg-primary text-white">
-
-								<div class="card-body">
-								
-									<spring:message code="performance.text" var="spaceNew" />
-								
-									<p class="card-text">${spaceNew}</p>
-									
-									<spring:message code="performance.new" var="actorNew" />
-									<input onclick="window.location='perfomance/user/create.do'"
-									class="btn btn-danger" type="button" value="${actorNew}" />
-								</div>
-								</div>
+	<jstl:if test="${empty perfomance}">
+	<div>
+				<spring:message code="performance.text" var="spaceNew" />
+				<p class="label label-success">${spaceNew}</p>
+	</div>
+	</jstl:if>
+	<div id="boton">						
+		<spring:message code="performance.new" var="actorNew" />
+		<input onclick="window.location='perfomance/user/create.do'"class="btn btn-danger" type="button" value="${actorNew}" />			
+	</div>
 	</jstl:if>
 </security:authorize>
+
+
+<div class="container-fluid">
+	<div class="row content">
+<div class="col-sm-12" id="container">
 <jstl:forEach var="p" items="${perfomance}" varStatus="vs">
 	
-	<div class="col-md-3">
+	<div class="col-sm-6">
 		<div class="card-content">
 			<div class="card-img">
 				
 				<%-- Script para los videos de yotube --%>
-				<div class="youtube" id='<jstl:out value="${p.videoUrl}" />'
-					style="width: 400px; height: 300px; padding-bottom: 400px;"></div>
+				<div class="youtube" id='<jstl:out value="${p.videoUrl}"/>' style="width:100%; height:400px"> </div>
 
 			</div>
 			<div class="card-desc">
@@ -175,7 +184,6 @@ a.btn-card {
 				<p>
 					<jstl:out value="${p.description}" />
 				</p>
-				<br />
 				<security:authorize access="hasRole('USER')">
 					<jstl:if test="${actor.userSpace==userSpace}">
 
@@ -249,14 +257,9 @@ a.btn-card {
 </jstl:forEach>
 
 
-
-
-
-
-
-
-
-
+</div>
+</div>
+</div>
 
 
 

@@ -144,6 +144,7 @@ a {
     margin-right: auto;
     width: 65%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
 }
 
 audio{
@@ -210,12 +211,15 @@ audio, canvas, progress, video {
 	padding-bottom: 5px;
 }
 
+label label-success {
+    margin-bottom: 3px;
+}
+
 
 </style>
 </head>
+<br>
 
-
-	
 <jstl:if test="${p==null and actor.userSpace==p}">
 	<div class="card bg-primary text-white">
 
@@ -340,17 +344,15 @@ audio, canvas, progress, video {
 				</h4>
 					<security:authorize access="hasRole('USER')">
 						<jstl:if test="${p!=null and actor.userSpace==p}">
-						
-						<br/>
-						
-								<spring:message code="userspace.donation.new" var="spaceNew" />
-								<span class="label label-success">${spaceNew}</span>
-	
-						<br/>
+
 							<spring:message code="actor.new" var="actorNew" />
 							<input onclick="window.location='donation/user/create.do'"
-								class="btn btn-danger" type="button" value="${actorNew}" />
+								class="btn btn-danger" type="button" value="${actorNew}" />	
 								
+								<jstl:if test="${empty p.donations}">
+								<spring:message code="userspace.donation.new" var="spaceNew" />
+								<span class="label label-success">${spaceNew}</span>
+							</jstl:if>
 						</jstl:if>
 						
 					</security:authorize>
@@ -481,12 +483,12 @@ audio, canvas, progress, video {
 					<jstl:if test="${p!=null}">
 						<jstl:if test="${actor.userSpace==p}">
 						
-						<br/>
-						
+
+							<jstl:if test="${empty p.playLists}">
 								<spring:message code="userspace.playlist.new" var="spaceNew" />
 								<span class="label label-success">${spaceNew}</span>
+							</jstl:if>
 	
-								<br/>
 	
 							<spring:message code="actor.new" var="actorNew" />
 							<input onclick="window.location='playlist/user/create.do'"
@@ -508,7 +510,7 @@ audio, canvas, progress, video {
    					 <div class="panel-heading">
   				<h2 id="tituloplaylist">${play.title}</h2>
   					<p>
-						<img class=" img-fluid" src="images/logo.jpg" alt="Caratula" height="175" width="200" id="caratula">
+						<img class=" img-fluid" src="images/playlist.png" alt="Caratula" height="175" width="200" id="caratula">
 					</p>
 				<h4>${play.description} </h4>
  					 <button type="button" class="btn btn-info" data-parent="#accordion" data-toggle="collapse" data-target="#${play.title}"><spring:message code="play.track"
