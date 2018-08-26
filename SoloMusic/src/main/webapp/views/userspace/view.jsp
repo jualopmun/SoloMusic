@@ -531,10 +531,48 @@ label label-success {
 									
 
 									<jstl:if test="${actor.userSpace==p}">
-										<input onclick="window.location='track/user/delete.do?q=${track.id}'"
-										class="btn btn-danger" type="button" value="x" id="borrartrack"/>
+									<div class="container">
+
+									<!-- Button to Open the Modal -->
+									<button type="button" class="btn btn-danger"
+										data-toggle="modal" data-target="#myModal${vs.index}">X</button>
+
+									<!-- The Modal -->
+									<div class="modal fade" id="myModal${vs.index}">
+									
+								
+										<div class="modal-dialog">
+											<div class="modal-content">
+												
+												<!-- Modal Header -->
+												<div class="modal-header alert-danger">
+													<h4 class="modal-title"><jstl:out value="${track.title}" /></h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body alert-info"><spring:message code="delete.track.message"/>
+												
+												
+												</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer alert-success">
+													<button type="button" class="btn btn-danger"
+														onclick="window.location='track/user/delete.do?q=${track.id}'"
+														data-dismiss="modal"><spring:message code="event.delete"/></button>
+													<button type="button" class="btn btn-danger"
+														onclick="window.location='userspace/user/spaceview.do?q=${p.id}'"
+														data-dismiss="modal"><spring:message code="event.cancel"/></button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									</div>
+										
 									</jstl:if>
-					
+			
 									</div>
 						</jstl:forEach>
 						<jstl:if test="${actor.userSpace==p}">
