@@ -65,7 +65,7 @@ public class AdvertisementService {
 
 		Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		if (this.exists(advertisement.getId())) {
-			Assert.isTrue(man.getOwnerAdvertisement().contains(advertisement));
+			Assert.isTrue(man.getOwnerAdvertisement().contains(advertisement) || man.getRegistersAdvertisement().contains(advertisement));
 			m = this.findOne(advertisement.getId());
 
 			m.setTitle(advertisement.getTitle());

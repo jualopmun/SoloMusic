@@ -38,7 +38,14 @@
 		</spring:url>
 		<spring:message code="actor.userSpace" var="userSpaceMsg" />
 		<display:column sortable="false">
+			<jstl:if test="${row.userSpace!=null}">
 			<input onclick="window.location='${userSpaceUrl}'"	class="btn btn-danger" type="button" value="${userSpaceMsg}" />
+			</jstl:if>
+			<jstl:if test="${row.userSpace==null}">
+			
+			<p><spring:message code="actor.noUserSpace"></spring:message></p>
+			
+			</jstl:if>
 		</display:column>
 		
 
