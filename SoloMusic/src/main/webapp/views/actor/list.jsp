@@ -7,7 +7,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<div style="width:70%; margin: auto;">
+<div style="width:70%; overflow-x:auto; margin: auto;">
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="actors"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		<spring:message code="actor.name" var="name" />

@@ -59,8 +59,7 @@
 									code="master.page.user.followers" /></a></li>
 								<li><a class="fNiv" href="actor/list.do?q=followeds"><spring:message
 									code="master.page.user.followeds" /></a></li>
-								<li><a class="fNiv" href="advertisement/user/list.do?q=0"><spring:message
-									code="master.page.user.advertisement.list" /></a></li>
+								
 								<li><a href="j_spring_security_logout"><spring:message
 											code="master.page.logout" /> </a></li>
 							</ul>
@@ -81,9 +80,18 @@
 					</security:authorize>
 					
 					<security:authorize access="hasRole('USER')">
-						<li><a class="fNiv" href="advertisement/list.do"><spring:message
-							code="master.page.advertisement.list" /></a></li>
-							<li><a class="fNiv" href="actor/premium.do"><spring:message
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><spring:message
+									code="master.page.advertisement.list" /><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a class="fNiv" href="advertisement/user/list.do?q=0"><spring:message
+									code="master.page.user.advertisement.list" /></a></li>
+								<li><a class="fNiv" href="advertisement/list.do"><spring:message
+									code="master.page.advertisement.list" /></a></li>
+							</ul>
+						</li>
+
+						<li><a class="fNiv" href="actor/premium.do"><spring:message
 							code="master.page.actor.premium" /></a></li>
 					</security:authorize>
 					

@@ -14,7 +14,9 @@ h1, h2, h3 {
 
 thead {
 	border: 1px solid;
+	background-color: #c9302c;
 }
+
 
 
 td {

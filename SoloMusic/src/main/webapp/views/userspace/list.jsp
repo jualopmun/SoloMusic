@@ -49,7 +49,7 @@ input{
 	</div>
 </div>
 	
-	
+	<div style="overflow-x:auto;">
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"
 		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 		<spring:message code="userspace.profileimg" var="profileImg"/>
@@ -87,4 +87,5 @@ input{
 		</display:column>
 	
 	</display:table>
+	</div>
 </div>

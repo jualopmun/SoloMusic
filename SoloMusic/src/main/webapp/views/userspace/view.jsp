@@ -216,27 +216,28 @@ label label-success {
     margin-bottom: 3px;
 }
 
+#boton{
+	padding-left:25px;
+}
 
 </style>
 </head>
 <br>
-
-<jstl:if test="${p==null and actor.userSpace==p}">
-	<div class="card bg-primary text-white">
-
-								<div class="card-body">
-								
-									<spring:message code="userspace.newspace" var="spaceNew" />
-								
-									<p class="card-text">${spaceNew}</p>
-									
-									<spring:message code="actor.new" var="actorNew" />
-									<input onclick="window.location='userspace/user/create.do'"
-									class="btn btn-danger" type="button" value="${actorNew}" />
-								</div>
-		</div>
-</jstl:if>
-
+<jstl:choose>
+<jstl:when test="${p==null and actor.userSpace==p}">
+	<div>
+	
+				<spring:message code="userspace.newspace" var="spaceNew" />
+				<p class="label label-success">${spaceNew}</p>
+			<div id="boton">
+				<spring:message code="actor.new" var="actorNew" />
+				<input onclick="window.location='userspace/user/create.do'" class="btn btn-danger" type="button" value="${actorNew}" />
+			</div>
+				
+							
+	</div>
+</jstl:when>
+<jstl:otherwise>
 <!-- Configuración del perfil -->
 <div class="container-fluid">
 	<div class="row content">
@@ -497,11 +498,6 @@ label label-success {
 							<input onclick="window.location='playlist/user/create.do'"
 								class="btn btn-danger" type="button" value="${actorNew}" />
 								
-	
-						
-						
-						
-						
 						</jstl:if>
 					</jstl:if>
 				</security:authorize>
@@ -531,10 +527,9 @@ label label-success {
 									
 
 									<jstl:if test="${actor.userSpace==p}">
-									<div class="container">
-
+									
 									<!-- Button to Open the Modal -->
-									<button type="button" class="btn btn-danger"
+									<button type="button" id="borrartrack" class="btn btn-danger"
 										data-toggle="modal" data-target="#myModal${vs.index}">X</button>
 
 									<!-- The Modal -->
@@ -569,7 +564,7 @@ label label-success {
 											</div>
 										</div>
 									</div>
-									</div>
+									
 										
 									</jstl:if>
 			
@@ -593,7 +588,8 @@ label label-success {
 		</div>
 	</div>
 </div>
-
+</jstl:otherwise>
+</jstl:choose>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <script>
