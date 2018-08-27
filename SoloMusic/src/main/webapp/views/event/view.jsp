@@ -134,6 +134,33 @@ a.btn-card {
 	text-decoration: none;
 	color: #fff;
 }
+
+#boton{
+	padding-left:31px;
+}
+
+.botones{
+	padding-left:8px;
+	padding-bottom:8px;
+}
+
+#borrar{
+	width:25%;
+}
+
+#editar{
+	width:25%;
+}
+
+#subirimg{
+	width:40%;
+}
+
+#eventos{
+	margin-top:10px;
+}
+
+
 </style>
 
 
@@ -142,32 +169,37 @@ a.btn-card {
 <security:authorize access="hasRole('USER')">
 
 
-
+<br />
 	<jstl:if test="${actor.userSpace==userSpace}">
-		<div class="card bg-primary text-white">
-
-								<div class="card-body">
-								
-									<spring:message code="event.text" var="spaceNew" />
-								
-									<p class="card-text">${spaceNew}</p>
+							<jstl:if test="${empty event}">
+								<spring:message code="event.text" var="spaceNew" />
+									<p class="label label-success">${spaceNew}</p>
 									
-									<spring:message code="event.new" var="actorNew" />
+							</jstl:if>
+								<div id="boton">
+								<spring:message code="event.new" var="actorNew" />	
 									<input onclick="window.location='event/user/create.do'"
 									class="btn btn-danger" type="button" value="${actorNew}" />
 								</div>
-		</div>
-		<br />
+		
+		
 		<br />
 	</jstl:if>
 </security:authorize>
+
+<div class="container-fluid">
+<div class="row content">
+<div class="col-sm-12" id="container">
 <jstl:forEach var="p" items="${event}" varStatus="vs">
+		
+		<div class="col-sm-4" id="eventos">
 		<div class="card-content">
 			
+		
 			<div class="card-desc">
-			<div class="container">
+
 			<div class="card-img">
-                        <img src="event/view/image.do?q=${p.id}" alt="">
+                        <img src="event/view/image.do?q=${p.id}" alt="" id="eventimg">
                        
                     </div>
 				<h3>
@@ -193,10 +225,10 @@ a.btn-card {
 					<jstl:if test="${actor.userSpace==userSpace}">
 						
 						
-								<div class="container">
+								<div class="botones">
 
 									<!-- Button to Open the Modal -->
-									<button type="button" class="btn btn-danger"
+									<button type="button" class="btn btn-danger" id="borrar"
 										data-toggle="modal" data-target="#myModal${vs.index}"><spring:message code="event.delete"/></button>
 
 									<!-- The Modal -->
@@ -233,11 +265,11 @@ a.btn-card {
 									</div>
 									<spring:message code="event.edit" var="actorEdit" /> <input
 								onclick="window.location='event/user/edit.do?p=${p.id}'"
-								class="btn btn-danger" type="button" value="${actorEdit}" />
+								class="btn btn-danger" type="button" value="${actorEdit}" id="editar"/>
 							
 								<spring:message code="event.upload" var="upload" /> <input
 								onclick="window.location='event/image/upload.do?q=${p.id}'"
-								class="btn btn-danger" type="button" value="${upload}" />
+								class="btn btn-danger" type="button" value="${upload}" id="subirimg"/>
 
 								</div> 
 								
@@ -251,10 +283,10 @@ a.btn-card {
 
 		</div>
 
-
-
 </jstl:forEach>
-
+</div>
+</div>
+</div>
 
 
 

@@ -118,17 +118,20 @@ a.btn-card {
 
 
 </style>
+
+
 <security:authorize access="permitAll">
-<div class="col-md-4">
-           
-            </div>
-            <div class="col-md-4">
+<br>
+<div class="container-fluid">
+	<div class="row content">
+            <div class="col-md-6">
                 <div class="card-content">
+                <div class="card-desc">
                     <div class="card-img">
                         <img src="advertisement/view/image.do?q=${advertisement.id}" alt="">
                        
                     </div>
-                    <div class="card-desc">
+                    
                         <h3><jstl:out value="${advertisement.title}" /></h3>
                         <br/>
                         <p><jstl:out value="${advertisement.description}" /></p>
@@ -151,7 +154,8 @@ a.btn-card {
                   
                 </div>
             </div>
-
+</div>
+</div>
 
 
 

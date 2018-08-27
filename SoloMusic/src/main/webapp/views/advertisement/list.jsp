@@ -65,7 +65,7 @@
 	  		 <acme:submit name="search" code="advertisement.search"/>
 		  </form:form>
 		</div>
-		
+		<div style="overflow-x:auto;">
 		<display:table style="border-collapse:inherit;" keepStatus="true" name="advertisements"
 			requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
 			
@@ -123,5 +123,6 @@
 			</jstl:if>
 			
 		</display:table>
+		</div>
 	</div>
 </security:authorize>

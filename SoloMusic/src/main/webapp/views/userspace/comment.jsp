@@ -30,7 +30,7 @@
 					
 					<label> <spring:message code="comment.puntuation" />
 					</label><br /> <input class="form-control" value="${comment.puntuacion}"
-						type="number" name="puntuacion"  />
+						type="number" name="puntuacion"  max="5" min="0"/>
 					<form:errors cssClass="error" path="puntuacion" />
 				<br/>
 				<br/>
