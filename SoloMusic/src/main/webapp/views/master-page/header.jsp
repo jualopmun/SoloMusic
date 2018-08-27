@@ -86,6 +86,12 @@
 							<li><a class="fNiv" href="actor/premium.do"><spring:message
 							code="master.page.actor.premium" /></a></li>
 					</security:authorize>
+					
+					<security:authorize access="hasRole('USER')">
+						<li><a class="fNiv" href="notification/list.do"><spring:message
+							code="master.page.notification.list" /></a></li>
+					</security:authorize>
+					
 					<li><a class="fNiv" href="welcome/index.do"><spring:message
 							code="master.page.user.home" /></a></li>
 				</ul>

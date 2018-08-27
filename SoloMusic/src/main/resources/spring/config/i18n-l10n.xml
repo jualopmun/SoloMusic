@@ -21,6 +21,7 @@
 	    <value>/views/playlist/messages</value>
 	    <value>/views/track/messages</value>
 		<value>/views/advertisement/messages</value>
+		<value>/views/notification/messages</value>
     </util:list>
 
 

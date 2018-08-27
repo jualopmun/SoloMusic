@@ -64,6 +64,9 @@
 		<bean class="converters.GenreToStringConverter"/>
 		<bean class="converters.StringToGenreConverter"/>
 		
+		<bean class="converters.NotificationToStringConverter"/>
+		<bean class="converters.StringToNotificationConverter"/>
+		
 	</util:list>
 	
 </beans>
