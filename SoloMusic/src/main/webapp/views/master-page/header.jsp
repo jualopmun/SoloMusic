@@ -23,7 +23,7 @@
 <link href="static/css/customIndex.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- 
+
 </head>
 
 
@@ -104,7 +104,43 @@
 		</div>
 	</nav>
 
-	<a href="?language=en"> <img src="images/flag_en.png" /></a>
-	<a href="?language=es"> <img src="images/flag_es.png" /></a>
+	<a href="javascript:setParam('language', 'en');"> <img src="images/flag_en.png" /></a>
+	<a href="javascript:setParam('language', 'es');"> <img src="images/flag_es.png" /></a>
+
+
+<script> 
+    function setParam(name, value) {
+        var l = window.location;
+
+        /* build params */
+        var params = {};        
+        var x = /(?:\??)([^=&?]+)=?([^&?]*)/g;        
+        var s = l.search;
+        for(var r = x.exec(s); r; r = x.exec(s))
+        {
+            r[1] = decodeURIComponent(r[1]);
+            if (!r[2]) r[2] = '%%';
+            params[r[1]] = r[2];
+        }
+
+        /* set param */
+        params[name] = encodeURIComponent(value);
+
+        /* build search */
+        var search = [];
+        for(var i in params)
+        {
+            var p = encodeURIComponent(i);
+            var v = params[i];
+            if (v != '%%') p += '=' + v;
+            search.push(p);
+        }
+        search = search.join('&');
+
+        /* execute search */
+        l.search = search;
+    }
+</script>
+
 
 </div>

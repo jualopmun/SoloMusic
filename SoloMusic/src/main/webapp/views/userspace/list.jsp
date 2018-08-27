@@ -18,6 +18,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<head>
 <style>
 
 select{
@@ -29,29 +30,35 @@ input{
     border:1px solid #ccc;
 }
 
-</style>
+.table-hover {
+    border-collapse:separate;
+    border: solid #ccc 1px;
+    border-radius: 25px;
+    overflow: hidden
+}
 
+.table-hover thead {
+	border: 1px solid;
+	background-color: #c9302c;
+	color: white;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #a6a6a6;
+}
+
+.pagelinks {
+    display: yes;
+}
+
+</style>
+</head>
 <div style="width:70%; margin: auto;">
-	<div style="padding: 0% 0% 1% 0%;">
-	
-	 <b><spring:message code="userspace.search"></spring:message></b>
-	 <div class="form-group">
-	 <form:form action="userspace/user/search.do">	
-	  	 <input type="text" id="searchTerm" name="searchTerm"/>
-	  	 <select  name="searchGenre">
-	  	 <option value="${null}"><spring:message code="userspace.search.genre"/></option>	
-	  	 	  <jstl:forEach var="g" items="${genres}">
-                    <option value="${g.id}">${g.genre}</option>
-              </jstl:forEach>
-	  	 </select>
-	  	 <acme:submit name="search" code="userspace.search.button"/>
-	  </form:form>
-	</div>
-</div>
+
 	
 	<div style="overflow-x:auto;">
 	<display:table style="border-collapse:inherit;" keepStatus="true" name="userspace"
-		requestURI="${requestURI}" id="row" class="table table-over" pagesize="12">
+		requestURI="${requestURI}" id="row" class="table table-hover">
 		<spring:message code="userspace.profileimg" var="profileImg"/>
 		
 		<display:column title="${profileImg}" sortable="false">
@@ -89,3 +96,25 @@ input{
 	</display:table>
 	</div>
 </div>
+
+
+<script>
+var search="<spring:message code="userspace.search"/>";
+var show="<spring:message code="advertisement.show"/>";
+
+$(document).ready(function() {
+    $('#row').DataTable({
+    	  "language": {
+    		    "paginate": { "previous": "&lt", "next": "&gt"},
+    		    "lengthMenu": show+" _MENU_",
+    		    "search": search+" "
+    		  }
+    		}
+    );
+} );
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
