@@ -51,7 +51,6 @@ public class NotificationService {
 		not.setView(false);
 
 		not = save(not);
-		System.out.println(not.getId());
 	}
 
 	public void createAdvertisement(Advertisement advertisement) {

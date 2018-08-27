@@ -23,7 +23,9 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" />
 		
-		<security:intercept-url access="hasRole('USER')" pattern="/notification/**"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/notification/list.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/notification/view.do"/>
+		<security:intercept-url access="hasRole('USER')" pattern="/notification/notifications.do"/>
 		
 		<!-- USERSPACE -->
 		

@@ -9,30 +9,46 @@
 
 <div style="width:70%; margin: auto;">
 
-
+	<spring:message code="notificacion.view" var="viewNot" />
+	<spring:message code="notificacion.view.view" var="viewView" />
 	<table class="table table-hover">
 		<thead>
-			<tr scope="col"><spring:message code="notification.message" /> </tr>
+			<tr>
+				<th scope="col" colspan="2">
+					<spring:message code="notification.message" />
+				</th>
+			 </tr>
 		</thead>
 		<tbody>
 			<jstl:forEach items="${notifications}" var="notification">
 				<jstl:if test="${notification.actor ne null}">
-					<tr scope="row">
+					<tr>
 						<td>
 							<spring:message code="notification.message.actor" /><jstl:out value="${notification.actor.name}" />
+						</td>
+						<td>
+						<input onclick="window.location='notification/view.do?q=${notification.id}'"
+							class="btn btn-success" type="button" value="${viewNot}" />
+						<input onclick="window.location='userspace/user/spaceview.do?q=${notification.actor.userSpace.id}'"
+							class="btn btn-info" type="button" value="${viewView}" />
 						</td>
 					</tr>
 				</jstl:if>
 				<jstl:if test="${notification.advertisement ne null}">
-					<tr scope="row">
+					<tr>
 						<td>
 							<spring:message code="notification.message.advertisement" /><jstl:out value="${notification.advertisement.title}" />
+						</td>
+						<td>
+							<input onclick="window.location='notification/view.do?q=${notification.id}'"
+								class="btn btn-success" type="button" value="${viewNot}" />
+							<input onclick="window.location='actor/advertisement/list.do?q=${notification.advertisement.id}'"
+								class="btn btn-info" type="button" value="${viewView}" />
 						</td>
 					</tr>
 				</jstl:if>
 			</jstl:forEach>
 		</tbody>
 	</table>
-
 	
 </div>

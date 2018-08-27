@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Actor;
@@ -40,6 +41,35 @@ public class NotificationController extends AbstractController {
 		}
 
 		return result;
+	}
+
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public ModelAndView view(@RequestParam int q) {
+		ModelAndView result;
+		try {
+
+			Notification notificacion = this.notificationService.findOne(q);
+			this.notificationService.markView(notificacion);
+
+			result = new ModelAndView("redirect:/notification/list.do");
+		} catch (final Throwable e) {
+			result = new ModelAndView("redirect:/notification/list.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/notifications", method = RequestMethod.GET)
+	public Boolean notifications() {
+		try {
+			final Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			List<Notification> notifications = notificationService.findByOwner(principal);
+
+			return !notifications.isEmpty();
+		} catch (final Throwable e) {
+			return false;
+		}
+
 	}
 
 }
