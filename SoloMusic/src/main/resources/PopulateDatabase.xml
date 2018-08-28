@@ -29,7 +29,7 @@
 	
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="user2" />
-		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
 		<property name="banned" value="false" />
 		<property name="authorities">
 			<list>

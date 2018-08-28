@@ -24,9 +24,33 @@
 <link href="static/css/customIndex.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+<style>
+/* Define what each icon button should look like */
+.button {
+  color: white;
+  display: inline-block; /* Inline elements with width and height. TL;DR they make the icon buttons stack from left-to-right instead of top-to-bottom */
+  position: relative; /* All 'absolute'ly positioned elements are relative to this one */
+  padding: 2px 5px; /* Add some padding so it looks nice */
+}
+
+/* Make the badge float in the top right corner of the button */
+.button__badge {
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
+ 
+  padding: 1px 3px;
+  font-size: 10px;
+  
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
+}
+
+</style>
 
 </head>
-
 
 
 <div style="width: 100%">
@@ -49,6 +73,9 @@
 									code="master.page.signup" /></a></li>
 					   
 					</security:authorize>
+					
+					<li><a class="fNiv" href="welcome/index.do"><spring:message
+							code="master.page.user.home" /></a></li>
 					
 					<security:authorize access="isAuthenticated()">
 						<security:authentication property="principal.id" var="id" />
@@ -96,18 +123,27 @@
 							code="master.page.actor.premium" /></a></li>
 					</security:authorize>
 					
-					<li><a class="fNiv" href="welcome/index.do"><spring:message
-							code="master.page.user.home" /></a></li>
-							
+					
 					<security:authorize access="hasRole('USER')">
-						<jstl:if test="${notifications.size() > 0 }">
-							<svg height="20" width="20">
-  								<circle cx="10" cy="10" r="10" stroke="black" stroke-width="3" fill="red" />
-							</svg>
-						</jstl:if>
-						<li><a class="fNiv" href="notification/list.do"><spring:message
-							code="master.page.notification.list" /></a></li>
+						
+						<li>
+						
+						<a class="fNiv" href="notification/list.do">
+						 <div class="button">
+    						<i class="fa fa-bell"></i>
+    						<jstl:if test="${notifications.size()>0}">
+   							 <span class="button__badge">${notifications.size()}</span>
+   							 </jstl:if>
+ 						 </div>
+						</a>
+						</li>
+	
 					</security:authorize>
+					
+					
+					
+							
+					
 				</ul>
 			</div>
 			

@@ -7,7 +7,32 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<div style="width:70%; margin: auto;">
+<head>
+<style>
+	
+.table-hover {
+    border-collapse:separate;
+    border: solid #ccc 1px;
+    border-radius: 25px;
+    overflow: hidden
+}
+
+.table-hover thead {
+	border: 1px solid;
+	background-color: #c9302c;
+	color: white;
+	 
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #a6a6a6;
+}
+	
+</style>
+</head>
+
+
+<div style="width:60%; margin: auto;">
 
 	<spring:message code="notificacion.view" var="viewNot" />
 	<spring:message code="notificacion.view.view" var="viewView" />
@@ -52,3 +77,24 @@
 	</table>
 	
 </div>
+
+<script>
+var search="<spring:message code="advertisement.search"/>";
+var show="<spring:message code="advertisement.show"/>";
+
+$(document).ready(function() {
+    $('#row').DataTable({
+    	  "language": {
+    		    "paginate": { "previous": "&lt", "next": "&gt"},
+    		    "lengthMenu": show+" _MENU_",
+    		    "search": search+" "
+    		  }
+    		}
+    );
+} );
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
