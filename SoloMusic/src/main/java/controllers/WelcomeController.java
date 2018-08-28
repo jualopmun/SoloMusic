@@ -12,15 +12,28 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
+import domain.Notification;
+import security.LoginService;
+import services.NotificationService;
+
 @Controller
 @RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
+
+	@Autowired
+	NotificationService	notificationService;
+	@Autowired
+	LoginService		loginService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -44,6 +57,12 @@ public class WelcomeController extends AbstractController {
 		result.addObject("name", name);
 
 		result.addObject("moment", moment);
+
+		if (LoginService.isAnyAuthenticated()) {
+			Actor principal = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+			List<Notification> notifications = notificationService.findByOwner(principal);
+			result.addObject("notifications", notifications);
+		}
 
 		return result;
 	}

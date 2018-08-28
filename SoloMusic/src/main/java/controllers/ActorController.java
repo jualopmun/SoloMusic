@@ -24,6 +24,7 @@ import domain.Advertisement;
 import security.LoginService;
 import services.ActorService;
 import services.AdvertisementService;
+import services.NotificationService;
 
 @Controller
 @RequestMapping("actor")
@@ -39,6 +40,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private LoginService			loginService;
+
+	@Autowired
+	private NotificationService		notificationService;
 
 
 	// Listing
@@ -150,6 +154,7 @@ public class ActorController extends AbstractController {
 
 		try {
 			this.actorService.follow(actor);
+			this.notificationService.createActor(actor);
 			result = new ModelAndView("redirect:/userspace/user/spaceview.do?q=" + actor.getUserSpace().getId());
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");

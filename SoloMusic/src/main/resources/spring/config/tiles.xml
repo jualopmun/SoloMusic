@@ -21,6 +21,7 @@
     	<value>/views/playlist/tiles.xml</value>
     	<value>/views/track/tiles.xml</value>
     	<value>/views/advertisement/tiles.xml</value>
+    	<value>/views/notification/tiles.xml</value>
     </util:list>
 
 

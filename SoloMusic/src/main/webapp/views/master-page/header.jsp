@@ -14,6 +14,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 	
 <head>
  <title>Bootstrap Example</title>
@@ -94,8 +95,19 @@
 						<li><a class="fNiv" href="actor/premium.do"><spring:message
 							code="master.page.actor.premium" /></a></li>
 					</security:authorize>
+					
 					<li><a class="fNiv" href="welcome/index.do"><spring:message
 							code="master.page.user.home" /></a></li>
+							
+					<security:authorize access="hasRole('USER')">
+						<jstl:if test="${notifications.size() > 0 }">
+							<svg height="20" width="20">
+  								<circle cx="10" cy="10" r="10" stroke="black" stroke-width="3" fill="red" />
+							</svg>
+						</jstl:if>
+						<li><a class="fNiv" href="notification/list.do"><spring:message
+							code="master.page.notification.list" /></a></li>
+					</security:authorize>
 				</ul>
 			</div>
 			
@@ -141,6 +153,5 @@
         l.search = search;
     }
 </script>
-
 
 </div>

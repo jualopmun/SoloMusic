@@ -31,6 +31,7 @@ import domain.Advertisement;
 import security.LoginService;
 import services.ActorService;
 import services.AdvertisementService;
+import services.NotificationService;
 
 @Controller
 @RequestMapping("advertisement")
@@ -46,6 +47,9 @@ public class AdvertisementController extends AbstractController {
 
 	@Autowired
 	private LoginService			loginService;
+
+	@Autowired
+	private NotificationService		notificationService;
 
 	public Integer					advertisementId;
 
@@ -237,6 +241,7 @@ public class AdvertisementController extends AbstractController {
 
 		try {
 			this.advertisementService.register(advertisement);
+			this.notificationService.createAdvertisement(advertisement);
 			result = new ModelAndView("redirect:/advertisement/user/list.do?q=1");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
