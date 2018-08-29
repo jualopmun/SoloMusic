@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.PlayListService;
 import domain.PlayList;
+import services.PlayListService;
 
 @Controller
 @RequestMapping("playlist")
 public class PlayListController extends AbstractController {
 
 	@Autowired
-	private PlayListService	playListService;
+	private PlayListService playListService;
 
 
 	@RequestMapping(value = "user/create", method = RequestMethod.GET)

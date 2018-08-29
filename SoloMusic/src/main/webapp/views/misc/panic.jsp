@@ -19,7 +19,17 @@
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<p><spring:message code="panic.text" /> <code>${name}</code>.</p>
+
+
+
+<div class="front-page">
+	<img src="images/alert.jpg" alt="SoloMusic Co., Inc." style="width:28em;"/>
+	<h1 style="font-weight:bold;"><spring:message code="message.error.imposible"></spring:message></h1>
+</div>
+
+
+
+<!-- <p><spring:message code="panic.text" /> <code>${name}</code>.</p>
 
 <h2><spring:message code="panic.message" /></h2>
 
@@ -32,3 +42,4 @@
 <p style="font-family: 'Courier New'">	
 	${stackTrace}
 </p>
+ -->

@@ -453,7 +453,6 @@ public class UserSpaceController extends AbstractController {
 
 		result = new ModelAndView("userspace/create");
 		result.addObject("userSpace", userSpace);
-
 		result.addObject("message", message);
 		return result;
 	}

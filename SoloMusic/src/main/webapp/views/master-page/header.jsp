@@ -148,11 +148,11 @@
 		</div>
 	</nav>
 
-	<a href="javascript:setParam('language', 'en');"> <img src="images/flag_en.png" /></a>
-	<a href="javascript:setParam('language', 'es');"> <img src="images/flag_es.png" /></a>
+	<a href="?language=en"> <img src="images/flag_en.png" /></a>
+	<a href="?language=es"> <img src="images/flag_es.png" /></a>
 
 
-<script> 
+<!-- <script> 
     function setParam(name, value) {
         var l = window.location;
 
@@ -184,6 +184,6 @@
         /* execute search */
         l.search = search;
     }
-</script>
+</script> -->
 
 </div>

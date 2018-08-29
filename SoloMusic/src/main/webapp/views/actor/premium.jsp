@@ -29,6 +29,7 @@
 		<spring:message code="event.back" var="back" />
 		<spring:message code="actor.premiumGo" var="premiumGo" />
 		<spring:message code="actor.premiumnoGo" var="premiumnoGo" />
+		
 		<jstl:if test="${actor.isPremium==false }">
 		<div id="paypal-button"></div>
 		</jstl:if>
@@ -72,7 +73,7 @@ $( document ).ready(function() {
     	    return actions.payment.create({
     	      transactions: [{
     	        amount: {
-    	          total: '6',
+    	          total: '5',
     	          currency: 'EUR'
     	        }
     	      }]

@@ -6,6 +6,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <head>
 <style>
@@ -40,7 +41,8 @@
 		<spring:message code="actor.followeds" var="followeds" />
 		
 		<display:column sortable="false">
-		<jstl:if test="${row.userSpace.profileImg!=null}">
+		
+		<jstl:if test="${fn:length(row.userSpace.profileImg)>0}">
 			<img style="max-width: 80px; max-height: 80px;"	src="userspace/view/image.do?q=${row.userSpace.id}">
 			</jstl:if>
 		</display:column>
