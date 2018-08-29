@@ -139,11 +139,7 @@
 						</li>
 	
 					</security:authorize>
-					
-					
-					
-							
-					
+
 				</ul>
 			</div>
 			

@@ -512,10 +512,10 @@ label label-success {
 						<img class=" img-fluid" src="images/playlist.png" alt="Caratula" height="175" width="200" id="caratula">
 					</p>
 				<h4>${play.description} </h4>
- 					 <button type="button" class="btn btn-info" data-parent="#accordion" data-toggle="collapse" data-target="#${play.title}"><spring:message code="play.track"
+ 					 <button type="button" class="btn btn-info" data-parent="#accordion" data-toggle="collapse" data-target="#${play.id}"><spring:message code="play.track"
 								/></button>
 				</div>
-  					<div id="${play.title}" class="panel-collapse collapse">
+  					<div id="${play.id}" class="panel-collapse collapse">
   					<div class="panel-body">
   						<jstl:forEach var="track" items="${play.tracks}" varStatus="vs">
 								
