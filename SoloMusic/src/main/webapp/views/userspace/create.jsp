@@ -39,7 +39,7 @@
 			<br />
 		    
 			<form:label path="description">
-				<spring:message code="userspace.description" />:
+				<spring:message code="userspace.description" />
 			</form:label>
 			<br />
 			<form:textarea cols="30" rows="10" path="description"
