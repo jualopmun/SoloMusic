@@ -104,6 +104,7 @@ public class UserSpaceController extends AbstractController {
 		ModelAndView result;
 		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		try {
+
 			Assert.isTrue(man.getUserSpace() != null);
 			final UserSpace userSpace = man.getUserSpace();
 			result = this.createNewModelAndView(userSpace, null);
@@ -200,6 +201,12 @@ public class UserSpaceController extends AbstractController {
 			result.addObject("genres", genres);
 		} else {
 			try {
+				Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
+
+				if (man.getUserSpace() != null && man.getUserSpace().getId() != userSpace.getId()) {
+
+					throw new IllegalArgumentException();
+				}
 
 				this.userSpaceService.save(userSpace);
 

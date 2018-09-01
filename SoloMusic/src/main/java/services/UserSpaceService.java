@@ -67,10 +67,9 @@ public class UserSpaceService {
 	public UserSpace save(final UserSpace userSpace) {
 		Assert.notNull(userSpace);
 		UserSpace m = null;
-		System.out.println(userSpace.getContact());
 		final Actor man = this.loginService.findActorByUsername(LoginService.getPrincipal().getId());
 		if (this.exists(userSpace.getId())) {
-
+			Assert.isTrue(man.getUserSpace().getId() == userSpace.getId());
 			m = this.findOne(userSpace.getId());
 
 			m.setTitle(userSpace.getTitle());

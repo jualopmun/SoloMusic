@@ -320,7 +320,7 @@ public class AdvertisementController extends AbstractController {
 		else if (!file.getOriginalFilename().contains(".jpg")) {
 			result = new ModelAndView("advertisement/upload");
 			result.addObject("advertisement", null);
-			result.addObject("message", "file.format.error");
+			result.addObject("message", "file.format.error.jpg");
 			result.addObject("requestURI", "user/create.do");
 			return result;
 		} else if (file.getSize() >= 268435455) {

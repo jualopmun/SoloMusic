@@ -212,7 +212,7 @@ public class EventController extends AbstractController {
 		else if (!file.getOriginalFilename().contains(".jpg")) {
 			result = new ModelAndView("event/upload");
 			result.addObject("event", null);
-			result.addObject("message", "file.format.error");
+			result.addObject("message", "file.format.error.image");
 			result.addObject("requestURI", "user/create.do");
 			return result;
 		} else if (file.getSize() >= 268435455) {
